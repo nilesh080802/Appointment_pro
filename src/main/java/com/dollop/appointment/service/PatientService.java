@@ -96,7 +96,7 @@ public class PatientService {
 		  psd.setFirstName(firstName); 
 		  psd.setLastName(lastName);
 		  psd.setDateOfBirth(dateOfBirth);
-		  psd.setAge(age);
+//		  psd.setAge(age);
 		  psd.setBloodGroup(bloodGroup);
 		  psd.setEmailId(emailId);
 		  psd.setMobile(mobile);
