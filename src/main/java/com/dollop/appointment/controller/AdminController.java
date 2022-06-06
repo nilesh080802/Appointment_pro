@@ -2,6 +2,7 @@ package com.dollop.appointment.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,23 +33,10 @@ public class AdminController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		
-		String action= request.getParameter("action");
-		System.out.println(action);
-		
-		switch(action) {
-		
-		case "showPatinetData": as.showPatientData(request,response);break;
-		
-		case "editPatinetProfileShow": as.editPatientProfileShow(request,response);break;
-					
-		case "editPatinetProfileUpdate":as.editPatinetProfileUpdate(request,response);break;
-		default:
-		
-		
-		}
-		
+		doPost(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+	
 	}
 
 	
@@ -58,7 +46,28 @@ public class AdminController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String action= request.getParameter("action");
+		System.out.println(action);
 		
+		switch(action) {
+		
+		case "showPatinetData": as.showPatientData(request,response);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("admin/editPatientProfile.jsp"); 
+		  rd.forward(request,response);
+		break;
+		
+		case "editPatinetProfileShow": as.editPatientProfileShow(request,response);break;
+					
+		case "editPatinetProfileUpdate":as.editPatinetProfileUpdate(request,response);break;
+		
+		case "register": as.adminRegistration(request,response); break;
+		default:
+		
+		
+		}
+		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 	}
 	
