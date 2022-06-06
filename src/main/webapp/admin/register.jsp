@@ -14,10 +14,10 @@
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		
 		<!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/font-awesome.min.css">
 		
 		<!-- Main CSS -->
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href=${pageContext.request.contextPath}/admin/assets/css/style.css">
 		
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -25,6 +25,12 @@
 		<![endif]-->
     </head>
     <body>
+    
+    <%if(session.getAttribute("type")=="admin" ){ %>
+			
+				<%response.sendRedirect("./register.jsp");%>
+			
+	<%}%>
 	
 		<!-- Main Wrapper -->
         <div class="main-wrapper login-body">
@@ -32,26 +38,54 @@
             	<div class="container">
                 	<div class="loginbox">
                     	<div class="login-left">
-							<img class="img-fluid" src="assets/img/logo-white.png" alt="Logo">
+							<img class="img-fluid" src="${pageContext.request.contextPath}/admin/assets/img/logo-white.png" alt="Logo">
                         </div>
                         <div class="login-right">
 							<div class="login-right-wrap">
 								<h1>Register</h1>
 								<p class="account-subtitle">Access to our dashboard</p>
+								<p style ="colour:red;"> 
+								
+									<%if(request.getAttribute("registrationError")!=null){ %>
+											
+											<%= request.getAttribute("registrationError") %>
+											
+									<%}else if(request.getAttribute("incorrect")!=null){%>
+											
+											
+											<%=request.getAttribute("incorrect") %>
+											
+											<% } %>
+											
+								</p>
+								
 								
 								<!-- Form -->
-								<form action="https://dreamguys.co.in/demo/doccure/admin/login.jsp">
+								<form action="${pageContext.request.contextPath}/AdminController" id="submit" method="post" >
+								
+								    <div class="form-group form-focus">
+												<div class="form-group">
+													<input type="hidden" class="form-control" name="action" value="register">
+												</div>
+											</div>
+								
 									<div class="form-group">
-										<input class="form-control" type="text" placeholder="Name">
+										<input class="form-control" type="text" name="firstName" placeholder="First Name">
 									</div>
 									<div class="form-group">
-										<input class="form-control" type="text" placeholder="Email">
+										<input class="form-control" type="text" name="lastName" placeholder="Last Name">
 									</div>
 									<div class="form-group">
-										<input class="form-control" type="text" placeholder="Password">
+										<input class="form-control" type="email" name="email" placeholder="Email">
 									</div>
 									<div class="form-group">
-										<input class="form-control" type="text" placeholder="Confirm Password">
+										<input class="form-control" type="text" name="mobileNumber" placeholder="Mobile Number">
+									</div>
+									<div class="form-group">
+										<input class="form-control" type="password" name="password" placeholder="Password">
+									</div>
+									<div class="form-group">
+										<input class="form-control" type="password" name="conPassword" placeholder="Confirm Password">
 									</div>
 									<div class="form-group mb-0">
 										<button class="btn btn-primary btn-block" type="submit">Register</button>
