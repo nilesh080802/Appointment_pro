@@ -77,19 +77,21 @@
 
 					<div class="row">
 						
-						<!-- Profile Sidebar -->
+					<!-- Profile Sidebar -->
 						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
 							<div class="profile-sidebar">
 								<div class="widget-profile pro-widget-content">
 									<div class="profile-info-widget">
 										<a href="#" class="booking-doc-img">
-											<img src="assets/img/patients/patient.jpg" alt="User Image">
+											
+											<img src="${patient.getImagePath()}">
 										</a>
 										<div class="profile-det-info">
-											<h3>Richard Wilson</h3>
+											<h3>${patient.getFirstName()}  ${patient.getLastName()}</h3>
 											<div class="patient-details">
-												<h5><i class="fas fa-birthday-cake"></i> 24 Jul 1983, 38 years</h5>
-												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Newyork, USA</h5>
+												<h5><i class="fas fa-birthday-cake"></i>${patient.getDateOfBirth()}, 38 years</h5>
+												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>${patient.getCountry()}, ${patient.getState()}, ${patient.getCity()}</h5>
+												<h5 class="mb-0">${patient.getAddress()}, ${patient.getZipCode()}</h5>
 											</div>
 										</div>
 									</div>
@@ -98,13 +100,13 @@
 									<nav class="dashboard-menu">
 										<ul>
 											<li class="active">
-												<a href="patient-dashboard.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientDashboardShowData&mobile=${mobileNumber}">
 													<i class="fas fa-columns"></i>
 													<span>Dashboard</span>
 												</a>
 											</li>
 											<li>
-												<a href="favourites.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientFavouritesShowData&mobile=${mobileNumber}">
 													<i class="fas fa-bookmark"></i>
 													<span>Favourites</span>
 												</a>
@@ -123,7 +125,7 @@
 												</a>
 											</li>
 											<li>
-												<a href="change-password.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientChangePasswordShowData&mobile=${mobileNumber}">
 													<i class="fas fa-lock"></i>
 													<span>Change Password</span>
 												</a>
@@ -141,6 +143,7 @@
 							</div>
 						</div>
 						<!-- / Profile Sidebar -->
+
 						
 						<div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="card">

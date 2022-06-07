@@ -46,18 +46,14 @@ public class LoginController extends HttpServlet {
 		
 		String action=request.getParameter("action");
 	        System.out.println(action+"   :main action");
-	        
-	        
+	    
 		String mobileNumber = request.getParameter("mobileNumber");
 		String password = request.getParameter("password");
 		if(mobileNumber!=null || password!=null) {
 			mobileNumber = mobileNumber.trim();
 			password = password.trim();
 		}
-		/*
-		 * request.setAttribute("mobile", mobileNumber);
-		 * response.sendRedirect("/PatientController");
-		 */
+	
 		if (mobileNumber == "" || password == "") {
 			//here we set a messseg  for showing on jsp page
 			

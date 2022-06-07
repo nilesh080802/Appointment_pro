@@ -1,6 +1,6 @@
 package com.dollop.appointment.model;
 
-import java.io.InputStream;
+
 
 public class PatientSettingData {
 	
@@ -17,9 +17,16 @@ public class PatientSettingData {
 	private String state;
 	private String zipCode;
 	private String country;
-	private InputStream photo;
-	private String base64Image;
+	private String imagePath;
 	
+	
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 	public Integer getAge() {
 		return age;
 	}
@@ -93,25 +100,8 @@ public class PatientSettingData {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public InputStream getPhoto() {
-		
-		return photo;
-	}
-	public void setPhoto(InputStream photo) {
-		this.photo = photo;
-	}
 	
-//The field�s getter getBase64Image() will be called by a JSTL tag in the JSP page in order to show the image.
-	public String getBase64Image() {
-        return base64Image;
-	}
 	
-//The field�s setter setBase64Image() will be called by a DAO class that retrieves the image binary data and converts it to a base64 string.
-
-	 
-	public void setBase64Image(String base64Image) {
-        this.base64Image = base64Image;
-	}
 
 
 }
