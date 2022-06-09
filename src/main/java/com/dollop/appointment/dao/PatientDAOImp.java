@@ -5,8 +5,11 @@ package com.dollop.appointment.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
+import com.dollop.appointment.model.PatientAppointmentShowData;
 import com.dollop.appointment.model.PatientSettingData;
+
 import com.dollop.appointment.utility.DBConnection;
 
 public class PatientDAOImp {
@@ -18,6 +21,58 @@ static Connection con=null;
 		
 	}
 	 
+	public ArrayList<PatientAppointmentShowData>  patientAppointmentGetData(String patientId) {
+		
+		String dql="Select * from appointmentdata where PatientId=?";
+//		String dql2="select profileImage,firstName,lastName,speciality from doctorprofilesettingdata where doctorId=?";
+		
+		
+		
+		ArrayList<PatientAppointmentShowData> appointmentList= new ArrayList<PatientAppointmentShowData>();
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(dql);
+//			PreparedStatement ps2 = con.prepareStatement(dql2);
+			ps.setString(1, patientId);
+			ResultSet rs= ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				PatientAppointmentShowData pasd = new PatientAppointmentShowData();
+				pasd.setDoctorId(rs.getString("DoctorId"));
+				pasd.setPatientId(rs.getString("PatientId"));
+				
+				pasd.setApptDate(rs.getString("AppointmentDate"));
+				pasd.setBookingDate(rs.getString("BookingDate"));
+				pasd.setAmount(rs.getInt("Amount"));
+				pasd.setStatus(rs.getInt("Status"));
+				System.out.println(rs.getInt("Status")+"-dao");
+				
+				//----------------
+				
+				/*
+				 * ps2.setString(1, rs.getString("DoctorId")); ResultSet rs1 =
+				 * ps2.executeQuery(); rs1.next();
+				 * pasd.setDoctorImage(rs1.getString("profileImage"));
+				 * pasd.setdFirstName(rs1.getString("firstName"));
+				 * pasd.setdLastName(rs1.getString("lastName"));
+				 * pasd.setSpecialization(rs.getString("specialization"));
+				 */
+				
+				appointmentList.add(pasd);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		
+		return appointmentList;
+		
+		
+	}
 	
 	public PatientSettingData patientProfileGetData(String mobileNumber) {
 		
@@ -47,6 +102,7 @@ static Connection con=null;
 				psd.setZipCode(rs.getString("zipCode"));
 				psd.setCountry(rs.getString("country"));
 				psd.setImagePath(rs.getString("imagePath"));
+				psd.setPatientId(rs.getString("PatientId"));
 				
 				System.out.println(mobileNumber+"-"+rs.getString("mobile")+"get->"+rs.getString("imagePath"));
 				

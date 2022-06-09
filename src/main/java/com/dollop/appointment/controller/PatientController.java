@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +63,7 @@ public class PatientController extends HttpServlet {
 		 rd1.forward(request, response);
 		break;
 		 
-		case "PatientDashboardShowData": ps.patientProfileSettingShowData(request,response);
+		case "PatientDashboardShowData": ps.patientDahsboardData(request,response);
 
 		RequestDispatcher rd2 = request.getRequestDispatcher("patient-dashboard.jsp");
 		 rd2.forward(request, response);

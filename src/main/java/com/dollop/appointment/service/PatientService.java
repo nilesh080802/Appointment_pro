@@ -1,6 +1,7 @@
 package com.dollop.appointment.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -8,13 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+
 
 import com.dollop.appointment.dao.PatientDAOImp;
 import com.dollop.appointment.dao.UserDAOImp;
+import com.dollop.appointment.model.PatientAppointmentShowData;
 import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.model.UserData;
-
 
 @MultipartConfig(location="/tmp", fileSizeThreshold=1048576, maxFileSize=20848820, maxRequestSize=418018841)
 public class PatientService {
@@ -29,12 +30,29 @@ public class PatientService {
 	
 	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("1->");
+//		System.out.println("1->");
 		String mobileNumber=request.getParameter("mobile");
-		 PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
-		 
-          request.setAttribute("patient",psd);
-		 
+		
+		if(mobileNumber!=null) {
+		   PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
+           request.setAttribute("patient",psd);
+		}
+		
+	}
+	
+	public void patientDahsboardData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//get patient data For patient profile
+		patientProfileSettingShowData(request,response);
+		String patientId=request.getParameter("id");
+		ArrayList<PatientAppointmentShowData> appointments =null; 
+		  
+		appointments = pdi.patientAppointmentGetData(patientId);
+
+		request.setAttribute("appointments", appointments);
+		
+		return;
+		
 		
 	}
 	

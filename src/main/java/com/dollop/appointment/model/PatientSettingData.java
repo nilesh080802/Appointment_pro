@@ -18,9 +18,16 @@ public class PatientSettingData {
 	private String zipCode;
 	private String country;
 	private String imagePath;
+	private String patientId;
 	
 	
 	
+	public String getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
 	public String getImagePath() {
 		return imagePath;
 	}

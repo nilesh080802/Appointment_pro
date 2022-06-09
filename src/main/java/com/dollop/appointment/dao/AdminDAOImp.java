@@ -40,33 +40,7 @@ public class AdminDAOImp {
 				  apd.setMobile(rs.getString("mobile"));
 				  
 				  
-				  //========This is for photo upload in database==========================
-				  
-					/*
-					 * Blob blob = rs.getBlob("photo");
-					 * 
-					 * InputStream inputstream = null; if(blob!=null) { inputstream =
-					 * blob.getBinaryStream(); // read the input stream...
-					 * 
-					 * } ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); byte[]
-					 * buffer = new byte[4096]; int bytesRead=-1;
-					 * 
-					 * while((bytesRead = inputstream.read(buffer)) != -1) {
-					 * outputStream.write(buffer,0,bytesRead);
-					 * 
-					 * } byte[] imageBytes = outputStream.toByteArray(); String base64Image =
-					 * Base64.getEncoder().encodeToString(imageBytes);
-					 * 
-					 * inputstream.close(); outputStream.close(); //-------here set the binary data
-					 * of image apd.setBase64Image(base64Image);
-					 * //====================================
-					 * 
-					 * 
-					 * patientList.add(apd);
-					 */
-//				apd.setLastVisit(rs.getString("lastVisit"));
-//				apd.setPaidAmout(rs.getString("paidAmount"));
-				
+				 
 			}
 			
 		} catch (Exception e) {
