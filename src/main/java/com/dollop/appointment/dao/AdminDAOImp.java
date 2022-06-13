@@ -43,6 +43,91 @@ public class AdminDAOImp {
 		
 	}
 	
+//	this method is for edit the admin profile data
+	
+	public void editAdminProfileData(AdminData ad)
+	{
+		String DML="UPDATE admindata SET firstName=? ,lastName=? , dateOfBirth=? , email=? , address=? , city=? , state=? , zipCode=? , country=?  where mobileNumber=? ";
+		
+		try {
+			
+			PreparedStatement ps= con.prepareStatement(DML);
+			
+			ps.setString(1, ad.getFirstName());
+			ps.setString(2,ad.getLastName());
+			ps.setString(3, ad.getDateOfBirth());
+			ps.setString(4, ad.getEmail());
+			ps.setString(5, ad.getAddress());
+			ps.setString(6, ad.getCity());
+			ps.setString(7, ad.getState());
+			ps.setString(8, ad.getZipCode());
+			ps.setString(9, ad.getCountry());
+			ps.setString(10, ad.getMobileNumber());
+			
+			ps.executeUpdate();
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//this method is for show Admin all data
+	
+	public AdminData getAdminData(String mobile)
+	{
+		 String DQL=" select * from admindata where mobileNumber = ?";
+		 System.out.println(mobile);
+		 
+			AdminData ad=new AdminData();
+		    try {
+		    	PreparedStatement ps=con.prepareStatement(DQL);
+		    	
+		    	ps.setString(1,mobile);
+		    	ResultSet rs=ps.executeQuery();
+		    	
+		    	if(rs.next())
+		    	{
+		    	
+		    		
+		    		
+                    ad.setFirstName(rs.getString("firstName"));
+                    System.out.println(rs.getString("firstName"));
+		    		
+		    		ad.setLastName(rs.getString("lastName")); 
+		    		
+		    		ad.setDateOfBirth(rs.getString("dateOfBirth"));
+		    		
+		    		ad.setEmail(rs.getString("email"));
+		    		
+		    		ad.setMobileNumber(rs.getString("mobileNumber")); 
+		    		
+		    		ad.setAddress(rs.getString("address")); 
+		    		
+		    		ad.setCity(rs.getString("city")); 
+		    		
+		    		ad.setState(rs.getString("state")); 
+		    		
+		    		ad.setZipCode(rs.getString("zipCode"));
+		    		
+		    		ad.setCountry(rs.getString("country"));
+		    		
+		    		
+		    				
+		    	}
+		    	
+		    	
+		    	
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    }
+		    return ad;
+		
+		
+	}
+	
 	
 	// this methos is for show all patient available in doctorprofilesetting table
 
@@ -69,6 +154,8 @@ public class AdminDAOImp {
 				  apd.setZipCode(rs.getString("zipCode"));
 				  apd.setCountry(rs.getString("country"));
 				  apd.setMobile(rs.getString("mobile"));
+				  
+				  patientList.add(apd);
 				 
 			}
 			
