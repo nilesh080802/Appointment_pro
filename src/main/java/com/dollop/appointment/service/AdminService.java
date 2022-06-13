@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AdminService {
 	AdminDAOImp adi=null;
+	
 		public AdminService()
 		{
 			adi=new AdminDAOImp();
@@ -34,8 +35,60 @@ public class AdminService {
 		rd.forward(request, response);
 	    	
 	}
+	public void showAdminData(HttpServletRequest request ,HttpServletResponse response )
+	{
+	    String mobile=request.getParameter("mobile");
+	    AdminData ad=new AdminData(); 
+	    ad= (AdminData) adi.getAdminData(mobile);
+	    request.setAttribute("adminData", ad);
+	    
+	    System.out.println(ad.getFirstName());
+		
+	}
 	
+//	this method is for edit the admin data 
+	public void editAdminData(HttpServletRequest request ,HttpServletResponse response)
+	{
+		AdminData ad=new AdminData();
 	
+		String firstName=request.getParameter("firstName");
+		String lastName=request.getParameter("lastName");
+		String dateOfBirth=request.getParameter("dateOfBirth");
+		String email=request.getParameter("email");
+		String mobileNumber=request.getParameter("mobileNumber");
+		String address=request.getParameter("address");
+		String city=request.getParameter("city");
+		String state=request.getParameter("state");
+		String zipCode=request.getParameter("zipCode");
+		String country=request.getParameter("country");
+		
+		firstName=firstName.trim();
+		lastName=lastName.trim();
+		dateOfBirth=dateOfBirth.trim();
+		email=email.trim();
+		mobileNumber=mobileNumber.trim();
+		address=address.trim();
+		city=city.trim();
+		state=state.trim();
+		zipCode=zipCode.trim();
+		country=country.trim();
+		
+		ad.setFirstName(firstName);
+		ad.setLastName(lastName);
+		ad.setDateOfBirth(dateOfBirth);
+		ad.setEmail(email);
+		ad.setMobileNumber(mobileNumber);
+		ad.setAddress(address);
+		ad.setCity(city);
+		ad.setState(state);
+		ad.setZipCode(zipCode);
+		ad.setCountry(country);
+
+		adi.editAdminProfileData(ad);
+		
+	}
+	
+//	this method is for admin registraion
 	public void adminRegistration(HttpServletRequest request , HttpServletResponse response)throws ServletException ,IOException
 	{
 		AdminData ad=new AdminData();
@@ -95,7 +148,7 @@ public class AdminService {
 
 
 
-
+// this method is for show the all doctors data
 public void showDoctorData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		AdminDAOImp adi = new AdminDAOImp();
@@ -109,7 +162,7 @@ public void showDoctorData(HttpServletRequest request, HttpServletResponse respo
 	    	
 	}
 	
-	
+//	this method is for show the patient profile 
 	public void editPatientProfileShow(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 	  
 		 
@@ -124,6 +177,8 @@ public void showDoctorData(HttpServletRequest request, HttpServletResponse respo
 	  
 	  
 	 }
+	
+//	this method is for update patient profile data
 	public void editPatinetProfileUpdate(HttpServletRequest request, HttpServletResponse response) {
 			
 			
