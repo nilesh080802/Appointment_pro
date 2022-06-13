@@ -73,9 +73,9 @@ public class LoginController extends HttpServlet {
 //				as.showPatientData(request,response);
 				
 //				as.showDoctorData(request,response);
+//				System.out.println(mobileNumber);
 				ls.adminLogin(request,response,mobileNumber,password);
-				RequestDispatcher rd = request.getRequestDispatcher("admin/login.jsp");
-				rd.forward(request, response);
+				
 			}
 			
 			
