@@ -62,8 +62,23 @@ public class AdminController extends HttpServlet {
 		case "editPatinetProfileUpdate":as.editPatinetProfileUpdate(request,response);break;
 		
 		case "register": as.adminRegistration(request,response); break;
-		default:
+		case "showAdminProfile" : as.showAdminData(request, response); 
 		
+		RequestDispatcher rdd=request.getRequestDispatcher("admin/profile.jsp");
+		rdd.forward(request, response);
+		
+		break;
+		case "editAdminData" : as.editAdminData(request,response);
+		
+		RequestDispatcher rd2=request.getRequestDispatcher("admin/profile.jsp");
+		rd2.forward(request, response);
+		break;
+		
+		
+		default:
+			RequestDispatcher rde=request.getRequestDispatcher("admin/index.jsp");
+			rde.forward(request, response);
+		 break;
 		
 		}
 		
