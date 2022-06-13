@@ -49,4 +49,14 @@
     <servlet-name>LoginController</servlet-name>
     <url-pattern>/LoginController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AppointmentController</display-name>
+    <servlet-name>AppointmentController</servlet-name>
+    <servlet-class>com.dollop.appointment.controller.AppointmentController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AppointmentController</servlet-name>
+    <url-pattern>/AppointmentController</url-pattern>
+  </servlet-mapping>
 </web-app>
