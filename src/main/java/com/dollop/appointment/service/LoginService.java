@@ -71,12 +71,13 @@ public class LoginService {
 					if (adi.verifyUser(mobileNumber, password)) {
 
 					session.setAttribute("mobileNumber",mobileNumber );
+//					System.out.println(mobileNumber);
 					
 					session.setAttribute("type","admin");
 					System.out.println("adminLoginsuccesfully");
-					
 					RequestDispatcher rd = request.getRequestDispatcher("admin/index.jsp");
 					rd.forward(request, response);
+					
 				
 					} else {
 						System.out.println("Admin Not Registred!!");
