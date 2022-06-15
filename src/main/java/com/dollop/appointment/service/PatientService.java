@@ -14,32 +14,32 @@ import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.model.UserData;
 
 
-public class PatientService {
+public class PatientService 
+{
 	PatientDAOImp  pdi=null;
 	UserDAOImp udi= null;
-	public PatientService() {
+	
+	//Constructor
+	public PatientService() 
+	{
 		udi= new UserDAOImp();
 		pdi=new PatientDAOImp();
 		
 	}
-	
-	
-	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{		
 		String mobileNumber=request.getParameter("mobile");
-		 PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
+		PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
 		 
-	 
-          request.setAttribute("patient",psd);
-		  RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
-		  rd.forward(request, response);
-		
+        request.setAttribute("patient",psd);
+		RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
+		rd.forward(request, response);		
 	}
 	
 	
-	public void patientProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public void patientProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{		
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String dateOfBirth = request.getParameter("dateOfBirth");
@@ -96,7 +96,7 @@ public class PatientService {
 		  psd.setFirstName(firstName); 
 		  psd.setLastName(lastName);
 		  psd.setDateOfBirth(dateOfBirth);
-		  psd.setAge(age);
+		  //psd.setAge(age);
 		  psd.setBloodGroup(bloodGroup);
 		  psd.setEmailId(emailId);
 		  psd.setMobile(mobile);

@@ -16,50 +16,55 @@ import com.dollop.appointment.service.DoctorService;
 /**
  * Servlet implementation class DoctorController
  */
-public class DoctorController extends HttpServlet {
+public class DoctorController extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
 
 	/**
 	* @see HttpServlet#HttpServlet()
 	*/
 	DoctorService ds = null;
-	public DoctorController() {
-		ds = new DoctorService();
 	
-
-	// TODO Auto-generated constructor stub
+	public DoctorController() 
+	{
+		ds = new DoctorService();
 	}
 
 	/**
 	* @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	*      response)
 	*/
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	throws ServletException, IOException {
-	// TODO Auto-generated method stub
-
-	doPost(request, response);
-	response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+	{
+		doPost(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	* @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	*      response)
 	*/
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-	String action=request.getParameter("action");
-	switch(action)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
 	{
-	   case "register":  ds.doctorRegistration(request,response);break;
-
-	   case "profileSettingInsData": ds.doctorProfileSettingInsData(request,response);break;
-
-	}
-	// TODO Auto-generated method stub
-
-	}
-
+		String action = request.getParameter("action");
+		
+		System.out.println(action);
+		switch(action)
+		{
+		   case "register":  
+  			   ds.doctorRegistration(request,response);
+			   break;
 	
-
-
+		   case "profileSettingInsData": 
+			   ds.doctorProfileSettingInsData(request,response);
+			   break;
+		   case "getDoctorDetails" :
+			   
+			   DoctorSettingData doctor = ds.getDoctor(request,response);
+			   request.setAttribute("doctor", doctor);
+			   RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
+			   rd.forward(request, response);
+			   break;
+		}
+	}
 }

@@ -136,7 +136,7 @@
 												</a>
 											</li>
 											<li>
-												<a href="doctor-profile-settings.jsp">
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}">>
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>
