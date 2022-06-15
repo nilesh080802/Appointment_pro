@@ -29,19 +29,13 @@
 	</head>
 	<body>
 	<!--Manage session -->
-		  <%if(session.getAttribute("type") == "doctor"){ %>
-			
-			<% response.sendRedirect("doctor-dashboard.jsp");%>
-			
-			<%}else if(session.getAttribute("type") == "patient") {%>
-			 
-			 <% response.sendRedirect("patient-dashboard.jsp");%>
-			
-			<%}else if(session.getAttribute("type") == "admin") {%>
-			 
-			 <% response.sendRedirect("admin/index.jsp");%>
-			
-			<%}%>
+		
+		<%String mobileNumber=(String)session.getAttribute("mobileNumber");%>	
+		
+		<% if(session.getAttribute("mobileNumber")==null){ %>
+		
+		<% response.sendRedirect("login.jsp"); %>
+		<%} %>
 		<!--Manage session end -->
 	
 		<!-- Main Wrapper -->
@@ -255,7 +249,7 @@
 							
 							<!-- Submit Section -->
 							<div class="submit-section proceed-btn text-right">
-								<a href="checkout.jsp" class="btn btn-primary submit-btn">Proceed to Pay</a>
+								<a href="${pageContext.request.contextPath}/PatientController?action=Booking&mobileNumber=${mobileNumber}" class="btn btn-primary submit-btn">Proceed to Pay</a>
 							</div>
 							<!-- /Submit Section -->
 							

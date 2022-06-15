@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import com.dollop.appointment.service.LoginService;
 /**
  * Servlet implementation class LoginController
  */
+
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -45,12 +47,12 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String action=request.getParameter("action");
-	        System.out.println(action+"   :main action");
+	     //   System.out.println(action+"   :main action");
 	        
 	        
 		String mobileNumber = request.getParameter("mobileNumber");
 		String password = request.getParameter("password");
-		if(mobileNumber!=null || password!=null) {
+		if(mobileNumber!=null && password!=null) {
 			mobileNumber = mobileNumber.trim();
 			password = password.trim();
 		}
@@ -71,13 +73,16 @@ public class LoginController extends HttpServlet {
 			}
 			
 			
-		} else {
-			System.out.println(action+"   :main action else");
-			if(action.equals("userLogin")) {
-					ls.userLogin(request,response,mobileNumber,password);
-			}else if(action.equals("adminLogin")) {
-					ls.adminLogin(request,response,mobileNumber,password);
-			}else if(action.equals("logout")) {
+		} 
+		else {
+				//System.out.println(action+"   :main action else");
+				if(action.equals("userLogin")) {
+						ls.userLogin(request,response,mobileNumber,password);
+				}
+				else if(action.equals("adminLogin")) {
+						ls.adminLogin(request,response,mobileNumber,password);
+				}
+				else if(action.equals("logout")) {
 				
 				System.out.println(action+"   :main action logout");
 					session.invalidate();

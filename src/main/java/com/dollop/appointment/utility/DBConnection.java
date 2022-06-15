@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	private static String jdbcUrl = "jdbc:mysql://localhost:3306/apointment";
+	private static String jdbcUrl = "jdbc:mysql://localhost:3306/appointment";
 	private static String userName="root";
 	private static String password="";
 	
@@ -16,16 +16,17 @@ public class DBConnection {
 		if(connection!=null) {
 			
 			return connection;
-		}else {
+		}
+		else {
 			
 			try {
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 				connection= DriverManager.getConnection(jdbcUrl,userName,password);
 				
-			} catch (SQLException e) {
+			 } catch (SQLException e) {
 				e.printStackTrace();
 				// TODO: handle exception
-			}catch(ClassNotFoundException  e) {
+			 }catch(ClassNotFoundException  e) {
 				e.printStackTrace();
 			}
 		}

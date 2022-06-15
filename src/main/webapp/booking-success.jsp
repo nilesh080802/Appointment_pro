@@ -1,4 +1,9 @@
 <!DOCTYPE html> 
+<%@page import="com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream"%>
+<%@page import="com.dollop.appointment.model.PatientSettingData"%>
+<%@page import="com.dollop.appointment.model.PaymentSettingData"%>
+<%@page import="com.dollop.appointment.model.DoctorSettingData"%>
+
 <html lang="en">
 	
 <!-- doccure/booking-success.jsp  30 Nov 2019 04:12:16 GMT -->
@@ -30,28 +35,10 @@
 	<body>
 
 	<!--Manage session -->
-		  <%if(session.getAttribute("type") == "doctor"){ %>
-			
-			<% response.sendRedirect("doctor-dashboard.jsp");%>
-			
-			<%}else if(session.getAttribute("type") == "patient") {%>
-			 
-			 <% response.sendRedirect("patient-dashboard.jsp");%>
-			
-			<%}else if(session.getAttribute("type") == "admin") {%>
-			 
-			 <% response.sendRedirect("admin/index.jsp");%>
-			
-			<%}%>
 		<!--Manage session end -->
-	
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
 		
-			<!-- Header -->
-			<jsp:include page="footer.jsp"/>
-			<!-- /Header -->
-			
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
 				<div class="container-fluid">
@@ -76,15 +63,15 @@
 				
 					<div class="row justify-content-center">
 						<div class="col-lg-6">
-						
+						   
 							<!-- Success Card -->
 							<div class="card success-card">
 								<div class="card-body">
 									<div class="success-cont">
 										<i class="fas fa-check"></i>
-										<h3>Appointment booked Successfully!</h3>
-										<p>Appointment booked with <strong>Dr. Darren Elder</strong><br> on <strong>12 Nov 2019 5:00PM to 6:00PM</strong></p>
-										<a href="invoice-view.jsp" class="btn btn-primary view-inv-btn">View Invoice</a>
+										<h3>Appointment booked Successfully!</h3> 
+									<p>Appointment booked with <strong>Dr.${dst.getFirstName()} ${dst.getLastName()}</strong><br> on <strong>${pmd.getPaymentDate().substring(0,19)}</strong></p> 
+									<a href="${pageContext.request.contextPath}/PatientController?action=view_invoice&doctorId=${pmd.getDoctorId()}&invoiceId=${pmd.getInvoiceId()}&reciptNumber=${pmd.getReciptNumber()}&patientId=${pmd.getPatientId()}" class="btn btn-primary view-inv-btn">View Invoice</a>
 									</div>
 								</div>
 							</div>
@@ -105,6 +92,7 @@
 		<!-- /Main Wrapper -->
 	  
 		<!-- jQuery -->
+		
 		<script src="assets/js/jquery.min.js"></script>
 		
 		<!-- Bootstrap Core JS -->

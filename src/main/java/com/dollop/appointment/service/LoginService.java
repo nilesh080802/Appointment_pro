@@ -24,19 +24,23 @@ public class LoginService {
 	}
 	public void userLogin(HttpServletRequest request, HttpServletResponse response,String mobileNumber,String password) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if (udi.verifyPassword(password)) {
 			
 			if (udi.verifyUser(mobileNumber, password)) {
-
+				
+				Integer patientId=udi.getPatientId(mobileNumber);
 				session.setAttribute("mobileNumber",mobileNumber );
+				session.setAttribute("patientId", patientId);
+			
 				if (udi.identifyUser(mobileNumber)) {
 			
 					session.setAttribute("type","doctor");
 					
 					RequestDispatcher rd = request.getRequestDispatcher("doctor-dashboard.jsp");
 					rd.forward(request, response);
-				} else {
+				} 
+				else{
 
 					session.setAttribute("type","patient");
 					

@@ -70,8 +70,8 @@
 										</div>
 										<div class="col-md-6">
 											<p class="invoice-details">
-												<strong>Order:</strong> #00124 <br>
-												<strong>Issued:</strong> 20/07/2019
+												<strong>Order:</strong>#${pmd.getOrderId()} <br>
+												<strong>Issued:</strong>${pmd.getInvoiceDate()} 
 											</p>
 										</div>
 									</div>
@@ -84,9 +84,9 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Invoice From</strong>
 												<p class="invoice-details invoice-details-two">
-													Dr. Darren Elder <br>
-													806  Twin Willow Lane, Old Forge,<br>
-													Newyork, USA <br>
+												  Dr.${dst.getFirstName()} ${dst.getLastName()} <br>
+											      ${dst.getAddressLine1()} (${dst.getPostalCode()}),${dst.getCity()}<br>
+												  ${dst.getState()},${dst.getCountry()} <br>
 												</p>
 											</div>
 										</div>
@@ -94,9 +94,9 @@
 											<div class="invoice-info invoice-info2">
 												<strong class="customer-text">Invoice To</strong>
 												<p class="invoice-details">
-													Walter Roberson <br>
-													299 Star Trek Drive, Panama City, <br>
-													Florida, 32405, USA <br>
+													${psd.getFirstName()} ${psd.getLastName()}  <br>
+													${psd.getAddress()} (${psd.getZipCode()}),${psd.getCity()} <br>
+												    ${psd.getState()},${psd.getCountry()} <br>
 												</p>
 											</div>
 										</div>
@@ -111,9 +111,9 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Payment Method</strong>
 												<p class="invoice-details invoice-details-two">
-													Debit Card <br>
-													XXXXXXXXXXXX-2541 <br>
-													HDFC Bank<br>
+													${pmd.getPaymentType()}<br>
+													XXXX XXXX XXXX ${pmd.getCardNumber().substring(15)} <br>
+													by ${pmd.getCardName()} card<br>
 												</p>
 											</div>
 										</div>
@@ -139,14 +139,14 @@
 														<tr>
 															<td>General Consultation</td>
 															<td class="text-center">1</td>
-															<td class="text-center">$0</td>
-															<td class="text-right">$100</td>
+															<td class="text-center">Rs0</td>
+															<td class="text-right">Rs100</td>
 														</tr>
 														<tr>
 															<td>Video Call Booking</td>
 															<td class="text-center">1</td>
-															<td class="text-center">$0</td>
-															<td class="text-right">$250</td>
+															<td class="text-center">Rs0</td>
+															<td class="text-right">Rs250</td>
 														</tr>
 													</tbody>
 												</table>
@@ -158,7 +158,7 @@
 													<tbody>
 													<tr>
 														<th>Subtotal:</th>
-														<td><span>$350</span></td>
+														<td><span>Rs350</span></td>
 													</tr>
 													<tr>
 														<th>Discount:</th>
@@ -166,7 +166,7 @@
 													</tr>
 													<tr>
 														<th>Total Amount:</th>
-														<td><span>$315</span></td>
+														<td><span>Rs${pmd.getAmount()}</span></td>
 													</tr>
 													</tbody>
 												</table>

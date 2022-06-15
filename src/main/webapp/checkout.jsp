@@ -1,7 +1,11 @@
 <!DOCTYPE html> 
 <html lang="en">
-	
+
 <!-- doccure/checkout.jsp  30 Nov 2019 04:12:16 GMT -->
+<%@ page import = "com.dollop.appointment.dao.PatientDAOImp"%>
+<%@ page import = "com.dollop.appointment.model.PatientSettingData"%>
+
+
 <head>
 		<meta charset="utf-8">
 		<title>Doccure</title>
@@ -52,50 +56,58 @@
 					</div>
 				</div>
 			</div>
-			<!-- /Breadcrumb -->
+			<!-- /Breadcrumb -->  
 			
 			<!-- Page Content -->
 			<div class="content">
 				<div class="container">
-
 					<div class="row">
 						<div class="col-md-7 col-lg-8">
 							<div class="card">
 								<div class="card-body">
-								
+								     
+											<%if(request.getAttribute("PaymentError")!=null){ %>
+									          <p id="alert" class="alert alert-danger " role="alert">		
+											<%= request.getAttribute("PaymentError") %>
+											 </p>
+											<%}else if(request.getAttribute("signup")!=null){%>
+												<p id="alert" class="alert alert-success " role="alert">
+												
+											<%=request.getAttribute("signup") %>
+											</p>
+											<%} %>
 									<!-- Checkout Form -->
-									<form action="https://dreamguys.co.in/demo/doccure/booking-success.jsp">
-									
 										<!-- Personal Information -->
+									<form action="${pageContext.request.contextPath}/PaymentController?action=payment" method="post">
 										<div class="info-widget">
 											<h4 class="card-title">Personal Information</h4>
 											<div class="row">
 												<div class="col-md-6 col-sm-12">
 													<div class="form-group card-label">
 														<label>First Name</label>
-														<input class="form-control" type="text">
+														<input class="form-control" type="text" name="firstName" value="${patient.getFirstName() }">
 													</div>
 												</div>
 												<div class="col-md-6 col-sm-12">
 													<div class="form-group card-label">
 														<label>Last Name</label>
-														<input class="form-control" type="text">
+														<input class="form-control" type="text" name="lastName" value="${patient.getLastName() }">
 													</div>
 												</div>
 												<div class="col-md-6 col-sm-12">
 													<div class="form-group card-label">
 														<label>Email</label>
-														<input class="form-control" type="email">
+														<input class="form-control" type="email" name="email" value="${patient.getEmailId() }">
 													</div>
 												</div>
 												<div class="col-md-6 col-sm-12">
 													<div class="form-group card-label">
 														<label>Phone</label>
-														<input class="form-control" type="text">
+														<input class="form-control" type="text" name="mobileNumber" value="${patient.getMobile() }">
 													</div>
 												</div>
 											</div>
-											<div class="exist-customer">Existing Customer? <a href="#">Click here to login</a></div>
+											<div class="exist-customer">Existing Customer? <a href="login.jsp">Click here to login</a></div>
 										</div>
 										<!-- /Personal Information -->
 										
@@ -105,7 +117,7 @@
 											<!-- Credit Card Payment -->
 											<div class="payment-list">
 												<label class="payment-radio credit-card-option">
-													<input type="radio" name="radio" checked>
+													<input type="radio" name="paymentType" value="CreditCard" checked>
 													<span class="checkmark"></span>
 													Credit card
 												</label>
@@ -113,41 +125,43 @@
 													<div class="col-md-6">
 														<div class="form-group card-label">
 															<label for="card_name">Name on Card</label>
-															<input class="form-control" id="card_name" type="text">
+															<input class="form-control" id="card_name" type="text" name="cardName">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group card-label">
 															<label for="card_number">Card Number</label>
-															<input class="form-control" id="card_number" placeholder="1234  5678  9876  5432" type="text">
+															<input class="form-control" id="card_number" name="cardNumber" placeholder="1234  5678  9876  5432" type="text">
 														</div>
 													</div>
 													<div class="col-md-4">
 														<div class="form-group card-label">
 															<label for="expiry_month">Expiry Month</label>
-															<input class="form-control" id="expiry_month" placeholder="MM" type="text">
+															<input class="form-control" id="expiry_month" name="expiryMonth" placeholder="MM" type="text">
 														</div>
 													</div>
 													<div class="col-md-4">
 														<div class="form-group card-label">
 															<label for="expiry_year">Expiry Year</label>
-															<input class="form-control" id="expiry_year" placeholder="YY" type="text">
+															<input class="form-control" id="expiry_year" name="expiryYear" placeholder="YY" type="text">
 														</div>
 													</div>
 													<div class="col-md-4">
 														<div class="form-group card-label">
 															<label for="cvv">CVV</label>
-															<input class="form-control" id="cvv" type="text">
+															<input class="form-control" id="cvv" name="cvv" type="text">
 														</div>
 													</div>
 												</div>
 											</div>
+											        <input class="form-control" id="amount" name="amount" type="hidden" value="160">
+											        <input class="form-control" id="doctor" name="doctorId" type="hidden" value="1">
 											<!-- /Credit Card Payment -->
 											
 											<!-- Paypal Payment -->
 											<div class="payment-list">
 												<label class="payment-radio paypal-option">
-													<input type="radio" name="radio">
+													<input type="radio" name="paymentType" value="Paypal">
 													<span class="checkmark"></span>
 													Paypal
 												</label>

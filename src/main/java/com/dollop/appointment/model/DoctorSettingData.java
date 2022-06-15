@@ -2,7 +2,9 @@ package com.dollop.appointment.model;
 
 public class DoctorSettingData {
 	
+	
 	private String firstName;
+	private Integer  doctorId;
 	private String lastName;
 	private String mobileNumber;
 	private String gender;
@@ -32,6 +34,14 @@ public class DoctorSettingData {
 	private String [] registration;
 	private String [] registrationYear;
 
+	
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
+	
 	public String getFirstName() {
 	return firstName;
 	}

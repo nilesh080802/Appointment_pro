@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dollop.appointment.service.PatientService;
+import com.dollop.appointment.service.PaymentService;
 
 /**
  * Servlet implementation class PatientController
@@ -22,6 +23,7 @@ public class PatientController extends HttpServlet {
      */
 	
 	PatientService ps =null;
+	
     public PatientController() {
     	ps=new PatientService();
     	
@@ -51,8 +53,12 @@ public class PatientController extends HttpServlet {
 		
 		case "profileSettingInsData": ps.patientProfileSettingInsData(request,response);break;
 		
-		case "profileSettingShowData": ps.patientProfileSettingShowData(request,response);break;
+		case "profileSettingShowData": ps.patientProfileSettingInsData(request,response);break;
 		
+		case "Booking": ps.BookingData(request,response);break;
+		
+		case "view_invoice": ps.getInvoiceData(request,response);
+			               
 		
 		default :
 		
