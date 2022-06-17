@@ -54,7 +54,6 @@ static Connection con=null;
 			doctor = getDoctorAwardDetails(doctorId,doctor);
 			doctor = getDoctorMembershipDetails(doctorId, doctor);
 			doctor = getDoctorRegistrationDetails(doctorId, doctor);
-			System.out.println("Return");
 			return doctor;
 		}
 		catch(Exception e)
@@ -112,9 +111,10 @@ static Connection con=null;
 			ArrayList<String> fromYear = new ArrayList<String>();
 			ArrayList<String> toYear = new ArrayList<String>();
 			ArrayList<String> designation = new ArrayList<String>();
+			
 			while(rs.next())
 			{
-				hospitalId.add(rs.getInt("doctorId"));
+				hospitalId.add(rs.getInt("hospitalId"));
 				hospitalName.add(rs.getString("hospitalName"));
 				fromYear.add(rs.getString("fromYear"));
 				toYear.add(rs.getString("toYear"));
@@ -218,18 +218,22 @@ static Connection con=null;
 		}
 		return doctor;
 	}
-//---------------------------------------------------------------------------------------------------------------------
+//*************************************************************************************************************************************************
 	
 	public boolean doctorProfileInsData(DoctorSettingData dsd,int doctorId)
 	{
 		boolean b1 = insertBasicInformation(dsd,doctorId);		
 		boolean b2 = insertEducationDetails(dsd,doctorId);		
-		boolean b3 = insertDoctorExperience(dsd, doctorId);
-		boolean b4 = insertDoctorAwards(dsd, doctorId);
-		boolean b5 = insertDoctorMembership(dsd, doctorId);
-		boolean b6 = insertDoctorRegistration(dsd, doctorId);
 		
-		if(b1 == true && b2 == true)
+		int i3 = insertDoctorExperience(dsd, doctorId);
+		
+		System.out.println(i3);
+		
+		int i4 = insertDoctorAwards(dsd, doctorId);
+		int i5 = insertDoctorMembership(dsd, doctorId);
+		int i6 = insertDoctorRegistration(dsd, doctorId);
+		
+		if(b1 == true && b2 == true && (i3==-1 || i3 == 1) && (i4==-1 || i4==1) && (i5==-1 || i5==1) && (i6==-1 || i6==1))
 		{
 			System.out.println("Data Insert Succesfully");
 			return true;
@@ -244,6 +248,9 @@ static Connection con=null;
 	public boolean insertBasicInformation(DoctorSettingData dsd,int doctorId)
 	{
 		String dml = "UPDATE doctorprofilesetting SET firstName=?,lastName=?,mobileNumber=?,gender=?,dateOfBirth=?,biography=?,clinicName=?,clinicAddress=?,addressLine1=?,addressLine2=?,city=?,state=?,country=?,postalCode=?,pricing=?,services=?,specialist=?,imagePath=? WHERE doctorId=?";
+		
+		System.out.println("Pricing : "+dsd.getPricing());
+		
 		try
 		{
 			PreparedStatement ps= (PreparedStatement) con.prepareStatement(dml);
@@ -268,8 +275,8 @@ static Connection con=null;
 			ps.setString(18, dsd.getImagePath());
 			
 			ps.setInt(19, doctorId);
+			
 			int rowCount = ps.executeUpdate();
-//			System.out.println(rowCount);
 			if(rowCount == 1)
 				return true;
 		}
@@ -284,18 +291,18 @@ static Connection con=null;
 	{
 		String dml = null;	
 		int rowCount = 0;
+		
 		ArrayList<Integer> degreeId = dsd.getDegreeId();
 		ArrayList<String> degree = dsd.getDegree();
 		ArrayList<String> college = dsd.getCollege();
 		ArrayList<String> yearCompletetion = dsd.getYearCompletetion();
-			
+		
 		for(int i=0;i<degree.size();i++)
 		{	
-			if(degreeId.size() == degree.size())
+			if(i<degreeId.size())
 			{
 			 	if(isDoctorDetailsExist("doctoreducation",doctorId,"degreeId",degreeId.get(i)))
 				{	
-//			 		System.out.println("Inside Condition True");
 					dml = "UPDATE doctorEducation SET degree= ?,collage=?,yearCompletetion=? WHERE doctorId=? AND degreeId =?";
 					try
 					{
@@ -309,7 +316,7 @@ static Connection con=null;
 					}
 					catch(Exception e)
 					{
-						e.printStackTrace();
+						System.out.println(e);
 					}	
 				}	
 			}	
@@ -337,7 +344,7 @@ static Connection con=null;
 			return false;
 	}
 	
-	public boolean insertDoctorExperience(DoctorSettingData dsd, int doctorId)
+	public int insertDoctorExperience(DoctorSettingData dsd, int doctorId)
 	{
 		String dml = null;	
 		int rowCount = 0;
@@ -347,15 +354,14 @@ static Connection con=null;
 		ArrayList<String> toYear = dsd.getTo();
 		ArrayList<String> designation = dsd.getDesignation();
 		
-		if(hospitalName != null && fromYear != null && toYear != null && designation != null)
+		if(!(hospitalName.get(0).isEmpty() && fromYear.get(0).isEmpty() && toYear.get(0).isEmpty() && designation.get(0).isEmpty() && hospitalName.size()==1))
 		{
 			for(int i=0;i<hospitalName.size();i++)
-			{	
-				if(hospitalId.size() == hospitalName.size())
+			{
+				if(i<hospitalId.size())
 				{
 				 	if(isDoctorDetailsExist("doctorexperience",doctorId,"hospitalId",hospitalId.get(i)))
 					{	
-				 		System.out.println("Inside Condition True");
 						dml = "UPDATE doctorexperience SET hospitalName= ?,fromYear=?,toYear=?,designation=? WHERE doctorId=? AND hospitalId =?";
 						try
 						{
@@ -396,32 +402,31 @@ static Connection con=null;
 				}					
 			}		
 			if(rowCount>0)
-				return true;
+				return 1;
 			else
-				return false;
+				return 0;
 		}
 		else
-			return false;
+			return -1;
 	}
 	
-	public boolean insertDoctorAwards(DoctorSettingData dsd, int doctorId)
+	public int insertDoctorAwards(DoctorSettingData dsd, int doctorId)
 	{
 		String dml = null;	
 		int rowCount = 0;
 		ArrayList<Integer> awardId = dsd.getAwardId();
 		ArrayList<String> awardName = dsd.getAward();
 		ArrayList<String> awardYear = dsd.getAwardYear();
-		
-		if(awardName != null && awardYear != null)
+				 
+		if(!(awardName.get(0).isEmpty() && awardYear.get(0).isEmpty() && awardName.size()==1))
 		{
 			for(int i=0;i<awardName.size();i++)
 			{	
-				if(awardId.size() == awardName.size())
+				if(i<awardId.size())
 				{
 				 	if(isDoctorDetailsExist("doctoraward",doctorId,"awardId",awardId.get(i)))
 					{	
-				 		System.out.println("Inside Condition True");
-						dml = "UPDATE doctoraward SET award= ?,awardYear=?,WHERE doctorId=? AND awardId =?";
+				 		dml = "UPDATE doctoraward SET award= ?,awardYear=? WHERE doctorId=? AND awardId =?";
 						try
 						{
 							PreparedStatement ps = con.prepareStatement(dml);
@@ -431,6 +436,7 @@ static Connection con=null;
 							ps.setInt(4, awardId.get(i));
 							
 							rowCount = ps.executeUpdate();
+							System.out.println("Row Count Value : "+rowCount);
 						}
 						catch(Exception e)
 						{
@@ -457,31 +463,30 @@ static Connection con=null;
 				}					
 			}		
 			if(rowCount>0)
-				return true;
+				return 1;
 			else
-				return false;
+				return 0;
 		}
 		else
-			return false;
+			return -1;
 	}
 	
-	public boolean insertDoctorMembership(DoctorSettingData dsd, int doctorId)
+	public int insertDoctorMembership(DoctorSettingData dsd, int doctorId)
 	{
 		String dml = null;	
 		int rowCount = 0;
-		ArrayList<Integer> membershipId = dsd.getAwardId();
-		ArrayList<String> membershipName = dsd.getAward();
+		ArrayList<Integer> membershipId = dsd.getMembershipId();
+		ArrayList<String> membershipName = dsd.getMemberships();
 		
-		if(membershipName != null)
+		if(!(membershipName.get(0).isEmpty() && membershipName.size()==1))
 		{
 			for(int i=0;i<membershipName.size();i++)
 			{	
-				if(membershipId.size() == membershipName.size())
+				if(i<membershipId.size())
 				{
-				 	if(isDoctorDetailsExist("doctormemberships",doctorId,"membershipId",membershipId.get(i)))
+					if(isDoctorDetailsExist("doctormemberships",doctorId,"membershipId",membershipId.get(i)))
 					{	
-				 		System.out.println("Inside Condition True");
-						dml = "UPDATE doctormemberships SET membership=?WHERE doctorId=? AND membershipId=?";
+						dml = "UPDATE doctormemberships SET membership=? WHERE doctorId=? AND membershipId=?";
 						try
 						{
 							PreparedStatement ps = con.prepareStatement(dml);
@@ -515,15 +520,15 @@ static Connection con=null;
 				}					
 			}		
 			if(rowCount>0)
-				return true;
+				return 1;
 			else
-				return false;
+				return 0;
 		}
 		else
-			return false;
+			return -1;
 	}
 	
-	public boolean insertDoctorRegistration(DoctorSettingData dsd, int doctorId)
+	public int insertDoctorRegistration(DoctorSettingData dsd, int doctorId)
 	{
 		String dml = null;	
 		int rowCount = 0;
@@ -531,16 +536,15 @@ static Connection con=null;
 		ArrayList<String> registration = dsd.getRegistration();
 		ArrayList<String> registrationYear = dsd.getRegistrationYear();
 		
-		if(registration != null && registrationYear != null)
+		if(!(registration.get(0).isEmpty() && registrationYear.get(0).isEmpty() && registration.size()==1))
 		{
 			for(int i=0;i<registration.size();i++)
 			{	
-				if(registrationId.size() == registration.size())
+				if(i<registrationId.size())
 				{
-				 	if(isDoctorDetailsExist("doctorregistrations",doctorId,"membershipId",registrationId.get(i)))
+				 	if(isDoctorDetailsExist("doctorregistrations",doctorId,"registrationId",registrationId.get(i)))
 					{	
-//				 		System.out.println("Inside Condition True");
-						dml = "UPDATE doctorregistrations SET registration,year=? WHERE doctorId=? AND registrationId=?";
+						dml = "UPDATE doctorregistrations SET registration=?,year=? WHERE doctorId=? AND registrationId=?";
 						try
 						{
 							PreparedStatement ps = con.prepareStatement(dml);
@@ -559,12 +563,12 @@ static Connection con=null;
 				}	
 				else
 				{
-					dml = "INSERT INTO doctorregistrations(registrations,year,doctorId) VALUES(?,?,?)";
+					dml = "INSERT INTO doctorregistrations(registration	,year,doctorId) VALUES(?,?,?)";
 					try
 					{
 						PreparedStatement ps = con.prepareStatement(dml);
 						ps.setString(1, registration.get(i));
-						ps.setString(i,registrationYear.get(i));
+						ps.setString(2,registrationYear.get(i));
 						ps.setInt(3, doctorId);
 						
 						rowCount = ps.executeUpdate();
@@ -576,18 +580,17 @@ static Connection con=null;
 				}					
 			}		
 			if(rowCount>0)
-				return true;
+				return 1;
 			else
-				return false;
+				return 0;
 		}
 		else
-			return false;
+			return -1;
 	}
 	
 	public boolean isDoctorDetailsExist(String tableName,int doctorId,String tableIdName,int tableId)
 	{
 		String dql = "SELECT * FROM "+tableName+" WHERE doctorId = ? AND "+tableIdName+" = ?";
-		System.out.println("String : "+dql);
 		try
 		{
 			PreparedStatement ps = con.prepareStatement(dql);
@@ -595,6 +598,7 @@ static Connection con=null;
 			ps.setInt(2, tableId);
 			
 			ResultSet rs = ps.executeQuery();
+
 			if(rs.next())
 				return true;
 		}

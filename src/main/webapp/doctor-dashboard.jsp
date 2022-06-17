@@ -136,7 +136,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}">>
+											<!-- <a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}">> -->
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails">
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>

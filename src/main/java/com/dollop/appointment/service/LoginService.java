@@ -41,8 +41,7 @@ public class LoginService
 				} 
 				else 
 				{
-					session.setAttribute("type","patient");
-					
+					session.setAttribute("type","patient");					
 					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");
 					rd.forward(request, response);
 				}

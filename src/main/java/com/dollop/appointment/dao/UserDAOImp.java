@@ -7,17 +7,15 @@ import java.sql.ResultSet;
 import com.dollop.appointment.model.UserData;
 import com.dollop.appointment.utility.DBConnection;
 
-public class UserDAOImp {
-
-
+public class UserDAOImp 
+{
 	static Connection con=null;
 	
 	public UserDAOImp() 
 	{		
 		con= DBConnection.openConnection();
 	}
-	
-	
+		
 	public void	addUserData(UserData ud)  
 	{
 		//this method for add user into database
@@ -62,9 +60,8 @@ public class UserDAOImp {
 	}
 	
 	public boolean identifyUser(String mobileNumber) 
-	{
-		
-	//This method for identify user ->is user doctor or patient
+	{		
+		//This method for identify user ->is user doctor or patient
 		String dql = "select type from userdata where mobileNumber=?";
 		try 
 		{			
@@ -116,6 +113,7 @@ public class UserDAOImp {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	public boolean verifyPassword( String password) {
 		//this method for verify user . user is registerd or not
 //		System.out.println(mobileNumber+"  "+password);

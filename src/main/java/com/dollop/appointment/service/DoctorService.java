@@ -31,7 +31,7 @@ public class DoctorService
 		ddi = new DoctorDAOImp();
 	}
 	
-	public void doctorRegistration(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	public boolean doctorRegistration(HttpServletRequest request, HttpServletResponse response)
 	{
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
@@ -46,8 +46,7 @@ public class DoctorService
 		if (fname == "" || lname == "" || mobileNumber == "" || password == "") 
 		{
 			request.setAttribute("loginError", "Please Enter details !!!!!!");
-			RequestDispatcher rd = request.getRequestDispatcher("doctor-register.jsp");
-			rd.forward(request, response);
+			return false;
 		} 
 		else if (isValid(mobileNumber)) 
 		{
@@ -61,22 +60,26 @@ public class DoctorService
 			udi.addUserData(ud);
 			request.setAttribute("signup", "SignUp Successfully!!!!");
 			request.setAttribute("mobile", mobileNumber);
-			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-			rd.forward(request, response);
+			return true;
 		} 
 		else 
 		{
 			request.setAttribute("loginError", "Please Enter Valid mobile number !!!!!!");
-			RequestDispatcher rd = request.getRequestDispatcher("doctor-register.jsp");
-			rd.forward(request, response);
+			return false;
 		}
 	}
 
 	public DoctorSettingData getDoctor(HttpServletRequest request,HttpServletResponse response)throws ServletException, IOException
 	{
-		String mobileNumber = (String)request.getParameter("mobile");
-		int doctorId = (Integer.parseInt(request.getParameter("doctorId")));
-		System.out.println("Doctor Mobile Number : "+mobileNumber+" Doctor Id : "+doctorId);
+//		String mobileNumber = (String)request.getParameter("mobile");
+//		int doctorId = (Integer.parseInt(request.getParameter("doctorId")));
+		HttpSession session = request.getSession(false);
+		int doctorId = (Integer)session.getAttribute("doctorId");
+		String mobileNumber = (String)session.getAttribute("mobileNumber");
+		
+//		System.out.println("Doctor Id in Service : "+doctorId);
+//		System.out.println("Doctor Mobile in Service : "+mobileNumber);
+		
 		return ddi.getDoctor(mobileNumber, doctorId);
 	}
 	
@@ -85,52 +88,58 @@ public class DoctorService
 	{
 		HttpSession session = request.getSession(false);
 		int doctorId = (Integer)session.getAttribute("doctorId");
-		System.out.println("Doctor Service doctorId : "+doctorId);
-		//Get Basic Information of Doctor
-		DoctorSettingData dpsd = getBasicInfo(request, response);
+		DoctorSettingData dpsd = new DoctorSettingData();
 		
-		//Get Education Details of Doctor
-		dpsd = getEducationInfo(request,response,dpsd);
-
-		//Get Experience Details of Doctor
-		dpsd = getDoctorExperience(request, response, dpsd);
-
-		//Get Award Details of Doctor
-		dpsd = getDoctorAwards(request, response, dpsd);
-		
-		//Get Membership Details of Doctor
-		dpsd = getDoctorMemberships(request, response, dpsd);
-		
-		//Get Registration Details of Doctor
-		dpsd = getDoctorRegistrations(request, response, dpsd);
-		
-//		System.out.println("Going Doctor DAO");
-		if(ddi.doctorProfileInsData(dpsd,doctorId))
+		//Get Basic Information of Doctor		
+		if(getBasicInfo(dpsd,request, response))
 		{
-			request.setAttribute("successMsg", "Update Succesfully");
-			RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
-			rd.forward(request, response);
+			//Get Education Details of Doctor
+			if(getEducationInfo(request,response,dpsd))
+			{
+				//Get Experience Details of Doctor
+				getDoctorExperience(request, response, dpsd);
+				
+				//Get Award Details of Doctor
+				getDoctorAwards(request, response, dpsd);
+				
+				//Get Membership Details of Doctor
+				getDoctorMemberships(request, response, dpsd);
+				
+				//Get Registration Details of Doctor
+				getDoctorRegistrations(request, response, dpsd);;
+			
+				if(ddi.doctorProfileInsData(dpsd,doctorId))
+				{
+					request.setAttribute("successMessage", "Updation Succesfully");
+//					return true;
+				}
+				else
+				{
+					request.setAttribute("failedMsg", "Updation Failed");
+//					return false;
+				}
+			}
+			else
+			{
+//				return false;
+			}
 		}
 		else
 		{
-			request.setAttribute("failedMsg", "Updataion Failed");
-			RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
-			rd.forward(request, response);
+//			return false;
 		}			
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------
 	
-	public DoctorSettingData getBasicInfo(HttpServletRequest request, HttpServletResponse response)
-	{
-		DoctorSettingData dpsd = new DoctorSettingData();
-		
+	public boolean getBasicInfo(DoctorSettingData dpsd,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{	
 		String firstName =request.getParameter("firstName");
 		firstName=firstName.trim();
 		String lastName=request.getParameter("lastName");
 		lastName=lastName.trim();
 		String mobileNumber=request.getParameter("mobileNumber");
-		mobileNumber=mobileNumber.trim();
+		mobileNumber = mobileNumber.trim();
 		String gender=request.getParameter("gender");
 		gender=gender.trim();
 		String dateOfBirth=request.getParameter("dateOfBirth");
@@ -171,13 +180,14 @@ public class DoctorService
 		
   		if(firstName=="" || lastName=="" || mobileNumber=="" || gender=="" || dateOfBirth=="" || biography == "" || clinicName=="" || clinicAddress=="" || addressLine1=="" || addressLine2=="" || city=="" || state=="" || country=="" || postalCode=="" || services=="" || specialist=="")
 		{
-			System.out.println("Please Fill All Details");
-			request.setAttribute("detailsMessage", "Please Fill Basic Information !!");
+			System.out.println("Please Fill Doctor Basic All Details");
+			request.setAttribute("failedMsg", "Please Fill Basic Information !!");
+			return false;
 		}
   		else
   		{			
 			HttpSession session = request.getSession(false);			
-			dpsd.setDoctorId(Integer.parseInt((String)session.getAttribute("doctorId")));
+			dpsd.setDoctorId((Integer)session.getAttribute("doctorId"));
 			 
   			dpsd.setFirstName(firstName);
   			dpsd.setLastName(lastName);
@@ -196,14 +206,14 @@ public class DoctorService
   			dpsd.setPricing(pricing);
   			dpsd.setServices(services);
   			dpsd.setSpecialist(specialist);
-  			dpsd.setImagePath(imagePath); 			
-  		}		
-		return dpsd;
+  			dpsd.setImagePath(imagePath); 
+  			return true;
+  		}				
 	}
 
 //--------------------------------------------------------------------------------------------------------------------------------------	
 
-	public DoctorSettingData getEducationInfo(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd) throws ServletException, IOException
+	public boolean getEducationInfo(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd) throws ServletException, IOException
 	{
 		ArrayList<Integer> degreeId = new ArrayList<Integer>();
 		
@@ -220,12 +230,12 @@ public class DoctorService
 		ArrayList<String> college = null;
 		ArrayList<String> yearCompletetion = null;
 		
-		if(request.getParameterValues("degree") != null && request.getParameterValues("college") != null && request.getParameterValues("yearCompletetion") != null)
+		if(!(request.getParameterValues("degree")[0].isEmpty() && request.getParameterValues("college")[0].isEmpty()  && request.getParameterValues("yearCompletetion")[0].isEmpty()))
 		{
 			degree = new ArrayList<String>(Arrays.asList(request.getParameterValues("degree")));
 			college = new ArrayList<String>(Arrays.asList(request.getParameterValues("college")));
 			yearCompletetion = new ArrayList<String>(Arrays.asList(request.getParameterValues("yearCompletetion")));
-			
+						
 			if(degree.size() == college.size() && degree.size()==yearCompletetion.size() && degree.size()!=0)
 			{				
 				for(int i=0;i<degree.size();i++)
@@ -233,8 +243,12 @@ public class DoctorService
 					if(degree.get(i).isEmpty() || college.get(i).isEmpty() || yearCompletetion.get(i).isEmpty())
 					{
 						request.setAttribute("failedMsg", "Please Fill Education Details");
-						RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
-						rd.forward(request, response);
+						return false;
+						/*
+						 * RequestDispatcher rd =
+						 * request.getRequestDispatcher("doctor-profile-settings.jsp");
+						 * rd.forward(request, response);
+						 */
 					}
 					else
 					{	
@@ -247,28 +261,32 @@ public class DoctorService
 				dpsd.setDegree(degree);
 				dpsd.setCollege(college);
 				dpsd.setYearCompletetion(yearCompletetion);
+				return true;
 			}
 			else
 			{
-				System.out.println("Please Fill Proper Details");
+				System.out.println("Please Fill Education Details Proper");
 				request.setAttribute("failedMsg", "Please Fill Education Details !!");
-				RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
-				rd.forward(request, response);
+				return false;
+//				RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
+//				rd.forward(request, response);
 			}
 		}
 		else
 		{
-			System.out.println("Please Fill All Details");
+			System.out.println("Piyush Jaiswal");
+			System.out.println("Please Fill All Details of Doctor Education");
 			request.setAttribute("failedMsg", "Please Fill Education Details !!");
-			RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
-			rd.forward(request, response);
-		}				
-		return dpsd;
+			return false;
+//			RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
+		
+		}
 	}
 	
-	public DoctorSettingData getDoctorExperience(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
+	public void getDoctorExperience(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
 	{
 		ArrayList<Integer> hospitalId = new ArrayList<Integer>();
+		
 		if(request.getParameterValues("hospitalId")!=null)
 		{	
 			ArrayList<String> hId = new ArrayList<String>(Arrays.asList(request.getParameterValues("hospitalId")));
@@ -277,20 +295,20 @@ public class DoctorService
 				if(!hid.isEmpty())
 					hospitalId.add(Integer.parseInt(hid));	
 		}
-		
+	
 		ArrayList<String> hospitalName = null;
 		ArrayList<String> from = null;
 		ArrayList<String> to = null;
 		ArrayList<String> designation = null;
 		
-		if(request.getParameterValues("hospitalName") != null && request.getParameterValues("from") != null && request.getParameterValues("to") != null && request.getParameterValues("designation") != null)
+		if(request.getParameterValues("hospitalName") != null && request.getParameterValues("from") != null && request.getParameterValues("to") != null && request.getParameterValues("Designation") != null)
 		{
 			hospitalName = new ArrayList<String>(Arrays.asList(request.getParameterValues("hospitalName")));
 			from = new ArrayList<String>(Arrays.asList(request.getParameterValues("from")));
 			to = new ArrayList<String>(Arrays.asList(request.getParameterValues("to")));
-			designation = new ArrayList<String>(Arrays.asList(request.getParameterValues("designation")));
+			designation = new ArrayList<String>(Arrays.asList(request.getParameterValues("Designation")));
 		
-			if(hospitalName.size() == from.size() && hospitalName.size() == to.size() && hospitalName.size() == designation.size() && hospitalName.size()==0)
+			if(hospitalName.size() == from.size() && hospitalName.size() == to.size() && hospitalName.size() == designation.size() && hospitalName.size()!=0)
 			{
 				for(int i=0;i<hospitalName.size();i++)
 				{
@@ -307,17 +325,16 @@ public class DoctorService
 			}
 			else
 			{
-				System.out.println("Please Fill Proper Details");
+				System.out.println("Please Fill  Doctor Experience Details Proper");
 			}		
 		}
 		else
 		{
 			System.out.println("Experience Details Empty");
-		}				
-		return dpsd;	
+		}					
 	}
 
-	public DoctorSettingData getDoctorAwards(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
+	public void getDoctorAwards(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
 	{
 		ArrayList<Integer> awardId = new ArrayList<Integer>();
 		ArrayList<String> awardName = null;
@@ -336,9 +353,8 @@ public class DoctorService
 			awardName = new ArrayList<String>(Arrays.asList(request.getParameterValues("award")));
 			awardYear = new ArrayList<String>(Arrays.asList(request.getParameterValues("awardYear")));
 		
-			if(awardName.size() == awardYear.size() && awardName.size()==0)
+			if(awardName.size() == awardYear.size() && awardName.size()!=0)
 			{
-				System.out.println("Hello I am Inside if");
  				for(int i=0;i<awardName.size();i++)
 				{
 					awardName.set(i, awardName.get(i).trim());
@@ -353,15 +369,12 @@ public class DoctorService
 		{
 			System.out.println("Award Info Empty");
 		}
-		return dpsd;
 	}
 
-	public DoctorSettingData getDoctorMemberships(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
+	public void getDoctorMemberships(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
 	{
 		ArrayList<Integer> membershipId = new ArrayList<Integer>();
 		ArrayList<String> membership = null;
-		System.out.println("Membership Id : "+request.getParameterValues("membershipId"));
-		System.out.println("MEmbership Name : "+request.getParameterValues("memberships"));
 		
 		if(request.getParameterValues("membershipId")!=null)
 		{	
@@ -374,9 +387,8 @@ public class DoctorService
 		{
 			membership = new ArrayList<String>(Arrays.asList(request.getParameterValues("memberships")));
 	
-			if(membership.size()==0)
+			if(membership.size()!=0)
 			{
-				System.out.println("Hello I am Inside if");
 				for(int i=0;i<membership.size();i++)
 					membership.set(i, membership.get(i).trim());
 				dpsd.setMembershipId(membershipId);
@@ -384,13 +396,10 @@ public class DoctorService
 			}
 		}	
 		else
-		{
 			System.out.println("Membership Block Empty");
-		}
-		return dpsd;
 	}
 	
-	public DoctorSettingData getDoctorRegistrations(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
+	public void getDoctorRegistrations(HttpServletRequest request,HttpServletResponse response,DoctorSettingData dpsd)
 	{
 		ArrayList<Integer> registrationId = new ArrayList<Integer>();
 		ArrayList<String> registration = null;
@@ -406,7 +415,7 @@ public class DoctorService
 		{
 			registration = new ArrayList<String>(Arrays.asList(request.getParameterValues("registration")));
 			registrationYear = new ArrayList<String>(Arrays.asList(request.getParameterValues("registrationYear")));
-			if(registration.size()==0 && registration.size() == registrationYear.size())
+			if(registration.size()!=0 && registration.size() == registrationYear.size())
 			{				
 				for(int i=0;i<registration.size();i++)
 				{
@@ -419,11 +428,7 @@ public class DoctorService
 			}
 		}		
 		else
-		{
 			System.out.println("Registration Block Empty");
-			//request.setAttribute("msg","Please Fill All Details");
-		}
-		return dpsd;
 	}
 	
 	public static boolean isValid(String s) 

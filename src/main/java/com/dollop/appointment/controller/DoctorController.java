@@ -52,18 +52,30 @@ public class DoctorController extends HttpServlet
 		switch(action)
 		{
 		   case "register":  
-  			   ds.doctorRegistration(request,response);
-			   break;
+  			   if(ds.doctorRegistration(request,response))
+  			   {
+  				 RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+  				 rd.forward(request, response);
+  			   }
+  			   else
+  			   {
+  				 RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
+  				 rd.forward(request, response);
+  			   }
+  			   break;
 	
 		   case "profileSettingInsData": 
-			   ds.doctorProfileSettingInsData(request,response);
-			   break;
+			   	ds.doctorProfileSettingInsData(request,response);
+			   	request.setAttribute("doctor", ds.getDoctor(request,response));
+			   	RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
+				rd.forward(request, response);
+				break;
 		   case "getDoctorDetails" :
 			   
 			   DoctorSettingData doctor = ds.getDoctor(request,response);
 			   request.setAttribute("doctor", doctor);
-			   RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
-			   rd.forward(request, response);
+			   RequestDispatcher rd3 = request.getRequestDispatcher("doctor-profile-settings.jsp");
+			   rd3.forward(request, response);
 			   break;
 		}
 	}

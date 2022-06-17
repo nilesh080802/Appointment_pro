@@ -146,7 +146,8 @@
 												</a>
 											</li>
 											<li class="active">
-												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}">>
+												<%-- <a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}"> --%>
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails">
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>
@@ -188,9 +189,9 @@
 						<div id="alert" class="alert alert-danger" role="alert">
   							<%=request.getAttribute("failedMsg") %>													
 						</div>
-					<%}else if(request.getAttribute("successMsg")!=null){%>
+					<%}else if(request.getAttribute("successMessage")!=null){%>
 						<div id="alert" class="alert alert-success" role="alert">
-  							<%=request.getAttribute("successMsg") %>												
+  							<%=request.getAttribute("successMessage") %>												
 						</div>
 					<%}%>
 						
@@ -230,7 +231,7 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Phone Number </label>
-													<input type="text" class="form-control" name="mobileNumber" value="${doctor.getMobileNumber()}">
+													<input type="text" class="form-control" name="mobileNumber" value="${doctor.getMobileNumber() }">
 												</div>
 											</div>
 											<div class="col-md-6">
@@ -262,7 +263,7 @@
 										<h4 class="card-title">About Me</h4>
 										<div class="form-group mb-0"> 
 											<label>Biography</label>
-											<textarea class="form-control" rows="5" name="biography" value="${doctor.getBiography()}"></textarea>
+											<textarea class="form-control" rows="5" name="biography">${doctor.getBiography() }</textarea>
 										</div>
 									</div>
 								</div>
@@ -471,7 +472,7 @@
 										<div class="experience-info">
 											<div class="row form-row experience-cont">
 												<div class="col-12 col-md-10 col-lg-11">
-													<div class="row form-row">
+													
 													
 													<%ArrayList<Integer> hospitalId = doctor.getHospitalId();%>
 													<%ArrayList<String> hospitalName = doctor.getHospitalName(); %>
@@ -480,7 +481,7 @@
 													<%ArrayList<String> designation = doctor.getDesignation(); %>
 													<%if(hospitalId.size() != 0){ %>
 													<%for(int i=0;i<hospitalId.size();i++){ %>
-													
+													<div class="row form-row">
 														<div class="col-12 col-md-6 col-lg-4">
 															<div class="form-group">
 																<label>Hospital Name</label>
@@ -503,10 +504,12 @@
 														<div class="col-12 col-md-6 col-lg-4">
 															<div class="form-group">
 																<label>Designation</label>
-																<input type="text" class="form-control" name="designation" value="<%=designation.get(i)%>">
+																<input type="text" class="form-control" name="Designation" value="<%=designation.get(i)%>">
 															</div> 
 														</div>
+													</div>	
 													<%}}else{ %>
+													<div class="row form-row">	
 														<div class="col-12 col-md-6 col-lg-4">
 															<div class="form-group">
 																<label>Hospital Name</label>
@@ -529,11 +532,11 @@
 														<div class="col-12 col-md-6 col-lg-4">
 															<div class="form-group">
 																<label>Designation</label>
-																<input type="text" class="form-control" name="designation" value="">
+																<input type="text" class="form-control" name="Designation" value="">
 															</div> 
 														</div>
-													<%} %>
 													</div>
+													<%} %>													
 												</div>
 											</div>
 										</div>
@@ -559,14 +562,14 @@
 												<div class="col-12 col-md-5">
 													<div class="form-group">
 														<label>Awards</label>
-														<input type="text" class="form-control" name="award" value="${doctor.getAward()}">
+														<input type="text" class="form-control" name="award" value="<%=awardName.get(i) %>">
 														<input type="hidden" name="awardId" value="<%=awardId.get(i)%>">
 													</div> 
 												</div>
 												<div class="col-12 col-md-5">
 													<div class="form-group">
 														<label>Year</label>
-														<input type="text" class="form-control" name="awardYear" value="${doctor.getAwardYear()}">
+														<input type="text" class="form-control" name="awardYear" value="<%=awardYear.get(i)%>">
 													</div> 
 												</div>
 												<%}}else{%>
@@ -725,7 +728,7 @@
 
 <!-- doccure/doctor-profile-settings.jsp  30 Nov 2019 04:12:15 GMT -->
 </html>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript">
 		
 		setTimeout(function () 
@@ -735,5 +738,26 @@
             	// Closing the alert
             	$('#alert').alert('close');
         	}, 10000);
+		
+		$("form").on("change",function(event){
+			event.preventDefault();
+			var form = $("#myform")[0];
+			var data = new FormData(form);
+			
+			$.ajax({
+				url : "UploadServlet",
+				type : "POST",
+				data : data,
+				processData : false,
+				contentType: false,
+				success: function(res)
+				{
+					console.log(res);
+					$("#imgPath").attr("value",res);
+					$("#newImg").attr("src",res);
+					$("#img").attr("src",res);
+				}
+			});
+		});
 </script>
 
