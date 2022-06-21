@@ -68,7 +68,7 @@ public class PaymentController extends HttpServlet {
 		                break;
 		case "DetaiIsValid":      if(ps.addPaymentData(pm)) {
 			  						ps.getPaymentInfo(pm, request, response);
-			                     ps.genrateInvoice(pm,request,response);
+			                        ps.genrateInvoice(pm,request,response);
 			                  
 		                          }
 								  else
