@@ -70,7 +70,7 @@
 									<div class="success-cont">
 										<i class="fas fa-check"></i>
 										<h3>Appointment booked Successfully!</h3> 
-									<p>Appointment booked with <strong>Dr.${dst.getFirstName()} ${dst.getLastName()}</strong><br> on <strong>${pmd.getPaymentDate().substring(0,19)}</strong></p> 
+									<p>Appointment booked with <strong>Dr.${dst.getFirstName()} ${dst.getLastName()}</strong><br> on <strong>${pmd.getPaymentDate().substring(0,16)}</strong></p> 
 									<a href="${pageContext.request.contextPath}/PatientController?action=view_invoice&doctorId=${pmd.getDoctorId()}&invoiceId=${pmd.getInvoiceId()}&reciptNumber=${pmd.getReciptNumber()}&patientId=${pmd.getPatientId()}" class="btn btn-primary view-inv-btn">View Invoice</a>
 									</div>
 								</div>
