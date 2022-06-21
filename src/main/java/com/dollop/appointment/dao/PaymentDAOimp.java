@@ -46,55 +46,41 @@ public class PaymentDAOimp {
 	public ArrayList getPaymentInfo(PaymentSettingData ob) {
 		
 		ArrayList list =new ArrayList();
-		String  dql ="SELECT * FROM  doctorprofilesetting where doctorId=?";
+		String  dql ="SELECT d.firstName,d.lastName,p.paymentId,p.patientId,p.dateTime from paymentinfo p inner JOIN doctorprofilesetting d on p.doctorId =d.doctorId and p.reciptNumber=?";
 		
 		PaymentSettingData pm=new PaymentSettingData();
 		DoctorSettingData dt =new DoctorSettingData();
 		PatientSettingData pa=new PatientSettingData();
 		try {
 			PreparedStatement ps =con.prepareStatement(dql);
-			ps.setInt(1 ,ob.getDoctorId());
+			ps.setString(1 ,ob.getReciptNumber());
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next())
 			{
-			  dt.setDoctorId(rs.getInt("doctorId"));
 			  dt.setFirstName(rs.getString("firstName"));
 			  dt.setLastName(rs.getString("lastName"));  
 			  list.add(dt);
+			  pm.setPaymentId(rs.getInt("paymentId"));	
+		      pm.setPatientId(rs.getInt("patientId"));
+		      pm.setDoctorId(ob.getDoctorId());
+			  pm.setPaymentDate(rs.getString("dateTime"));
+			  pm.setReciptNumber(ob.getReciptNumber());
+			  pm.setInvoiceId(ob.getInvoiceId());
+			  list.add(pm);	  
 			}
 		}
 			catch(Exception e){
 				e.printStackTrace();
 			}
 			 
-			  String  dql1 ="SELECT * FROM  paymentInfo where reciptNumber=?";
-        try {      
-			  PreparedStatement pd =con.prepareStatement(dql1);
-				pd.setString(1 ,ob.getReciptNumber());
-				ResultSet rs1 = pd.executeQuery();
-				
-			  if(rs1.next()) {	
-		      pm.setPaymentId(rs1.getInt("paymentId"));	
-		      pm.setPatientId(rs1.getInt("patientId"));
-		      pm.setDoctorId(rs1.getInt("doctorId"));
-			  pm.setPaymentDate(rs1.getString("dateTime"));
-			  pm.setReciptNumber(rs1.getString("reciptNumber"));
-			  pm.setInvoiceId(ob.getInvoiceId());
-			  list.add(pm);
-			  } 	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		
 		return list;
 	}
 
 	public Integer addInvoiceData(PaymentSettingData pm) {
 		
 		Integer invoiceId=null;
-		String dml="INSERT INTO `invoice_info`(`patientId`, `doctorId`, `paymentId`) VALUES (?,?,?)";
+		String dml="INSERT INTO `invoice_data`(`patientId`, `doctorId`, `paymentId`) VALUES (?,?,?)";
 		
 		try {
 			PreparedStatement ps =con.prepareStatement(dml);
@@ -108,7 +94,7 @@ public class PaymentDAOimp {
 		         e.printStackTrace();	
 		}
 		
-		String drl1="SELECT invoiceId FROM `invoice_info` WHERE paymentId=?";
+		String drl1="SELECT invoiceId FROM `invoice_data` WHERE paymentId=?";
 		try {
 			PreparedStatement ps =con.prepareStatement(drl1);
 		    ps.setInt(1, pm.getPaymentId());
@@ -130,7 +116,7 @@ public class PaymentDAOimp {
 
 	public void addOrderId(String orderId,Integer invoiceId) {
       
-         String dml="UPDATE `invoice_info` SET `orderId`=? WHERE `invoiceId`=?;";
+         String dml="UPDATE `invoice_data` SET `orderId`=? WHERE `invoiceId`=?;";
 		  System.out.println(orderId);
 		try {
 			PreparedStatement ps =con.prepareStatement(dml);
@@ -146,22 +132,19 @@ public class PaymentDAOimp {
 
 	public ArrayList getInvoiceData(PaymentSettingData ob) {
 		ArrayList list =new ArrayList();
-		String  dql ="SELECT * FROM  doctorprofilesetting where doctorId=?";
-		
+		String  dql ="select dps.firstName as dfirstName,dps.lastName as dlastName,dps.address1,dps.address2,dps.city,dps.country,dps.state,dps.postalCode,pps.firstName as pfirstName,pps.lastName as plastName,pps.address,pps.city,pps.state,pps.zipCode,pps.country,pm.paymentId,pm.patientId,pm.cardNumber,pm.cardName,pm.dateTime,pm.paymentType,pm.amount,inv.invoiceDate,inv.orderId from ( ((invoice_data inv inner join doctorprofilesetting dps on inv.doctorId=dps.doctorId)INNER JOIN patientprofilesetting pps on inv.patientId=pps.patientId) inner JOIN paymentinfo pm on inv.paymentId = pm.paymentId and pm.reciptNumber=?)";
 		PaymentSettingData pm=new PaymentSettingData();
 		DoctorSettingData dt =new DoctorSettingData();
 		PatientSettingData pa=new PatientSettingData();
 		try {
 			PreparedStatement ps =con.prepareStatement(dql);
-			ps.setInt(1 ,ob.getDoctorId());
+			ps.setString(1,ob.getReciptNumber());
 			ResultSet rs = ps.executeQuery();
-			
 			if(rs.next())
 			{
-			  dt.setDoctorId(rs.getInt("doctorId"));
-			  dt.setFirstName(rs.getString("firstName"));
-			  dt.setLastName(rs.getString("lastName"));
-			  dt.setMobileNumber(rs.getString("mobileNumber"));
+			  dt.setDoctorId(ob.getDoctorId());
+			  dt.setFirstName(rs.getString("dfirstName"));
+			  dt.setLastName(rs.getString("dlastName"));
 			  dt.setAddressLine1(rs.getString("address1"));
 			  dt.setAddressLine2(rs.getString("address2"));
 			  dt.setCity(rs.getString("city"));
@@ -169,80 +152,35 @@ public class PaymentDAOimp {
 			  dt.setState(rs.getString("state"));
 			  dt.setPostalCode(rs.getString("postalCode"));  
 			  list.add(dt);
+               
+			  pm.setPaymentId(rs.getInt("paymentId"));	
+			  pm.setPatientId(rs.getInt("patientId"));
+		      pm.setCardNumber(rs.getString("cardNumber"));		  
+			  pm.setCardName(rs.getString("cardName"));
+			  pm.setPaymentDate(rs.getString("dateTime"));
+			  pm.setReciptNumber(ob.getReciptNumber());
+			  pm.setPaymentType(rs.getString("paymentType"));
+			  pm.setAmount(rs.getDouble("amount"));
+			  pm.setInvoiceId(ob.getInvoiceId());
+		      pm.setInvoiceDate(rs.getString("invoiceDate"));
+		      pm.setOrderId(rs.getString("orderId"));
+			  list.add(pm);
+			  
+			  pa.setPatientId(ob.getPatientId());			
+			  pa.setFirstName(rs.getString("pfirstName"));
+			  pa.setLastName(rs.getString("plastName"));
+			  pa.setAddress(rs.getString("address"));
+			  pa.setCity(rs.getString("city"));
+			  pa.setState(rs.getString("state"));
+			  pa.setZipCode(rs.getString("zipCode"));
+			  pa.setCountry(rs.getString("country"));	
+			  list.add(pa);		   
 			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-			 
-			  String  dql1 ="SELECT * FROM  paymentInfo where reciptNumber=?";
-             
-	      try {		  
-			    PreparedStatement pd =con.prepareStatement(dql1);
-				pd.setString(1 ,ob.getReciptNumber());
-				ResultSet rs1 = pd.executeQuery();
-				
-			  if(rs1.next()) {	
-		      pm.setPaymentId(rs1.getInt("paymentId"));	
-			  pm.setPatientId(rs1.getInt("patientId"));
-		      pm.setCardNumber(rs1.getString("cardNumber"));		  
-			  pm.setCardName(rs1.getString("cardName"));
-			  pm.setPaymentDate(rs1.getString("dateTime"));
-			  pm.setReciptNumber(rs1.getString("reciptNumber"));
-			  pm.setPaymentType(rs1.getString("paymentType"));
-			  pm.setAmount(rs1.getDouble("amount"));
-			  } 
-	      }
-	      catch(Exception e){
-				e.printStackTrace();
-			}
-			
-			
-			String dql2="SELECT * FROM patientprofilesetting where patientId=?";
-			
-			try {
-				PreparedStatement ps1 =con.prepareStatement(dql2);
-				ps1.setInt(1,ob.getPatientId());
-				ResultSet rs2 = ps1.executeQuery();
-				
-				if(rs2.next()) {
-					
-					pa.setFirstName(rs2.getString("firstName"));
-					pa.setLastName(rs2.getString("lastName"));
-					pa.setMobile(rs2.getString("mobile"));
-					pa.setAddress(rs2.getString("address"));
-					pa.setCity(rs2.getString("city"));
-					pa.setState(rs2.getString("state"));
-					pa.setZipCode(rs2.getString("zipCode"));
-					pa.setCountry(rs2.getString("country"));	
-					list.add(pa);
-				}
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-			
-			 String  dql3 ="SELECT * FROM  invoice_info where invoiceId=?";
-				try {
-					
-		             
-					PreparedStatement pd =con.prepareStatement(dql3);
-					pd.setInt(1 ,ob.getInvoiceId());
-					ResultSet rs1 = pd.executeQuery();
-						
-				    if(rs1.next()){	
-					    
-				       pm.setInvoiceId(rs1.getInt("invoiceId"));
-				       pm.setInvoiceDate(rs1.getString("invoiceDate"));
-				       pm.setOrderId(rs1.getString("orderId"));
-				    } 
-				}
-				catch(Exception e){
-					e.printStackTrace();
-				}
-				
-				list.add(pm);
-				
+			 			
 		return list;
 	}
 
