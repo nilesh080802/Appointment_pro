@@ -103,44 +103,35 @@
 											<!-- Day Slot -->
 											<div class="day-slot">
 												<ul>
-													<li class="left-arrow">
-														<a href="#">
-															<i class="fa fa-chevron-left"></i>
-														</a>
+													<li>
+														<span id="name1"></span>
+														<span id="day1" class="slot-date"><small class="slot-year"></small></span>
 													</li>
 													<li>
-														<span>Mon</span>
-														<span class="slot-date">11 Nov <small class="slot-year">2019</small></span>
+														<span id="name2"></span>
+														<span id="day2" class="slot-date"><small class="slot-year"></small></span>
 													</li>
 													<li>
-														<span>Tue</span>
-														<span class="slot-date">12 Nov <small class="slot-year">2019</small></span>
+														<span id="name3"></span>
+														<span id="day3" class="slot-date"><small class="slot-year"></small></span>
 													</li>
 													<li>
-														<span>Wed</span>
-														<span class="slot-date">13 Nov <small class="slot-year">2019</small></span>
+														<span id="name4"></span>
+														<span id="day4" class="slot-date"> <small class="slot-year"></small></span>
 													</li>
 													<li>
-														<span>Thu</span>
-														<span class="slot-date">14 Nov <small class="slot-year">2019</small></span>
+														<span id="name5"></span>
+														<span id="day5" class="slot-date"> <small class="slot-year"></small></span>
 													</li>
 													<li>
-														<span>Fri</span>
-														<span class="slot-date">15 Nov <small class="slot-year">2019</small></span>
+														<span id="name6"></span>
+														<span id="day6" class="slot-date"><small class="slot-year"></small></span>
 													</li>
 													<li>
-														<span>Sat</span>
-														<span class="slot-date">16 Nov <small class="slot-year">2019</small></span>
+														<span id="name7"></span>
+														<spanid id="day7" class="slot-date"> <small class="slot-year"></small></span>
 													</li>
-													<li>
-														<span>Sun</span>
-														<span class="slot-date">17 Nov <small class="slot-year">2019</small></span>
-													</li>
-													<li class="right-arrow">
-														<a href="#">
-															<i class="fa fa-chevron-right"></i>
-														</a>
-													</li>
+													
 												</ul>
 											</div>
 											<!-- /Day Slot -->
@@ -404,7 +395,27 @@
 	  
 		<!-- jQuery -->
 		<script src="assets/js/jquery.min.js"></script>
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+		<script type="text/javascript">
 		
+		var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+		 var today = new Date();
+		 var name;
+		 var date;
+		
+		$(document).ready(function(){
+		for(var i=1;i<=7;i++)
+	    { 
+			 nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+i);
+			 name=weekday[nextweek.getDay()];
+		     date=nextweek+"";
+		     date =date.substring(4,15);
+		     
+		     $("#name"+(i)).text(name);
+		     $("#day"+(i)).text(date);
+	     }
+		});
+		</script>
 		<!-- Bootstrap Core JS -->
 		<script src="assets/js/popper.min.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>

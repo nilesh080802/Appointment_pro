@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 public class PatientSettingData {
 	
-
+    private Integer patientId;
 	private String firstName;
 	private String lastName;
 	private String bloodGroup;
@@ -17,6 +17,15 @@ public class PatientSettingData {
 	private String state;
 	private String zipCode;
 	private String country;
+	
+	
+	public Integer getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(Integer patientId) {
+		this.patientId = patientId;
+	}
+
 	private InputStream photo;
 	private String base64Image;
 	
