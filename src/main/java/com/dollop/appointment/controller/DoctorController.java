@@ -53,7 +53,8 @@ public class DoctorController extends HttpServlet {
 	   case "register":  ds.doctorRegistration(request,response);break;
 
 	   case "profileSettingInsData": ds.doctorProfileSettingInsData(request,response);break;
-
+       
+	   case "timeSchedule":ds.doctorTimeScheduleData(request,response);break;
 	}
 	// TODO Auto-generated method stub
 
