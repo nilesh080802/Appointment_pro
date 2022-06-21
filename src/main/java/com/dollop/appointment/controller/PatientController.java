@@ -57,7 +57,7 @@ public class PatientController extends HttpServlet {
 		
 		case "Booking": ps.BookingData(request,response);break;
 		
-		case "view_invoice": ps.getInvoiceData(request,response);
+		case "view_invoice": ps.getInvoiceData(request,response);break;
 			               
 		
 		default :
