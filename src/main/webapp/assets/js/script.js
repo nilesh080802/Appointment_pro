@@ -15,7 +15,7 @@ Version      : 1.0
 			  // Settings
 			  additionalMarginTop: 30
 			});
-		}
+		}	
 	}
 	
 // Sidebar
