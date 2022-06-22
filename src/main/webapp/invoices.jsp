@@ -1,4 +1,6 @@
 <!DOCTYPE html> 
+<%@page import="com.dollop.appointment.model.PaymentSettingData"%>
+<%@page import="java.util.ArrayList"%>
 <html lang="en">
 	
 <!-- doccure/invoices.jsp  30 Nov 2019 04:12:14 GMT -->
@@ -170,6 +172,7 @@
 								</div>
 							</div>
 							<!-- /Profile Sidebar -->
+						
 							
 						</div>
 						<div class="col-md-7 col-lg-8 col-xl-9">
@@ -188,24 +191,30 @@
 													<th></th>
 												</tr>
 											</thead>
+						<%ArrayList<PaymentSettingData> invoiceList = (ArrayList)request.getAttribute("invoiceDetails");%>																
+						<%if(invoiceList != null){ %> 					
 											<tbody>
+											<%for(PaymentSettingData invoice : invoiceList){%>
+												<%String invoiceId=null,patientId=null; %>
+												<%if(invoice.getInvoiceId()<10){invoiceId = "000"+invoice.getInvoiceId(); }else if(invoice.getInvoiceId()<100){invoiceId = "00"+invoice.getInvoiceId();}%>										
+												<%if(invoice.getPatientId()<10){patientId = "000"+invoice.getPatientId(); }else if(invoice.getPatientId()<100){patientId = "00"+invoice.getPatientId();}%>
 												<tr>
 													<td>
-														<a href="invoice-view.jsp">#INV-0010</a>
+														<a href="${pageContext.request.contextPath}/DoctorController?action=getInvoiceDetails">#INV-<%=invoiceId %></a>
 													</td>
 													<td>
 														<h2 class="table-avatar">
 															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
 																<img class="avatar-img rounded-circle" src="assets/img/patients/patient.jpg" alt="User Image">
 															</a>
-															<a href="patient-profile.jsp">Richard Wilson <span>#PT0016</span></a>
+															<a href="patient-profile.jsp"><%=invoice.getFirstName()+" "+invoice.getLastName() %><span>#PT<%=patientId %></span></a>
 														</h2>
 													</td>
-													<td>$450</td>
-													<td>14 Nov 2019</td>
+													<td><%=invoice.getAmmount() %></td>
+													<td><%=invoice.getInvoiceDate() %></td>
 													<td class="text-right">
 														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
+															<a class="btn btn-sm bg-info-light" href="${pageContext.request.contextPath}/DoctorController?action=getInvoiceDetails">
 																<i class="far fa-eye"></i> View
 															</a>
 															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
@@ -214,231 +223,7 @@
 														</div>
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0009</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Charlene Reed <span>#PT0001</span></a>
-														</h2>
-													</td>
-													<td>$200</td>
-													<td>13 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0008</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient2.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Travis Trimble <span>#PT0002</span></a>
-														</h2>
-													</td>
-													<td>$100</td>
-													<td>12 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0007</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient3.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Carl Kelly <span>#PT0003</span></a>
-														</h2>
-													</td>
-													<td>$350</td>
-													<td>11 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0006</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient4.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Michelle Fairfax <span>#PT0004</span></a>
-														</h2>
-													</td>
-													<td>$275</td>
-													<td>10 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0005</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient5.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Gina Moore <span>#PT0005</span></a>
-														</h2>
-													</td>
-													<td>$600</td>
-													<td>9 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0004</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient6.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Elsie Gilley <span>#PT0006</span></a>
-														</h2>
-													</td>
-													<td>$50</td>
-													<td>8 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0003</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient7.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Joan Gardner <span>#PT0007</span></a>
-														</h2>
-													</td>
-													<td>$400</td>
-													<td>7 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0002</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient8.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Daniel Griffing <span>#PT0008</span></a>
-														</h2>
-													</td>
-													<td>$550</td>
-													<td>6 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="invoice-view.jsp">#INV-0001</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="patient-profile.jsp" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="assets/img/patients/patient9.jpg" alt="User Image">
-															</a>
-															<a href="patient-profile.jsp">Walter Roberson <span>#PT0009</span></a>
-														</h2>
-													</td>
-													<td>$100</td>
-													<td>5 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="invoice-view.jsp" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
+											<%}} %>	
 											</tbody>
 										</table>
 									</div>
