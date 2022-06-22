@@ -9,12 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import com.dollop.appointment.dao.PatientDAOImp;
 import com.dollop.appointment.dao.UserDAOImp;
 import com.dollop.appointment.model.PatientAppointmentShowData;
 import com.dollop.appointment.model.PatientSettingData;
+
 import com.dollop.appointment.model.UserData;
 
 @MultipartConfig(location="/tmp", fileSizeThreshold=1048576, maxFileSize=20848820, maxRequestSize=418018841)
@@ -28,6 +29,27 @@ public class PatientService {
 	}
 	
 	
+
+	public void patientsFavouritesShow(HttpServletRequest request, HttpServletResponse response) {
+		
+		String  patientId= request.getParameter("patientId");
+		pdi.patientsFavouritesShowData(patientId);
+		
+	}
+	
+	public void addRemoveFavouritesData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+//		HttpSession session = request.getSession();
+		String patientId= request.getParameter("patientId");
+		String doctorId=request.getParameter("doctorId");
+		
+		System.out.println(patientId+"-"+doctorId);
+		
+		pdi.addRemoveFavourites(patientId,doctorId);
+		
+	}
+	
+	
 	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 //		System.out.println("1->");
@@ -36,6 +58,9 @@ public class PatientService {
 		if(mobileNumber!=null) {
 		   PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
            request.setAttribute("patient",psd);
+		}
+		else {
+			System.out.println("invalid mobile number");
 		}
 		
 	}
@@ -183,7 +208,13 @@ public class PatientService {
 		
 	}
 	
-	
+	public void doctorProfileShowData(HttpServletRequest request, HttpServletResponse response) {
+		
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
 	
 	 public static boolean isValid(String s)
 	    {
@@ -206,5 +237,13 @@ public class PatientService {
 	        // Returning boolean value
 	        return (m.matches());
 	    }
+
+
+
+	
+
+
+
+
 
 }
