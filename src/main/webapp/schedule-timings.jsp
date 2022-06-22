@@ -186,7 +186,7 @@
 														<div class="form-group">               
 															<label>Timing Slot Duration</label>
 															<select class="select form-control">
-																<option>-</option>
+																<option>Select Time Duration</option>
 																<option>15 mins</option>
 																<option selected="selected">30 mins</option>  
 																<option>45 mins</option>
@@ -565,3 +565,11 @@
 
 <!-- doccure/schedule-timings.jsp  30 Nov 2019 04:12:09 GMT -->
 </html>
+
+<script>
+	
+
+
+
+</script>
+

@@ -18,15 +18,30 @@ import com.dollop.appointment.model.PatientSettingData;
 
 import com.dollop.appointment.model.UserData;
 
+
 @MultipartConfig(location="/tmp", fileSizeThreshold=1048576, maxFileSize=20848820, maxRequestSize=418018841)
 public class PatientService {
+
 	PatientDAOImp  pdi=null;
 	UserDAOImp udi= null;
-	public PatientService() {
+	
+	//Constructor
+	public PatientService() 
+	{
 		udi= new UserDAOImp();
 		pdi=new PatientDAOImp();
 		
 	}
+
+	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{		
+		String mobileNumber=request.getParameter("mobile");
+		PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
+		 
+        request.setAttribute("patient",psd);
+		RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
+		rd.forward(request, response);		
+
 	
 	
 
@@ -78,12 +93,12 @@ public class PatientService {
 		
 		return;
 		
-		
+
 	}
 	
 	
-	public void patientProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public void patientProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{		
 		String firstName = request.getParameter("firstName");
 		System.out.println(firstName);
 		String lastName = request.getParameter("lastName");
@@ -131,7 +146,8 @@ public class PatientService {
 		  psd.setFirstName(firstName); 
 		  psd.setLastName(lastName);
 		  psd.setDateOfBirth(dateOfBirth);
-//		  psd.setAge(age);
+
+
 		  psd.setBloodGroup(bloodGroup);
 		  psd.setEmailId(emailId);
 		  psd.setMobile(mobile);

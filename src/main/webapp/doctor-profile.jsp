@@ -2,7 +2,7 @@
 <html lang="en">
 	
 <!-- doccure/doctor-profile.jsp  30 Nov 2019 04:12:16 GMT -->
-<head>
+	<head>
 		<meta charset="utf-8">
 		<title>Doccure</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -32,14 +32,14 @@
 	</head>
 	<body>
 
-		<!-- Main Wrapper -->
+	<!-- Main Wrapper -->
 		<div class="main-wrapper">
 		
-			<!-- Header -->
+		<!-- Header -->
 			<jsp:include page="header.jsp"/>
-			<!-- /Header -->
+		<!-- /Header -->
 			
-			<!-- Breadcrumb -->
+		<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
 				<div class="container-fluid">
 					<div class="row align-items-center">
@@ -56,13 +56,13 @@
 					</div>
 				</div>
 			</div>
-			<!-- /Breadcrumb -->
+		<!-- /Breadcrumb -->
 			
-			<!-- Page Content -->
+		<!-- Page Content -->
 			<div class="content">
 				<div class="container">
 
-					<!-- Doctor Widget -->
+				<!-- Doctor Widget -->
 					<div class="card">
 						<div class="card-body">
 							<div class="doctor-widget">

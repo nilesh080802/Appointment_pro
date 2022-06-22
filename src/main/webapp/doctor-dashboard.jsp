@@ -117,7 +117,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="invoices.jsp">
+												<!-- <a href="invoices.jsp"> -->
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getAllInvoiceDetails">
 													<i class="fas fa-file-invoice"></i>
 													<span>Invoices</span>
 												</a>
@@ -136,7 +137,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="doctor-profile-settings.jsp">
+											<!-- <a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}">> -->
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails">
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>
