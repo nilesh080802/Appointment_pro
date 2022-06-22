@@ -40,6 +40,7 @@
 			 
 			 <%-- <% response.sendRedirect("patient-dashboard.jsp");%>--%>
 			 	<!--when patient is login continue....  -->
+			 	
 			<%}else if(session.getAttribute("type") == "admin") {%>
 			 
 			  <% response.sendRedirect("admin/index.jsp");%>

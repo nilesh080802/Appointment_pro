@@ -37,11 +37,11 @@
 		<% response.sendRedirect("login.jsp"); %>
 		<%} %>
 
-		<%--   <%if(session.getAttribute("type") == "doctor"){ %>
+		   <%if(session.getAttribute("type") == "doctor"){ %>
 			
-			<% response.sendRedirect("doctor-dashboard.jsp");%>
+			<%response.sendRedirect("doctor-dashboard.jsp");%>
 			
-			<%}else if(session.getAttribute("type") == "patient") {%>
+			<%}else if(session.getAttribute("type") == "patient"){ %>
 			 
 			 <%-- <% response.sendRedirect("patient-dashboard.jsp");%> --%>
 			
@@ -49,7 +49,7 @@
 			 
 			 <% response.sendRedirect("admin/index.jsp");%>
 			
-			<%}%> --%>
+			<%}%>
 
 		<!--Manage session end -->
 	

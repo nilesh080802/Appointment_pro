@@ -128,8 +128,7 @@ public class UserDAOImp
 
 
 	public boolean verifyUser(String mobileNumber, String password) {
-		//this method for verify user . user is register or not
-		//System.out.println(mobileNumber+"  "+password);
+		
 		String dql = "select * from userdata where mobileNumber=? AND password=?";
 		try {
 			

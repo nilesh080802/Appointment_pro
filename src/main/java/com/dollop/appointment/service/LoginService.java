@@ -34,11 +34,12 @@ public class LoginService
 		{	
 			if (udi.verifyUser(mobileNumber, password)) 
 			{
-
+				session.setAttribute("mobileNumber",mobileNumber);
 				if(udi.identifyUser(mobileNumber)) 
 				{
 					session.setAttribute("type","doctor");					
 					session.setAttribute("doctorId", udi.getUserId(mobileNumber));
+					
 					RequestDispatcher rd = request.getRequestDispatcher("doctor-dashboard.jsp");
 					rd.forward(request, response);
 				}else{
@@ -47,7 +48,7 @@ public class LoginService
 					
 					PatientDAOImp ptdao= new PatientDAOImp();
 					PatientSettingData psd= ptdao.patientProfileGetData(mobileNumber);
-//					request.setAttribute("patientData", psd);
+
 					request.setAttribute("patient",psd);
 					session.setAttribute("pid",psd.getPatientId() );
  					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");

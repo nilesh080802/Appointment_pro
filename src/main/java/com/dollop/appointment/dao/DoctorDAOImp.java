@@ -634,7 +634,7 @@ static Connection con=null;
 				payment.setDoctorId(rs.getInt("doctorId"));
 				payment.setFirstName(rs.getString("firstName"));
 				payment.setLastName(rs.getString("lastName"));
-				payment.setAmmount(rs.getInt("amount"));
+				payment.setAmount((double) rs.getInt("amount"));
 				
 				list.add(payment);				
 			}

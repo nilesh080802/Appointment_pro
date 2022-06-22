@@ -191,8 +191,8 @@
 													<th></th>
 												</tr>
 											</thead>
-						<%ArrayList<PaymentSettingData> invoiceList = (ArrayList)request.getAttribute("invoiceDetails");%>																
-						<%if(invoiceList != null){ %> 					
+												<%ArrayList<PaymentSettingData> invoiceList = (ArrayList)request.getAttribute("invoiceDetails");%>																
+												<%if(invoiceList != null){ %> 					
 											<tbody>
 											<%for(PaymentSettingData invoice : invoiceList){%>
 												<%String invoiceId=null,patientId=null; %>
@@ -210,7 +210,7 @@
 															<a href="patient-profile.jsp"><%=invoice.getFirstName()+" "+invoice.getLastName() %><span>#PT<%=patientId %></span></a>
 														</h2>
 													</td>
-													<td><%=invoice.getAmmount() %></td>
+													<td><%=invoice.getAmount() %></td>
 													<td><%=invoice.getInvoiceDate() %></td>
 													<td class="text-right">
 														<div class="table-action">

@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet
 		HttpSession session = request.getSession();
 		
 		String action=request.getParameter("action");
-
+		System.out.println(action);
 
 		String mobileNumber = request.getParameter("mobileNumber");
 		String password = request.getParameter("password");

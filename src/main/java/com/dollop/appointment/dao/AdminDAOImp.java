@@ -1,3 +1,4 @@
+//we will have to change column name password  to pass
 package com.dollop.appointment.dao;
 
 import java.sql.Connection;
@@ -7,13 +8,7 @@ import java.util.ArrayList;
 
 import com.dollop.appointment.model.AdminData;
 import com.dollop.appointment.model.AdminRegistrationData;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 01fbbac89b529cab8c482b2bdca7aa5a18f7bfe9
-=======
->>>>>>> 01fbbac89b529cab8c482b2bdca7aa5a18f7bfe9
 import com.dollop.appointment.model.DoctorSettingData;
 import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.utility.DBConnection;
@@ -391,7 +386,7 @@ public  DoctorSettingData doctorData(String mobile) {
 	public boolean verifyUser(String mobileNumber, String password) {
 		//this method for verify user . user is register or not
 		System.out.println(mobileNumber+"  "+password);
-		String dql = "select * from admindata where mobileNumber=? AND pass=?";
+		String dql = "select * from admindata where mobileNumber=? AND password=?";
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(dql);
@@ -415,7 +410,7 @@ public  DoctorSettingData doctorData(String mobile) {
 	public boolean verifyPassword( String password) {
 		//this method for verify admin ,admin is registerd or not
 //		System.out.println(mobileNumber+"  "+password);
-		String dql = "select * from admindata where  pass=?";
+		String dql = "select * from admindata where  password=?";
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(dql);
