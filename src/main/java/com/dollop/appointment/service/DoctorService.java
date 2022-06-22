@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import com.dollop.appointment.dao.DoctorDAOImp;
 import com.dollop.appointment.dao.UserDAOImp;
 import com.dollop.appointment.model.DoctorSettingData;
+import com.dollop.appointment.model.InvoiceView;
+import com.dollop.appointment.model.PaymentSettingData;
 import com.dollop.appointment.model.UserData;
 
 
@@ -83,6 +84,15 @@ public class DoctorService
 		return ddi.getDoctor(mobileNumber, doctorId);
 	}
 	
+	public ArrayList<PaymentSettingData> getAllInvoiceDetails()
+	{
+		return ddi.getAllInvoiceDetails();
+	}
+	
+	public InvoiceView getInvoiceViewDetails()
+	{
+		return ddi.getInvoiceViewDetails();
+	}
 	
 	public void doctorProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
