@@ -139,7 +139,7 @@ public class UserDAOImp
 
 	public boolean verifyUser(String mobileNumber, String password) {
 		//this method for verify user . user is register or not
-		System.out.println(mobileNumber+"  "+password);
+		//System.out.println(mobileNumber+"  "+password);
 		String dql = "select * from userdata where mobileNumber=? AND password=?";
 		try {
 			
@@ -165,12 +165,12 @@ public class UserDAOImp
 	public boolean verifyPassword( String password) {
 		//this method for verify user . user is registerd or not
 //		System.out.println(mobileNumber+"  "+password);
-		String dql = "select * from userdata where  password=?";
+		String dql ="select * from userdata where password=?";
 		try {
 			
-			PreparedStatement ps = con.prepareStatement(dql);		
+			PreparedStatement ps = con.prepareStatement(dql);
 			ps.setString(1, password);
-			
+		
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()) {
@@ -186,6 +186,30 @@ public class UserDAOImp
 		return false;
 	}
 	
+
+	public Integer getPatientId(String mobileNumber) {
+		
+		String dql="select patientId from patientprofilesetting where mobile=?";
+		Integer id=null;
+		
+        try {
+			
+			PreparedStatement ps = con.prepareStatement(dql);		
+			ps.setString(1, mobileNumber);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+			id=	rs.getInt("patientId"); 
+			}
+						
+		} 
+        catch (Exception e) {
+			// TODO: handle exception
+		}
+		return id;
+	}
+
 
 	public void addAllTable(String mobileNumber)
 	{
@@ -244,4 +268,5 @@ public class UserDAOImp
 		}		
 		return 0;
 	}
+
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dollop.appointment.service.PatientService;
+import com.dollop.appointment.service.PaymentService;
 
 /**
  * Servlet implementation class PatientController
@@ -23,6 +24,7 @@ public class PatientController extends HttpServlet {
      */
 	
 	PatientService ps =null;
+	
     public PatientController() {
     	ps=new PatientService();
     	
@@ -52,6 +54,10 @@ public class PatientController extends HttpServlet {
 		case "register":  ps.patientRegistration(request,response);break;
 		
 		
+		case "Booking": ps.BookingData(request,response);break;
+		
+		case "view_invoice": ps.getInvoiceData(request,response);break;
+			              
 		case "profileSettingInsData": ps.patientProfileSettingInsData(request,response);
 		 RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
 		  rd.forward(request, response);
@@ -91,6 +97,7 @@ public class PatientController extends HttpServlet {
 		case "doctorProfile" :ps.doctorProfileShowData(request,response);
 		RequestDispatcher rd5 = request.getRequestDispatcher("doctor-profile.jsp");
 		rd5.forward(request, response);
+
 		
 		
 		break;

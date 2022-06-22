@@ -25,6 +25,7 @@ public class LoginService
 		udi = new UserDAOImp();
 		adi = new AdminDAOImp();
 	}
+
 	
 	public void userLogin(HttpServletRequest request, HttpServletResponse response,String mobileNumber,String password) throws ServletException, IOException 
 	{	
@@ -53,7 +54,8 @@ public class LoginService
 					
 					RequestDispatcher rd = request.getRequestDispatcher("doctor-dashboard.jsp");
 					rd.forward(request, response);
-				} else {
+				} 
+				else{
 
 					session.setAttribute("type","patient");
 					

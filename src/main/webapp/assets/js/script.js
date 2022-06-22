@@ -163,25 +163,17 @@ Version      : 1.0
 					'<div class="col-12 col-md-6">' +
 						'<div class="form-group">' +
 							'<label>Start Time</label>' +
-							'<select class="form-control">' +
-								'<option>-</option>' +
-								'<option>12.00 am</option>' +
-								'<option>12.30 am</option>' + 
-								'<option>1.00 am</option>' +
-								'<option>1.30 am</option>' +
-							'</select>' +
+							
+							'<input type="text" class="form-control timepicker" name="start">' +
+					
 						'</div>' +
 					'</div>' +
 					'<div class="col-12 col-md-6">' +
 						'<div class="form-group">' +
 							'<label>End Time</label>' +
-							'<select class="form-control">' +
-								'<option>-</option>' +
-								'<option>12.00 am</option>' +
-								'<option>12.30 am</option>' +
-								'<option>1.00 am</option>' +
-								'<option>1.30 am</option>' +
-							'</select>' +
+							
+							'<input type="text" class="form-control timepicker" name="end">' +
+						
 						'</div>' +
 					'</div>' +
 				'</div>' +

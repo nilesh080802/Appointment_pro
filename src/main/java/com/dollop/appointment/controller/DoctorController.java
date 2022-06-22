@@ -48,6 +48,7 @@ public class DoctorController extends HttpServlet
 	*/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
 	{
+
 		String action = request.getParameter("action");
 		
 		System.out.println(action);
@@ -65,6 +66,7 @@ public class DoctorController extends HttpServlet
   				 rd.forward(request, response);
   			   }
   			   break;
+
 	
 		   case "profileSettingInsData": 
 			   	ds.doctorProfileSettingInsData(request,response);

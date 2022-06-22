@@ -12,6 +12,12 @@
 		
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+		<link href="assets/css/mdtimepicker.css" rel="stylesheet" type="text/css">
+		<!-- 
+		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	--><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 		
 		<!-- Fontawesome CSS -->
 		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
@@ -185,12 +191,14 @@
 													<div class="col-lg-4">
 														<div class="form-group">               
 															<label>Timing Slot Duration</label>
+
 															<select class="select form-control">
 																<option>Select Time Duration</option>
 																<option>15 mins</option>
 																<option selected="selected">30 mins</option>  
 																<option>45 mins</option>
 																<option>1 Hour</option>
+
 															</select>
 														</div>
 													</div>
@@ -207,7 +215,7 @@
 																<div class="schedule-nav">
 																	<ul class="nav nav-tabs nav-justified">
 																		<li class="nav-item">
-																			<a class="nav-link" data-toggle="tab" href="#slot_sunday">Sunday</a>
+																			<a class="nav-link " data-toggle="tab" href="#slot_sunday">Sunday</a>
 																		</li>
 																		<li class="nav-item">
 																			<a class="nav-link active" data-toggle="tab" href="#slot_monday">Monday</a>
@@ -267,19 +275,6 @@
 																			<a href="javascript:void(0)" class="delete_schedule">
 																				<i class="fa fa-times"></i>
 																			</a>
-																		</div>
-																		<div class="doc-slot-list">
-																			3:00 pm - 5:00 pm
-																			<a href="javascript:void(0)" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		<div class="doc-slot-list">
-																			6:00 pm - 11:00 pm
-																			<a href="javascript:void(0)" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
 																	</div>
 																	<!-- /Slot List -->
 																	
@@ -362,9 +357,10 @@
 		   
 		</div>
 		<!-- /Main Wrapper -->
+		<!-- /Add Time Slot Modal -->
 		
-		<!-- Add Time Slot Modal -->
-		<div class="modal fade custom-modal" id="add_time_slot">
+		<!-- Edit Time Slot Modal -->
+		<div class="modal fade custom-modal" id="edit_time_slot">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -382,83 +378,13 @@
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>Start Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option>12.30 am</option>  
-														<option>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
+											    	 <input type="text" class="form-control timepicker" name="start" >
 												</div> 
 											</div>
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>End Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option>12.30 am</option>  
-														<option>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
-												</div> 
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="add-more mb-3">
-								<a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> Add More</a>
-							</div>
-							<div class="submit-section text-center">
-								<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Add Time Slot Modal -->
-		
-		<!-- Edit Time Slot Modal -->
-		<div class="modal fade custom-modal" id="edit_time_slot">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Edit Time Slots</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form>
-							<div class="hours-info">
-								<div class="row form-row hours-cont">
-									<div class="col-12 col-md-10">
-										<div class="row form-row">
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>Start Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option selected>12.00 am</option>
-														<option>12.30 am</option>  
-														<option>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
-												</div> 
-											</div>
-											<div class="col-12 col-md-6">
-												<div class="form-group">
-													<label>End Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option selected>12.30 am</option>  
-														<option>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
+													 <input type="text" class="form-control timepicker" name="end">
 												</div> 
 											</div>
 										</div>
@@ -468,28 +394,16 @@
 								<div class="row form-row hours-cont">
 									<div class="col-12 col-md-10">
 										<div class="row form-row">
-											<div class="col-12 col-md-6">
+											<div class="col-12 col-md-6"> 
 												<div class="form-group">
 													<label>Start Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option selected>12.30 am</option>
-														<option>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
+													<input type="text" class="form-control timepicker" name="start" >
 												</div>
 											</div>
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>End Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option>12.30 am</option>
-														<option selected>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
+													<input type="text" class="form-control timepicker" name="end">
 												</div>
 											</div>
 										</div>
@@ -503,25 +417,13 @@
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>Start Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option>12.30 am</option>
-														<option selected>1.00 am</option>
-														<option>1.30 am</option>
-													</select>
+													<input type="text" class="form-control timepicker" name="start">
 												</div>
 											</div>
 											<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>End Time</label>
-													<select class="form-control">
-														<option>-</option>
-														<option>12.00 am</option>
-														<option>12.30 am</option>
-														<option>1.00 am</option>
-														<option selected>1.30 am</option>
-													</select>
+													<input type="text" class="form-control timepicker" name="end">
 												</div>
 											</div>
 										</div>
@@ -546,6 +448,9 @@
 	  
 		<!-- jQuery -->
 		<script src="assets/js/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="assets/js/mdtimepicker.js"></script>
+		
 		
 		<!-- Bootstrap Core JS -->
 		<script src="assets/js/popper.min.js"></script>
@@ -561,6 +466,70 @@
 		<!-- Custom JS -->
 		<script src="assets/js/script.js"></script>
 		
+		
+		<script>
+	  $(document).ready(function(){
+	
+		  $('.timepicker').mdtimepicker(); //Initializes the time picker
+	
+		  $('.add-hours').click(function(){ 
+	
+		    $('.timepicker').mdtimepicker(); //Initializes the time picker
+	       });
+		  
+		$('.submit-btn').click(function(){
+		        
+			      var i=0,j=0;
+			      const s =[];
+			      
+			      var starts=$("input[name='start']");
+			     
+			     starts.each(function(){
+			          	
+			    	 s[i++]=$(this).val();
+			     }); 
+					
+		         var ends=$("input[name='end']");
+			     
+			     ends.each(function(){
+			          	
+			    	 s[j]=s[j]+" - "+$(this).val();
+			    	 j++;
+			     });    
+			    
+	            var day=$(".active") .text();
+	            var js=JSON.stringify(s);
+	           $.ajax({
+	        	  
+	        	   url:"DoctorController",
+	        	   type:'POST',
+	        	   dataType:'json',
+	        	   data:{ js:JSON.stringify(s),action:'timeSchedule'},  	   
+	        	   success:function(data){
+	        		   
+	        	   }
+	           }); 
+		  });	
+	  });
+	   
+	</script>
+	
+	
+	<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-36251023-1']);
+	  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+</script>
+			
 	</body>
 
 <!-- doccure/schedule-timings.jsp  30 Nov 2019 04:12:09 GMT -->

@@ -1,8 +1,13 @@
 package com.dollop.appointment.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+
+import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
@@ -460,5 +465,17 @@ public class DoctorService
 
 		// Returning boolean value
 		return (m.matches());
-	}
+
+		}
+
+		public void doctorTimeScheduleData(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			
+			String json = request.getParameter("js");
+			
+			
+				
+			
+		}
+
+
 }

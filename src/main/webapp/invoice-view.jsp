@@ -70,8 +70,10 @@
 										</div>
 										<div class="col-md-6">
 											<p class="invoice-details">
+
 												<strong>Order: </strong>#${invoiceDetails.getOrderId() }  <br>	<!-- #00124 -->
 												<strong>Issued: </strong> ${invoiceDetails.getInvoiceDate()}<!-- 20/07/2019 -->
+
 											</p>
 										</div>
 									</div>
@@ -84,9 +86,11 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Invoice From</strong>
 												<p class="invoice-details invoice-details-two">
+
 													Dr. ${invoiceDetails.getDocFirstName() } ${invoiceDetails.getDocLastName() }<br>
 													 ${invoiceDetails.getDocAddress() }, ${invoiceDetails.getDocPostalCode()}, ${invoiceDetails.getDocCity()}<!-- 806  Twin Willow Lane, Old Forge -->,<br>
 													${invoiceDetails.getDocState()}, ${invoiceDetails.getDocCountry()}<!-- Newyork, USA  --><br>
+
 												</p>
 											</div>
 										</div>
@@ -94,9 +98,11 @@
 											<div class="invoice-info invoice-info2">
 												<strong class="customer-text">Invoice To</strong>
 												<p class="invoice-details">
+
 													${invoiceDetails.getPatFirstName()} ${invoiceDetails.getPatLastName()}<!-- Walter Roberson  --><br>
 													${invoiceDetails.getPatAddress()}, ${invoiceDetails.getPatCity()}<!-- 299 Star Trek Drive, Panama City, --> <br>
 													${invoiceDetails.getPatCity()}, ${invoiceDetails.getPatZipCode()}, ${invoiceDetails.getPatCountry()}<!-- Florida, 32405, USA  --><br>
+
 												</p>
 											</div>
 										</div>
@@ -111,9 +117,11 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Payment Method</strong>
 												<p class="invoice-details invoice-details-two">
+
 													${invoiceDetails.getCardName()}<!-- Debit Card --> <br>
 													XXXXXXXXXXXX-${invoiceDetails.getCardNumber().substring(14,19)}<!-- XXXXXXXXXXXX-2541 --> <br>
 													<!-- HDFC Bank --><br>
+
 												</p>
 											</div>
 										</div>
@@ -139,14 +147,18 @@
 														<tr>
 															<td>General Consultation</td>
 															<td class="text-center">1</td>
+
 															<td class="text-center">0</td>
 															<td class="text-right">${invoiceDetails.getAmount()}</td>
+
 														</tr>
 														<tr>
 															<td>Video Call Booking</td>
 															<td class="text-center">1</td>
+
 															<td class="text-center">0</td>
 															<td class="text-right">250</td>
+
 														</tr>
 													</tbody>
 												</table>
@@ -158,7 +170,7 @@
 													<tbody>
 													<tr>
 														<th>Subtotal:</th>
-														<td><span>$350</span></td>
+														<td><span>Rs350</span></td>
 													</tr>
 													<tr>
 														<th>Discount:</th>
@@ -166,7 +178,7 @@
 													</tr>
 													<tr>
 														<th>Total Amount:</th>
-														<td><span>$315</span></td>
+														<td><span>Rs${pmd.getAmount()}</span></td>
 													</tr>
 													</tbody>
 												</table>

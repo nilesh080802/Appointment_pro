@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import com.dollop.appointment.service.LoginService;
 /**
  * Servlet implementation class LoginController
  */
+
 public class LoginController extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
@@ -55,19 +57,17 @@ public class LoginController extends HttpServlet
 		
 		String action=request.getParameter("action");
 
+
 		String mobileNumber = request.getParameter("mobileNumber");
 		String password = request.getParameter("password");
 		
-		if(mobileNumber!=null || password!=null) 
+		if(mobileNumber!=null && password!=null) 
 		{
+
 			mobileNumber = mobileNumber.trim();
 			password = password.trim();
 		}
 
-		
-		
-
-	
 		if (mobileNumber == "" || password == "") {
 
 			//here we set a messseg  for showing on jsp page
@@ -83,6 +83,7 @@ public class LoginController extends HttpServlet
 			{
 				RequestDispatcher rd = request.getRequestDispatcher("admin/login.jsp");
 				rd.forward(request, response);
+
 			}			
 		} 
 		else 
@@ -91,14 +92,6 @@ public class LoginController extends HttpServlet
 			if(action.equals("userLogin")) 
 			{
 				ls.userLogin(request,response,mobileNumber,password);
-
-			}else if(action.equals("adminLogin")) {
-				
-//				as.showPatientData(request,response);
-				
-//				as.showDoctorData(request,response);
-//				System.out.println(mobileNumber);
-				ls.adminLogin(request,response,mobileNumber,password);
 
 			}
 			else if(action.equals("adminLogin")) 

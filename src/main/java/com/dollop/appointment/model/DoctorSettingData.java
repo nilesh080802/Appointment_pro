@@ -1,11 +1,14 @@
 package com.dollop.appointment.model;
 
+
 import java.util.ArrayList;
 
 public class DoctorSettingData 
 {
 	private int doctorId;
+
 	private String firstName;
+	private Integer  doctorId;
 	private String lastName;
 	private String mobileNumber;
 	private String gender;
@@ -46,6 +49,13 @@ public class DoctorSettingData
 	private ArrayList<String> registration;
 	private ArrayList<String> registrationYear;
 
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
+	
 	public ArrayList<Integer> getDegreeId()
 	{
 		return degreeId;
@@ -72,6 +82,7 @@ public class DoctorSettingData
 	{
 		this.doctorId = doctorId;
 	}
+
 	public String getFirstName() {
 	return firstName;
 	}

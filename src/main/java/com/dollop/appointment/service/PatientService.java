@@ -16,11 +16,15 @@ import com.dollop.appointment.dao.UserDAOImp;
 import com.dollop.appointment.model.PatientAppointmentShowData;
 import com.dollop.appointment.model.PatientSettingData;
 
+import com.dollop.appointment.model.PaymentSettingData;
+
 import com.dollop.appointment.model.UserData;
 
 
 @MultipartConfig(location="/tmp", fileSizeThreshold=1048576, maxFileSize=20848820, maxRequestSize=418018841)
 public class PatientService {
+
+	PaymentService pms =null;
 
 	PatientDAOImp  pdi=null;
 	UserDAOImp udi= null;
@@ -30,7 +34,7 @@ public class PatientService {
 	{
 		udi= new UserDAOImp();
 		pdi=new PatientDAOImp();
-		
+		pms=new PaymentService(); 
 	}
 
 	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -42,14 +46,17 @@ public class PatientService {
 		RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
 		rd.forward(request, response);		
 
-	
-	
-
-	public void patientsFavouritesShow(HttpServletRequest request, HttpServletResponse response) {
 		
-		String  patientId= request.getParameter("patientId");
-		pdi.patientsFavouritesShowData(patientId);
+	}
+	
+	public void BookingData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		 String mobileNumber=request.getParameter("mobileNumber");
+		 PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
+		  
+          request.setAttribute("patient",psd);
+		  RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
+		  rd.forward(request, response);
 	}
 	
 	public void addRemoveFavouritesData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,6 +84,7 @@ public class PatientService {
 		else {
 			System.out.println("invalid mobile number");
 		}
+
 		
 	}
 	
@@ -147,7 +155,6 @@ public class PatientService {
 		  psd.setLastName(lastName);
 		  psd.setDateOfBirth(dateOfBirth);
 
-
 		  psd.setBloodGroup(bloodGroup);
 		  psd.setEmailId(emailId);
 		  psd.setMobile(mobile);
@@ -164,15 +171,10 @@ public class PatientService {
 			  request.setAttribute("msg1","Your data updated succesfully");
 			 
 			  patientProfileSettingShowData(request,response);
-			  
-			
-		  
-		}
-		
-		  
+			   
+		}		  
 	}
-	
-	
+		
 	public void patientRegistration(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
@@ -180,14 +182,16 @@ public class PatientService {
 		String lname = request.getParameter("lname");
 		String mobileNumber = request.getParameter("mobileNumber");
 		String password=request.getParameter("password");
-	try {
-		fname=fname.trim();
-		lname=lname.trim();
-		mobileNumber=mobileNumber.trim();
-		password=password.trim();
+
+		try {
 		
-		if( fname==""|| lname=="" || mobileNumber=="" ||password=="" ) {
-			request.setAttribute("loginError", "Please Enter details !!!!!!");
+			fname=fname.trim();
+		    lname=lname.trim();
+		    mobileNumber=mobileNumber.trim();
+		    password=password.trim();
+		
+		    if( fname==""|| lname=="" || mobileNumber=="" ||password=="" ) {
+		 	request.setAttribute("loginError", "Please Enter details !!!!!!");
 			RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
 			rd.forward(request, response);
 			
@@ -224,19 +228,9 @@ public class PatientService {
 		
 	}
 	
-	
-	  public void doctorProfileShowData(HttpServletRequest request,
-	  HttpServletResponse response) {
-	  
-	  
-	  
-	  // TODO Auto-generated method stub
-	  
-	  }
-	 
+
 	 public static boolean isValid(String s)
 	    {
-	 
 	        // The given argument to compile() method
 	        // is regular expression. With the help of
 	        // regular expression we can validate mobile
@@ -257,10 +251,23 @@ public class PatientService {
 	    }
 
 
-
-	
-
-
+	public void getInvoiceData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	 
+		
+		PaymentSettingData pm =new PaymentSettingData();
+		String action=request.getParameter("action");
+		
+		pm.setDoctorId(Integer.parseInt(request.getParameter("doctorId")));
+		pm.setPatientId(Integer.parseInt(request.getParameter("patientId")));
+		pm.setReciptNumber(request.getParameter("reciptNumber"));
+		pm.setInvoiceId(Integer.parseInt(request.getParameter("invoiceId")));
+		pms.getInvoiceData(pm, request, response);
+		
+		 if(action.equals("view_invoice")){
+        	 
+       	  RequestDispatcher rd3 =request.getRequestDispatcher("invoice-view.jsp");
+   		  rd3.forward(request, response);
+         }
+	}
 
 
 
