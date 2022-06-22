@@ -110,7 +110,7 @@
 												</a>
 											</li>
 											<li>
-												<a href="${pageContext.request.contextPath}/PatientController?action=PatientFavouritesShowData&mobile=${mobileNumber}">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientFavouritesShowData&id=${patient.getPatientId()}&mobile=${mobileNumber}">
 													<i class="fas fa-bookmark"></i>
 													<span>Favourites</span>
 												</a>
@@ -198,12 +198,12 @@
 															
 																<tr>
 																	<td>
-																		<%-- <h2 class="table-avatar">
+																		 <h2 class="table-avatar">
 																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
 																				 <img class="avatar-img rounded-circle" src="${appointment.getDoctorImage()}" alt="User Image">
 																			</a>
-																			<a href="doctor-profile.jsp">Dr. ${appointment.getFirstName()} ${appointment.getLastName()} <span>${appointment.getSpecialization()}</span></a>
-																		</h2> --%>	
+																			<a href="PatientController?action=doctorProfile">Dr.${appointment.getdFirstName()} ${appointment.getdLastName()} <span>${appointment.getSpecialization()}</span></a>
+																		</h2> 
 																	</td>
 																	<td>${appointment.getApptDate()} <span class="d-block text-info">${appointment.getApptDate()}</span></td>
 																	<td>${appointment.getBookingDate()}</td>
