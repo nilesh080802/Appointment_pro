@@ -208,14 +208,16 @@ public class PatientService {
 		
 	}
 	
-	public void doctorProfileShowData(HttpServletRequest request, HttpServletResponse response) {
-		
-		
-		
-		// TODO Auto-generated method stub
-		
-	}
-	
+	/*
+	 * public void doctorProfileShowData(HttpServletRequest request,
+	 * HttpServletResponse response) {
+	 * 
+	 * 
+	 * 
+	 * // TODO Auto-generated method stub
+	 * 
+	 * }
+	 */
 	 public static boolean isValid(String s)
 	    {
 	 
