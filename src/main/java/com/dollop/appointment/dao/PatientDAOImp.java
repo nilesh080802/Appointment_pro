@@ -23,41 +23,35 @@ static Connection con=null;
 	 
 	public ArrayList<PatientAppointmentShowData>  patientAppointmentGetData(String patientId) {
 		
-		String dql="Select * from appointmentdata where PatientId=?";
-//		String dql2="select profileImage,firstName,lastName,speciality from doctorprofilesettingdata where doctorId=?";
-		
+		String dql="SELECT appointmentdata.DoctorId, appointmentdata.PatientId,appointmentdata.Status, appointmentdata.AppointmentDate, appointmentdata.BookingDate, appointmentdata.Amount, doctorprofilesetting.firstName, doctorprofilesetting.lastName,doctorprofilesetting.specialist,doctorprofilesetting.imagePath  FROM `appointmentdata`\r\n"
+				+ "INNER JOIN doctorprofilesetting ON appointmentdata.DoctorId=doctorprofilesetting.doctorId";
 		
 		
 		ArrayList<PatientAppointmentShowData> appointmentList= new ArrayList<PatientAppointmentShowData>();
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(dql);
-//			PreparedStatement ps2 = con.prepareStatement(dql2);
-			ps.setString(1, patientId);
+			
 			ResultSet rs= ps.executeQuery();
+			
 			
 			while(rs.next()) {
 				
 				PatientAppointmentShowData pasd = new PatientAppointmentShowData();
-				pasd.setDoctorId(rs.getString("DoctorId"));
+				pasd.setDoctorId(rs.getInt("DoctorId"));
 				pasd.setPatientId(rs.getString("PatientId"));
-				
 				pasd.setApptDate(rs.getString("AppointmentDate"));
 				pasd.setBookingDate(rs.getString("BookingDate"));
 				pasd.setAmount(rs.getInt("Amount"));
 				pasd.setStatus(rs.getInt("Status"));
+				pasd.setdFirstName(rs.getString("firstName"));
+				pasd.setdLastName(rs.getString("lastName"));
+				pasd.setSpecialization(rs.getString("specialist"));
+				pasd.setDoctorImage(rs.getString("imagePath"));
+			
+				
 				System.out.println(rs.getInt("Status")+"-dao");
-				
-				//----------------
-				
-				/*
-				 * ps2.setString(1, rs.getString("DoctorId")); ResultSet rs1 =
-				 * ps2.executeQuery(); rs1.next();
-				 * pasd.setDoctorImage(rs1.getString("profileImage"));
-				 * pasd.setdFirstName(rs1.getString("firstName"));
-				 * pasd.setdLastName(rs1.getString("lastName"));
-				 * pasd.setSpecialization(rs.getString("specialization"));
-				 */
+			
 				
 				appointmentList.add(pasd);
 			}
@@ -165,6 +159,75 @@ static Connection con=null;
 	   
 	  
 	 }
+
+	public void addRemoveFavourites(String patientId, String doctorId) {
+
+		String dml2="Insert into favourites(patientId,doctorId)values(?,?)";
+		String dml1="DELETE FROM favourites WHERE patientId=? AND doctorId=?";
+		String dql="Select * from favourites where patientId=? AND doctorId=?";
+		try {
+			
+			PreparedStatement psq = con.prepareStatement(dql);
+			psq.setString(1, patientId);
+			psq.setString(2, doctorId);
+			
+			ResultSet rs = psq.executeQuery();
+			System.out.println(rs.next());
+			if(rs.next()) {
+				
+				PreparedStatement ps1 = con.prepareStatement(dml1);
+				ps1.setString(1, patientId);
+				ps1.setString(2, doctorId);
+				
+				ps1.execute();
+				
+				
+			}else {
+				
+				PreparedStatement ps2 = con.prepareStatement(dml2);
+				ps2.setString(1, patientId);
+				ps2.setString(2, doctorId);
+				
+				ps2.execute();
+				
+			}
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	public void patientsFavouritesShowData(String patientId) {
+		String dql ="select doctorId from favouritest where patientId=?";
+		ArrayList favourites = new ArrayList();
+		try {
+			PreparedStatement ps = con.prepareStatement(dql);
+			ps.setString(1,patientId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				
+				String did = rs.getString("doctorId");
+				
+				
+				
+			}
+			
+			
+			
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	  
 
 }
