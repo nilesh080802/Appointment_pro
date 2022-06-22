@@ -1,4 +1,4 @@
-	package com.dollop.appointment.service;
+package com.dollop.appointment.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,13 +6,16 @@ import java.util.regex.Pattern;
 
 import com.dollop.appointment.dao.*;
 import com.dollop.appointment.model.AdminData;
+import com.dollop.appointment.model.AdminRegistrationData;
 import com.dollop.appointment.model.DoctorSettingData;
 import com.dollop.appointment.model.PatientSettingData;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class AdminService {
 	AdminDAOImp adi=null;
@@ -22,27 +25,83 @@ public class AdminService {
 			adi=new AdminDAOImp();
 		}
 
-	
-	public void showPatientData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		AdminDAOImp adi = new AdminDAOImp();
+//	this method is for show all the patient data
+	public ArrayList<PatientSettingData> showPatientsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		ArrayList<PatientSettingData> patientList = adi.allPatientsData();
 		
+		patientList=adi.allPatientsData();
+		
 		request.setAttribute("patientList", patientList);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("admin/patient-list.jsp");
-		rd.forward(request, response);
+		return patientList;
 	    	
 	}
 	public void showAdminData(HttpServletRequest request ,HttpServletResponse response )
 	{
-	    String mobile=request.getParameter("mobile");
+		HttpSession session=request.getSession();
+	    String mobile=(String) session.getAttribute("mobileNumber");
+	    
+	    
+	    System.out.println("show "+mobile);
 	    AdminData ad=new AdminData(); 
 	    ad= (AdminData) adi.getAdminData(mobile);
 	    request.setAttribute("adminData", ad);
 	    
 	    System.out.println(ad.getFirstName());
+		
+	}
+	
+//	this method is for change the admin password
+	public boolean changeAdminPassword(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException
+	{
+		HttpSession session=null;
+		
+		String oldPassword=request.getParameter("oldPassword");
+		String mobileNumber=request.getParameter("mobileNumber");
+		String newPassword=request.getParameter("newPassword");
+		String newConPassword=request.getParameter("newConPassword");
+		
+		oldPassword=oldPassword.trim();
+		newPassword=newPassword.trim();
+		newConPassword=newConPassword.trim();
+		
+		AdminRegistrationData ard= new AdminRegistrationData();
+		
+		if(oldPassword=="" || mobileNumber=="" ||newPassword=="" || newConPassword=="")
+		{
+			request.setAttribute("changePassword","	Please fill All the field");
+			
+			return false;
+			
+		}
+		else {
+			
+			ard.setMobileNumber(mobileNumber);
+			ard.setPassword(newPassword);
+			ard.setConPassword(newConPassword);
+			
+			if(adi.changePassword(ard, oldPassword))
+			{
+				
+				
+//				System.out.println("hiscss");
+				return true;
+				
+			}
+			else
+			{
+				System.out.println("not changed");
+				request.setAttribute("changePassword","	New Password and Confirm new Password does not Match");
+				
+				return false;
+				
+			}
+
+			
+		}
+				
+		
 		
 	}
 	
@@ -54,6 +113,7 @@ public class AdminService {
 		String firstName=request.getParameter("firstName");
 		String lastName=request.getParameter("lastName");
 		String dateOfBirth=request.getParameter("dateOfBirth");
+		System.out.println(dateOfBirth);
 		String email=request.getParameter("email");
 		String mobileNumber=request.getParameter("mobileNumber");
 		String address=request.getParameter("address");
@@ -86,12 +146,13 @@ public class AdminService {
 
 		adi.editAdminProfileData(ad);
 		
+		
 	}
 	
 //	this method is for admin registraion
 	public void adminRegistration(HttpServletRequest request , HttpServletResponse response)throws ServletException ,IOException
 	{
-		AdminData ad=new AdminData();
+		AdminRegistrationData ad=new AdminRegistrationData();
 		String firstName=request.getParameter("firstName");
 		String lastName=request.getParameter("lastName");
 		String email=request.getParameter("email");
@@ -123,7 +184,7 @@ public class AdminService {
 				ad.setPassword(password);
 				ad.setConPassword(conPassword);
 				
-				adi.insertAdminData(ad);	
+				adi.insertAdminRegistrationData(ad);	
 				request.setAttribute("registration", "Registration  succesfully !!!!");
 				RequestDispatcher rd = request.getRequestDispatcher("./admin/login.jsp");
 				rd.forward(request, response);
@@ -170,6 +231,7 @@ public void showDoctorData(HttpServletRequest request, HttpServletResponse respo
 		AdminDAOImp adi = new AdminDAOImp();
 		
 		  String mobile = request.getParameter("mobile");
+		  System.out.println(mobile);
 		  PatientSettingData patients= adi.patientData(mobile);
 	  
 		  request.setAttribute("patients", patients);
@@ -179,15 +241,10 @@ public void showDoctorData(HttpServletRequest request, HttpServletResponse respo
 	 }
 	
 //	this method is for update patient profile data
-	public void editPatinetProfileUpdate(HttpServletRequest request, HttpServletResponse response) {
-			
-			
-		  String mobile = request.getParameter("mobile");
-		  
-		  
-		  
-		  
-//		  AdminPatientDataUpdate patients=adi.patientData(mobile);
+	public void editPatientProfileUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		  PatientService ps=new PatientService();
+		  ps.patientProfileSettingInsData(request, response);
 			
 			
 	  }
