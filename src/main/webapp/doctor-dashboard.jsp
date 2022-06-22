@@ -117,7 +117,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="invoices.jsp">
+												<!-- <a href="invoices.jsp"> -->
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getAllInvoiceDetails">
 													<i class="fas fa-file-invoice"></i>
 													<span>Invoices</span>
 												</a>
