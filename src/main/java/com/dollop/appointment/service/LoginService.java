@@ -9,30 +9,45 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.dollop.appointment.dao.AdminDAOImp;
+import com.dollop.appointment.dao.PatientDAOImp;
 import com.dollop.appointment.dao.UserDAOImp;
+import com.dollop.appointment.model.PatientSettingData;
 
-public class LoginService {
-	
+public class LoginService 
+{
 	
 	UserDAOImp udi = null;
 	AdminDAOImp adi =null;
-	public LoginService() {
+
+	//Constructor
+	public LoginService() 
+	{
 		udi = new UserDAOImp();
 		adi = new AdminDAOImp();
-
-		// TODO Auto-generated constructor stub
 	}
-	public void userLogin(HttpServletRequest request, HttpServletResponse response,String mobileNumber,String password) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession(false);
-		if (udi.verifyPassword(password)) {
-			
-			if (udi.verifyUser(mobileNumber, password)) {
+
+	
+	public void userLogin(HttpServletRequest request, HttpServletResponse response,String mobileNumber,String password) throws ServletException, IOException 
+	{	
+		HttpSession session = request.getSession();
+		if (udi.verifyPassword(password)) 
+		{	
+			if (udi.verifyUser(mobileNumber, password)) 
+			{
+
+				if(udi.identifyUser(mobileNumber)) 
+				{
+					session.setAttribute("type","doctor");					
+					session.setAttribute("doctorId", udi.getUserId(mobileNumber));
+					RequestDispatcher rd = request.getRequestDispatcher("doctor-dashboard.jsp");
+					rd.forward(request, response);
+				} 
+				else 
+				{
+					session.setAttribute("type","patient");					
+					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");
+
 				
-				Integer patientId=udi.getPatientId(mobileNumber);
-				session.setAttribute("mobileNumber",mobileNumber );
-				session.setAttribute("patientId", patientId);
-			
 				if (udi.identifyUser(mobileNumber)) {
 			
 					session.setAttribute("type","doctor");
@@ -44,25 +59,32 @@ public class LoginService {
 
 					session.setAttribute("type","patient");
 					
-					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");
-					rd.forward(request, response);
+					PatientDAOImp ptdao= new PatientDAOImp();
+					PatientSettingData psd= ptdao.patientProfileGetData(mobileNumber);
+//					request.setAttribute("patientData", psd);
+					request.setAttribute("patient",psd);
+					session.setAttribute("pid",psd.getPatientId() );
+ 					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");
 
+					rd.forward(request, response);
 				}
-			} else {
+			} 
+			else 
+			{
 				System.out.println("User Not Registred!!");
 				request.setAttribute("loginError","User Not Registred!!" );
 				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 				rd.forward(request, response);
 			}
-		} else {
+		} 
+		else 
+		{
 			request.setAttribute("loginError", "Invalid Password !!!");
 
 			System.out.println("Invalid Password !!!");
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
-		}
-		
-		
+		}		
 	}
 	
 	public void adminLogin(HttpServletRequest request, HttpServletResponse response,String mobileNumber,String password) throws ServletException, IOException {
@@ -75,12 +97,13 @@ public class LoginService {
 					if (adi.verifyUser(mobileNumber, password)) {
 
 					session.setAttribute("mobileNumber",mobileNumber );
+//					System.out.println(mobileNumber);
 					
 					session.setAttribute("type","admin");
 					System.out.println("adminLoginsuccesfully");
-					
 					RequestDispatcher rd = request.getRequestDispatcher("admin/index.jsp");
 					rd.forward(request, response);
+					
 				
 					} else {
 						System.out.println("Admin Not Registred!!");
@@ -89,15 +112,12 @@ public class LoginService {
 						rd.forward(request, response);
 					}
 			} else {
-					request.setAttribute("loginError", "Invalid Password !!!");
+					
+				        request.setAttribute("loginError", "Invalid Password !!!");
 
 						System.out.println("Invalid Password !!!");
 						RequestDispatcher rd = request.getRequestDispatcher("admin/login.jsp");
 						rd.forward(request, response);
-		}
-
-		
-	}
-	
-	
+		}		
+	}	
 }

@@ -29,13 +29,28 @@
 	</head>
 	<body>
 	<!--Manage session -->
-		
+
 		<%String mobileNumber=(String)session.getAttribute("mobileNumber");%>	
 		
 		<% if(session.getAttribute("mobileNumber")==null){ %>
 		
 		<% response.sendRedirect("login.jsp"); %>
 		<%} %>
+
+		<%--   <%if(session.getAttribute("type") == "doctor"){ %>
+			
+			<% response.sendRedirect("doctor-dashboard.jsp");%>
+			
+			<%}else if(session.getAttribute("type") == "patient") {%>
+			 
+			 <%-- <% response.sendRedirect("patient-dashboard.jsp");%> --%>
+			
+			<%}else if(session.getAttribute("type") == "admin") {%>
+			 
+			 <% response.sendRedirect("admin/index.jsp");%>
+			
+			<%}%> --%>
+
 		<!--Manage session end -->
 	
 		<!-- Main Wrapper -->

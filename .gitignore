@@ -1,5 +1,7 @@
 /build/
 /.settings/
+/src/main/webapp/assets/img/
+/src/main/webapp/admin/assets/img/
 .classpath
 .project
 /bin/

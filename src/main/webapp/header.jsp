@@ -111,13 +111,13 @@
 										</ul>
 									</li>
 									<li class="active"><a href="blank-page.jsp">Starter Page</a></li>
-									<li><a href="login.jsp">Login</a></li>
+									<li><a href="${pageContext.request.contextPath}/login.jsp">Login</a></li>
 									<li><a href="register.jsp">Register</a></li>
 									<li><a href="forgot-password.jsp">Forgot Password</a></li>
 								</ul>
 							</li>
 							<li>
-								<a href="admin/login.jsp" target="_blank">Admin</a>
+								<a href="admin/login.jsp" >Admin</a>
 							</li>
 							<li class="login-link">
 							

@@ -1,42 +1,51 @@
 package com.dollop.appointment.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dollop.appointment.dao.PatientDAOImp;
 import com.dollop.appointment.dao.UserDAOImp;
+import com.dollop.appointment.model.PatientAppointmentShowData;
 import com.dollop.appointment.model.PatientSettingData;
+
 import com.dollop.appointment.model.PaymentSettingData;
+
 import com.dollop.appointment.model.UserData;
 
 
+@MultipartConfig(location="/tmp", fileSizeThreshold=1048576, maxFileSize=20848820, maxRequestSize=418018841)
 public class PatientService {
 
 	PaymentService pms =null;
+
 	PatientDAOImp  pdi=null;
 	UserDAOImp udi= null;
-	public PatientService() {
+	
+	//Constructor
+	public PatientService() 
+	{
 		udi= new UserDAOImp();
 		pdi=new PatientDAOImp();
 		pms=new PaymentService(); 
 	}
-	
-	
-	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		 String mobileNumber=request.getParameter("mobile");
-		 PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
+
+	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{		
+		String mobileNumber=request.getParameter("mobile");
+		PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
 		 
-           
-          request.setAttribute("patient",psd);
-		  RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
-		  rd.forward(request, response);
+        request.setAttribute("patient",psd);
+		RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
+		rd.forward(request, response);		
+
 		
 	}
 	
@@ -49,9 +58,57 @@ public class PatientService {
 		  RequestDispatcher rd = request.getRequestDispatcher("checkout.jsp");
 		  rd.forward(request, response);
 	}
-	public void patientProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	public void addRemoveFavouritesData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+//		HttpSession session = request.getSession();
+		String patientId= request.getParameter("patientId");
+		String doctorId=request.getParameter("doctorId");
+		
+		System.out.println(patientId+"-"+doctorId);
+		
+		pdi.addRemoveFavourites(patientId,doctorId);
+		
+	}
+	
+	
+	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+//		System.out.println("1->");
+		String mobileNumber=request.getParameter("mobile");
+		
+		if(mobileNumber!=null) {
+		   PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
+           request.setAttribute("patient",psd);
+		}
+		else {
+			System.out.println("invalid mobile number");
+		}
+
+		
+	}
+	
+	public void patientDahsboardData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//get patient data For patient profile
+		patientProfileSettingShowData(request,response);
+		String patientId=request.getParameter("id");
+		ArrayList<PatientAppointmentShowData> appointments =null; 
+		  
+		appointments = pdi.patientAppointmentGetData(patientId);
+
+		request.setAttribute("appointments", appointments);
+		
+		return;
+		
+
+	}
+	
+	
+	public void patientProfileSettingInsData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{		
 		String firstName = request.getParameter("firstName");
+		System.out.println(firstName);
 		String lastName = request.getParameter("lastName");
 		String dateOfBirth = request.getParameter("dateOfBirth");
 //		Integer age = Integer.parseInt(request.getParameter("Age"));
@@ -64,21 +121,11 @@ public class PatientService {
 		String zipCode = request.getParameter("zipCode");
 		String country = request.getParameter("country");
 		
-		/*
-		 * InputStream inputstream =null; // input stream of the upload file Part
-		 * filePart=request.getPart("photo");
-		 * 
-		 * 
-		 * 
-		 * if(filePart!=null) { System.out.println(filePart.getName());
-		 * System.out.println(filePart.getSize());
-		 * System.out.println(filePart.getContentType());
-		 * 
-		 * inputstream= filePart.getInputStream();
-		 * 
-		 * 
-		 * }
-		 */
+		
+		  String imagePath = request.getParameter("image");
+		  
+//		  System.out.println("image->"+imagePath);
+		 	
 		
 		
 		firstName=firstName.trim();
@@ -107,7 +154,7 @@ public class PatientService {
 		  psd.setFirstName(firstName); 
 		  psd.setLastName(lastName);
 		  psd.setDateOfBirth(dateOfBirth);
-		 // psd.setAge(age);
+
 		  psd.setBloodGroup(bloodGroup);
 		  psd.setEmailId(emailId);
 		  psd.setMobile(mobile);
@@ -116,11 +163,10 @@ public class PatientService {
 		  psd.setState(state);
 		  psd.setZipCode(zipCode);
 		  psd.setCountry(country);
-//		  System.out.println("ppppppp");
-//		  psd.setPhoto(inputstream);
+		  psd.setImagePath(imagePath);
 		  
 		  
-		   pdi.patientProfileInsData(psd); 
+		    pdi.patientProfileInsData(psd); 
 			
 			  request.setAttribute("msg1","Your data updated succesfully");
 			 
@@ -161,6 +207,7 @@ public class PatientService {
 			
 //			System.out.println(name+"  "+"  "+mobileNumber+"  "+password);
 			udi.addUserData(ud);
+			
 			request.setAttribute("signup", "SignUp succesfully !!!!");
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
@@ -181,6 +228,7 @@ public class PatientService {
 		
 	}
 	
+
 	 public static boolean isValid(String s)
 	    {
 	        // The given argument to compile() method
@@ -222,6 +270,5 @@ public class PatientService {
 	}
 
 
-	
 
 }

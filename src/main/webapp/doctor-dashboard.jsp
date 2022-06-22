@@ -117,7 +117,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="invoices.jsp">
+												<!-- <a href="invoices.jsp"> -->
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getAllInvoiceDetails">
 													<i class="fas fa-file-invoice"></i>
 													<span>Invoices</span>
 												</a>
@@ -136,7 +137,8 @@
 												</a>
 											</li>
 											<li>
-												<a href="doctor-profile-settings.jsp">
+											<!-- <a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails&mobile=${mobileNumber}&doctorId=${doctorId}">> -->
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getDoctorDetails">
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>
@@ -288,7 +290,7 @@
 																	<tr>
 																		<td>
 																			<h2 class="table-avatar">
-																				<a href="patient-profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
+																				<a href="patient-profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient2.jpg" alt="User Image"></a>
 																				<a href="patient-profile.jsp">Charlene Reed <span>#PT0001</span></a>
 																			</h2>
 																		</td>

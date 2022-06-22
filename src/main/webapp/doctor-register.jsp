@@ -61,7 +61,9 @@
 										</div>
 										
 										<!-- Register Form -->
-										<form action="${pageContext.request.contextPath }/DoctorController?action=register "  id="submit" method="post">
+
+										<form action="${pageContext.request.contextPath }/DoctorController?action=register"  id="submit" method="post">
+
 											<div class="form-group form-focus">
 												<input type="text" class="form-control floating " id="fname" name="fname" required>
 												<label class="focus-label">First Name</label>
@@ -89,7 +91,11 @@
 
 											    $('#submit').validate({ // initialize the plugin
 											        rules: {
-											            name: {
+											            fname: {
+											                required: true,
+											                
+											            },
+											            lname: {
 											                required: true,
 											                
 											            },
