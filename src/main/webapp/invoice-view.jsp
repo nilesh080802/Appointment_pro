@@ -70,8 +70,8 @@
 										</div>
 										<div class="col-md-6">
 											<p class="invoice-details">
-												<strong>Order:</strong> #00124 <br>
-												<strong>Issued:</strong> 20/07/2019
+												<strong>Order: </strong>#${invoiceDetails.getOrderId() }  <br>	<!-- #00124 -->
+												<strong>Issued: </strong> ${invoiceDetails.getInvoiceDate()}<!-- 20/07/2019 -->
 											</p>
 										</div>
 									</div>
@@ -84,9 +84,9 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Invoice From</strong>
 												<p class="invoice-details invoice-details-two">
-													Dr. Darren Elder <br>
-													806  Twin Willow Lane, Old Forge,<br>
-													Newyork, USA <br>
+													Dr. ${invoiceDetails.getDocFirstName() } ${invoiceDetails.getDocLastName() }<br>
+													 ${invoiceDetails.getDocAddress() }, ${invoiceDetails.getDocPostalCode()}, ${invoiceDetails.getDocCity()}<!-- 806  Twin Willow Lane, Old Forge -->,<br>
+													${invoiceDetails.getDocState()}, ${invoiceDetails.getDocCountry()}<!-- Newyork, USA  --><br>
 												</p>
 											</div>
 										</div>
@@ -94,9 +94,9 @@
 											<div class="invoice-info invoice-info2">
 												<strong class="customer-text">Invoice To</strong>
 												<p class="invoice-details">
-													Walter Roberson <br>
-													299 Star Trek Drive, Panama City, <br>
-													Florida, 32405, USA <br>
+													${invoiceDetails.getPatFirstName()} ${invoiceDetails.getPatLastName()}<!-- Walter Roberson  --><br>
+													${invoiceDetails.getPatAddress()}, ${invoiceDetails.getPatCity()}<!-- 299 Star Trek Drive, Panama City, --> <br>
+													${invoiceDetails.getPatCity()}, ${invoiceDetails.getPatZipCode()}, ${invoiceDetails.getPatCountry()}<!-- Florida, 32405, USA  --><br>
 												</p>
 											</div>
 										</div>
@@ -111,9 +111,9 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Payment Method</strong>
 												<p class="invoice-details invoice-details-two">
-													Debit Card <br>
-													XXXXXXXXXXXX-2541 <br>
-													HDFC Bank<br>
+													${invoiceDetails.getCardName()}<!-- Debit Card --> <br>
+													XXXXXXXXXXXX-${invoiceDetails.getCardNumber().substring(14,19)}<!-- XXXXXXXXXXXX-2541 --> <br>
+													<!-- HDFC Bank --><br>
 												</p>
 											</div>
 										</div>
@@ -139,14 +139,14 @@
 														<tr>
 															<td>General Consultation</td>
 															<td class="text-center">1</td>
-															<td class="text-center">$0</td>
-															<td class="text-right">$100</td>
+															<td class="text-center">0</td>
+															<td class="text-right">${invoiceDetails.getAmount()}</td>
 														</tr>
 														<tr>
 															<td>Video Call Booking</td>
 															<td class="text-center">1</td>
-															<td class="text-center">$0</td>
-															<td class="text-right">$250</td>
+															<td class="text-center">0</td>
+															<td class="text-right">250</td>
 														</tr>
 													</tbody>
 												</table>
@@ -177,10 +177,10 @@
 								<!-- /Invoice Item -->
 								
 								<!-- Invoice Information -->
-								<div class="other-info">
+								<!-- <div class="other-info">
 									<h4>Other information</h4>
 									<p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed dictum ligula, cursus blandit risus. Maecenas eget metus non tellus dignissim aliquam ut a ex. Maecenas sed vehicula dui, ac suscipit lacus. Sed finibus leo vitae lorem interdum, eu scelerisque tellus fermentum. Curabitur sit amet lacinia lorem. Nullam finibus pellentesque libero.</p>
-								</div>
+								</div> -->
 								<!-- /Invoice Information -->
 								
 							</div>
