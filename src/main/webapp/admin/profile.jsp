@@ -14,10 +14,11 @@
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		
 		<!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath }/admin/assets/css/font-awesome.min.css">
 		
 		<!-- Feathericon CSS -->
-        <link rel="stylesheet" href="assets/css/feathericon.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath }/admin/assets/css/feathericon.min.css">
+       
 		
 		<!-- Main CSS -->
         <link rel="stylesheet" href="assets/css/style.css">
@@ -26,6 +27,18 @@
 			<script src="assets/js/html5shiv.min.js"></script>
 			<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
+		
+		<style type="text/css">
+		
+		.sizeSmall{
+		
+		  height: 0px;
+		  width: 0px;
+		
+		}
+		
+		
+		</style>
     </head>
     <body>
     
@@ -45,7 +58,7 @@
 			<%}%>
 		<!--Manage session end -->
 	<!-- Sidebar -->
-            <jsp:include page="adminSideBar.jsp"/>
+            <jsp:include page="adminSideBar.jsp"/> 
 			<!-- /Sidebar -->
 		<!-- Main Wrapper -->
         <div class="main-wrapper">
@@ -78,21 +91,34 @@
 							<div class="profile-header">
 								<div class="row align-items-center">
 									<div class="col-auto profile-image">
-										<a href="#">
-											<img class="rounded-circle" alt="User Image" src="assets/img/profiles/avatar-01.jpg">
+										<!-- <a href=" " style="text-decoration:none"> -->
+										
+										<input type="file" name="image" id="img" class="sizeSmall">
+											<img class="rounded-circle" alt="User Image" src="${pageContext.request.contextPath}/admin/assets/img/profiles/avatar-01.jpg">
+											<i class="fe fe-edit" onclick="openImg();" style=" 
+											    position: absolute;
+											    bottom: 30px;
+											    right: 30px;
+											    color: white;
+											    background: green;
+											    border-radius: 22%;
+											    width: 30px;
+											    height: 30px;
+											    display: flex;
+											    align-items: center;
+											    justify-content: center;
+											"></i>
 										</a>
 									</div>
 									<div class="col ml-md-n2 profile-user-info">
-										<h4 class="user-name mb-0">Ryan Taylor</h4>
-										<h6 class="text-muted">ryantaylor@admin.com</h6>
-										<div class="user-Location"><i class="fa fa-map-marker"></i> Florida, United States</div>
-										<div class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+										<h4 class="user-name mb-0">${adminData.getFirstName()} ${adminData.getLastName()} </h4>
+										<h6 class="text-muted">${adminData.getEmail()}</h6>
+										<div class="user-Location"><i class="fa fa-map-marker"></i> ${adminData.getCountry()} ${adminData.getState()}</div>
+										<div class="about-text"> ${adminData.getAddress()} ${adminData.getCity()} ${adminData.getState()} ${adminData.getCountry()} ${adminData.getZipCode()}</div>
 									</div>
 									<div class="col-auto profile-btn">
 										
-										<a href="#" class="btn btn-primary">
-											Edit
-										</a>
+										
 									</div>
 								</div>
 							</div>
@@ -122,26 +148,26 @@
 													</h5>
 													<div class="row">
 														<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
-														<p class="col-sm-10">John Doe</p>
+														<p class="col-sm-10">${adminData.getFirstName()} ${adminData.getLastName()}</p>
 													</div>
 													<div class="row">
 														<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Date of Birth</p>
-														<p class="col-sm-10">24 Jul 1983</p>
+														<p class="col-sm-10">${adminData.getDateOfBirth()}</p>
 													</div>
 													<div class="row">
 														<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Email ID</p>
-														<p class="col-sm-10">johndoe@example.com</p>
+														<p class="col-sm-10">${adminData.getEmail()}</p>
 													</div>
 													<div class="row">
 														<p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
-														<p class="col-sm-10">305-310-5857</p>
+														<p class="col-sm-10">${adminData.getMobileNumber()}</p>
 													</div>
 													<div class="row">
 														<p class="col-sm-2 text-muted text-sm-right mb-0">Address</p>
-														<p class="col-sm-10 mb-0">4663  Agriculture Lane,<br>
-														Miami,<br>
-														Florida - 33165,<br>
-														United States.</p>
+														<p class="col-sm-10 mb-0"> ${adminData.getAddress()}   <br>
+														${adminData.getCity()} ,  ${adminData.getState()}<br>
+														${adminData.getCountry()}<br>
+														${adminData.getZipCode()} .</p>
 													</div>
 												</div>
 											</div>
@@ -157,38 +183,38 @@
 															</button>
 														</div>
 														<div class="modal-body">
-															<form>
+															<form action="${pageContext.request.contextPath }/AdminController?action=editAdminData&mobile=${mobileNumber}" id="submit" method = "post">
 																<div class="row form-row">
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>First Name</label>
-																			<input type="text" class="form-control" value="John">
+																			<input type="text"  name="firstName" class="form-control" value=${adminData.getFirstName() }>
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Last Name</label>
-																			<input type="text"  class="form-control" value="Doe">
+																			<input type="text"  name="lastName" class="form-control" value="${adminData.getLastName()}">
 																		</div>
 																	</div>
 																	<div class="col-12">
 																		<div class="form-group">
 																			<label>Date of Birth</label>
 																			<div class="cal-icon">
-																				<input type="text" class="form-control" value="24-07-1983">
+																				<input type="date"  name="dateOfBirth"class="form-control" value="${adminData.getDateOfBirth()}">
 																			</div>
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Email ID</label>
-																			<input type="email" class="form-control" value="johndoe@example.com">
+																			<input type="email" name="email" class="form-control" value="${adminData.getEmail()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Mobile</label>
-																			<input type="text" value="+1 202-555-0125" class="form-control">
+																			<input type="text"  name="mobileNumber"  value="${adminData.getMobileNumber()}" class="form-control"  readonly>
 																		</div>
 																	</div>
 																	<div class="col-12">
@@ -197,31 +223,31 @@
 																	<div class="col-12">
 																		<div class="form-group">
 																		<label>Address</label>
-																			<input type="text" class="form-control" value="4663 Agriculture Lane">
+																			<input type="text"  name="address" class="form-control" value="${adminData.getAddress()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>City</label>
-																			<input type="text" class="form-control" value="Miami">
+																			<input type="text" name="city" class="form-control" value="${adminData.getCity()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>State</label>
-																			<input type="text" class="form-control" value="Florida">
+																			<input type="text" name ="state" class="form-control" value="${adminData.getState()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Zip Code</label>
-																			<input type="text" class="form-control" value="22434">
+																			<input type="text" name="zipCode" class="form-control" value="${adminData.getZipCode()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Country</label>
-																			<input type="text" class="form-control" value="United States">
+																			<input type="text" name="country"  class="form-control" value="${adminData.getCountry()}">
 																		</div>
 																	</div>
 																</div>
@@ -284,17 +310,24 @@
 		<!-- /Main Wrapper -->
 		
 		<!-- jQuery -->
-        <script src="assets/js/jquery-3.2.1.min.js"></script>
+        <script src="${pageContext.request.contextPath }/admin/assets/js/jquery-3.2.1.min.js"></script>
+        
 		
 		<!-- Bootstrap Core JS -->
         <script src="assets/js/popper.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
 		
 		<!-- Slimscroll JS -->
-        <script src="assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 		
 		<!-- Custom JS -->
 		<script  src="assets/js/script.js"></script>
+		<script>
+		function openImg()
+		{
+			$("#img").trigger( "click" );
+		}
+		</script>
 		
     </body>
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dollop.appointment.service.AdminService;
 import com.dollop.appointment.service.LoginService;
 
 /**
@@ -21,8 +22,10 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	LoginService ls = null;
+	AdminService as=null;
 	public LoginController() {
 		ls = new LoginService();
+		as=new AdminService();
 	}
 	
 	/**
@@ -62,8 +65,13 @@ public class LoginController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 				rd.forward(request, response);
 			}else if(action.equals("adminLogin")) {
-				RequestDispatcher rd = request.getRequestDispatcher("admin/login.jsp");
-				rd.forward(request, response);
+				
+//				as.showPatientData(request,response);
+				
+//				as.showDoctorData(request,response);
+//				System.out.println(mobileNumber);
+				ls.adminLogin(request,response,mobileNumber,password);
+				
 			}
 			
 			

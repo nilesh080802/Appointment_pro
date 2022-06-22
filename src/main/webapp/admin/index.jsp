@@ -60,7 +60,7 @@
 		<!-- Header -->
             <jsp:include page="adminHeader.jsp"/>
 			<!-- /Header -->
-		
+	
 						
 			<!-- Page Wrapper -->
             <div class="page-wrapper">
@@ -72,6 +72,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<h3 class="page-title">Welcome Admin!</h3>
+								<%-- 	<%=session.getAttribute("mobileNumber") %> --%>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item active">Dashboard</li>
 								</ul>
@@ -216,6 +217,7 @@
 											</thead>
 											<tbody>
 												<tr>
+												
 													<td>
 														<h2 class="table-avatar">
 															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
@@ -232,75 +234,8 @@
 														<i class="fe fe-star-o text-secondary"></i>
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-02.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Darren Elder</a>
-														</h2>
-													</td>
-													<td>Dental</td>
-													<td>$3100.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-03.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Deborah Angel</a>
-														</h2>
-													</td>
-													<td>Cardiology</td>
-													<td>$4000.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-04.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Sofia Brient</a>
-														</h2>
-													</td>
-													<td>Urology</td>
-													<td>$3200.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-05.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Marvin Campbell</a>
-														</h2>
-													</td>
-													<td>Orthopaedics</td>
-													<td>$3500.00</td>
-													<td>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star text-warning"></i>
-														<i class="fe fe-star-o text-secondary"></i>
-													</td>
-												</tr>
-											</tbody>
+												
+																							</tbody>
 										</table>
 									</div>
 								</div>
@@ -338,50 +273,7 @@
 													<td>20 Oct 2019</td>
 													<td class="text-right">$100.00</td>
 												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient2.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Travis Trimble </a>
-														</h2>
-													</td>
-													<td>2077299974</td>
-													<td>22 Oct 2019</td>
-													<td class="text-right">$200.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient3.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Carl Kelly</a>
-														</h2>
-													</td>
-													<td>2607247769</td>
-													<td>21 Oct 2019</td>
-													<td class="text-right">$250.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient4.jpg" alt="User Image"></a>
-															<a href="profile.jsp"> Michelle Fairfax</a>
-														</h2>
-													</td>
-													<td>5043686874</td>
-													<td>21 Sep 2019</td>
-													<td class="text-right">$150.00</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient5.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Gina Moore</a>
-														</h2>
-													</td>
-													<td>9548207887</td>
-													<td>18 Sep 2019</td>
-													<td class="text-right">$350.00</td>
-												</tr>
+												
 											</tbody>
 										</table>
 									</div>
@@ -438,108 +330,7 @@
 														$200.00
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-02.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Darren Elder</a>
-														</h2>
-													</td>
-													<td>Dental</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient2.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Travis Trimble </a>
-														</h2>
-													</td>
-													
-													<td>5 Nov 2019 <span class="text-primary d-block">11.00 AM - 11.35 AM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_2" class="check" checked>
-															<label for="status_2" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$300.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-03.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Deborah Angel</a>
-														</h2>
-													</td>
-													<td>Cardiology</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient3.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Carl Kelly</a>
-														</h2>
-													</td>
-													<td>11 Nov 2019 <span class="text-primary d-block">12.00 PM - 12.15 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_3" class="check" checked>
-															<label for="status_3" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$150.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-04.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Sofia Brient</a>
-														</h2>
-													</td>
-													<td>Urology</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient4.jpg" alt="User Image"></a>
-															<a href="profile.jsp"> Michelle Fairfax</a>
-														</h2>
-													</td>
-													<td>7 Nov 2019<span class="text-primary d-block">1.00 PM - 1.20 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_4" class="check" checked>
-															<label for="status_4" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$150.00
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/doctors/doctor-thumb-05.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Dr. Marvin Campbell</a>
-														</h2>
-													</td>
-													<td>Orthopaedics</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="./assets/img/patients/patient5.jpg" alt="User Image"></a>
-															<a href="profile.jsp">Gina Moore</a>
-														</h2>
-													</td>
-													
-													<td>15 Nov 2019 <span class="text-primary d-block">1.00 PM - 1.15 PM</span></td>
-													<td>
-														<div class="status-toggle">
-															<input type="checkbox" id="status_5" class="check" checked>
-															<label for="status_5" class="checktoggle">checkbox</label>
-														</div>
-													</td>
-													<td class="text-right">
-														$200.00
-													</td>
-												</tr>
+												
 											</tbody>
 										</table>
 									</div>

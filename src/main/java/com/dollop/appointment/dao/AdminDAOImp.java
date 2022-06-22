@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.dollop.appointment.model.AdminPatientData;
+import com.dollop.appointment.model.AdminData;
+import com.dollop.appointment.model.DoctorSettingData;
+import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.utility.DBConnection;
 
 public class AdminDAOImp {
@@ -13,11 +15,125 @@ public class AdminDAOImp {
 	
 	public AdminDAOImp() {
 		con= DBConnection.openConnection();
+	
+		
 	}
 	
-	public ArrayList<AdminPatientData> allPatientsData() {
+	public void insertAdminData(AdminData ad)
+	{
+		String DML="insert into admindata (firstName,lastName,email,mobileNumber,password) values(?,?,?,?,?)";
 		
-		ArrayList<AdminPatientData> patientList = new ArrayList<>();
+		try
+		{
+			PreparedStatement ps = con.prepareStatement(DML);
+			ps.setString(1,ad.getFirstName());
+			ps.setString(2,ad.getLastName());
+			ps.setString(3,ad.getEmail());
+			ps.setString(4,ad.getMobileNumber());
+			ps.setString(5,ad.getPassword());
+			System.out.println(ad.getFirstName());
+			System.out.println(ad.getLastName());
+			
+			
+			ps.executeUpdate();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+//	this method is for edit the admin profile data
+	
+	public void editAdminProfileData(AdminData ad)
+	{
+		String DML="UPDATE admindata SET firstName=? ,lastName=? , dateOfBirth=? , email=? , address=? , city=? , state=? , zipCode=? , country=?  where mobileNumber=? ";
+		
+		try {
+			
+			PreparedStatement ps= con.prepareStatement(DML);
+			
+			ps.setString(1, ad.getFirstName());
+			ps.setString(2,ad.getLastName());
+			ps.setString(3, ad.getDateOfBirth());
+			ps.setString(4, ad.getEmail());
+			ps.setString(5, ad.getAddress());
+			ps.setString(6, ad.getCity());
+			ps.setString(7, ad.getState());
+			ps.setString(8, ad.getZipCode());
+			ps.setString(9, ad.getCountry());
+			ps.setString(10, ad.getMobileNumber());
+			
+			ps.executeUpdate();
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//this method is for show Admin all data
+	
+	public AdminData getAdminData(String mobile)
+	{
+		 String DQL=" select * from admindata where mobileNumber = ?";
+		 System.out.println(mobile);
+		 
+			AdminData ad=new AdminData();
+		    try {
+		    	PreparedStatement ps=con.prepareStatement(DQL);
+		    	
+		    	ps.setString(1,mobile);
+		    	ResultSet rs=ps.executeQuery();
+		    	
+		    	if(rs.next())
+		    	{
+		    	
+		    		
+		    		
+                    ad.setFirstName(rs.getString("firstName"));
+                    System.out.println(rs.getString("firstName"));
+		    		
+		    		ad.setLastName(rs.getString("lastName")); 
+		    		
+		    		ad.setDateOfBirth(rs.getString("dateOfBirth"));
+		    		
+		    		ad.setEmail(rs.getString("email"));
+		    		
+		    		ad.setMobileNumber(rs.getString("mobileNumber")); 
+		    		
+		    		ad.setAddress(rs.getString("address")); 
+		    		
+		    		ad.setCity(rs.getString("city")); 
+		    		
+		    		ad.setState(rs.getString("state")); 
+		    		
+		    		ad.setZipCode(rs.getString("zipCode"));
+		    		
+		    		ad.setCountry(rs.getString("country"));
+		    		
+		    		
+		    				
+		    	}
+		    	
+		    	
+		    	
+		    }catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    }
+		    return ad;
+		
+		
+	}
+	
+	
+	// this methos is for show all patient available in doctorprofilesetting table
+
+	public ArrayList<PatientSettingData> allPatientsData() {
+		
+		ArrayList<PatientSettingData> patientList = new ArrayList<>();
 		String dql="Select * From patientprofilesetting";
 		try {
 			PreparedStatement ps = con.prepareStatement(dql);
@@ -25,7 +141,7 @@ public class AdminDAOImp {
 			
 			while(rs.next()) {
 				
-				AdminPatientData apd = new AdminPatientData();
+				PatientSettingData apd = new PatientSettingData();
 				
 				apd.setFirstName(rs.getString("firstName"));
 				apd.setLastName(rs.getString("lastName"));
@@ -38,8 +154,7 @@ public class AdminDAOImp {
 				  apd.setZipCode(rs.getString("zipCode"));
 				  apd.setCountry(rs.getString("country"));
 				  apd.setMobile(rs.getString("mobile"));
-				  
-				  
+
 				 
 			}
 			
@@ -49,17 +164,56 @@ public class AdminDAOImp {
 			// TODO: handle exception
 		}
 		
-		
 		return patientList;
+	}
+		
+		// this methos is for show all doctor available in doctorprofilesetting table
+		public ArrayList<DoctorSettingData> allDoctorsData() {
+			
+			ArrayList<DoctorSettingData> doctorList = new ArrayList<>();
+			String dql="Select * From doctorprofilesetting";
+			try {
+				PreparedStatement ps = con.prepareStatement(dql);
+				ResultSet rs = ps.executeQuery();
+				
+				while(rs.next()) {
+					
+					DoctorSettingData apd = new DoctorSettingData();
+					// doctor setting data required
+					
+					
+					/*
+					 * apd.setFirstName(rs.getString("firstName"));
+					 * apd.setLastName(rs.getString("lastName"));
+					 * //System.out.println(rs.getString("lastName")+"  "+rs.getString("firstName"))
+					 * ;
+					 * 
+					 * apd.setAge(rs.getInt("Age")); apd.setAddress(rs.getString("address"));
+					 * apd.setCity(rs.getString("city")); apd.setState(rs.getString("state"));
+					 * apd.setZipCode(rs.getString("zipCode"));
+					 * apd.setCountry(rs.getString("country"));
+					 * apd.setMobile(rs.getString("mobile"));
+					 */					 
+				}
+				
+			} catch (Exception e) {
+				
+				System.out.println(e);
+				// TODO: handle exception
+			}
+
+		
+		 
+		return doctorList;
 	
 	
 	}
 	
-	//----------only one patient data------
-	public  AdminPatientData patientData(String mobile) {
+	//----------this method is only for getting one patient data------
+	public  PatientSettingData patientData(String mobile) {
 		
 		String dql="Select * From patientprofilesetting where mobile=?";
-		AdminPatientData apdu = new AdminPatientData();
+		PatientSettingData apdu = new PatientSettingData();
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(dql);
@@ -82,36 +236,49 @@ public class AdminDAOImp {
 				apdu.setCountry(rs.getString("country"));
 				}
 				
-				//========this is for upload photo in database
-				/*
-				Blob blob = rs.getBlob("photo");
-				InputStream inputstream = null;
-				if(blob!=null) {
-			    inputstream = blob.getBinaryStream();
-			    // read the input stream...		
-				 
-				}
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				 byte[] buffer = new byte[4096];
-				 int bytesRead=-1;
-				 
-				 while((bytesRead = inputstream.read(buffer)) != -1) {
-					 outputStream.write(buffer,0,bytesRead);
-					 
-				 }
-				 byte[] imageBytes = outputStream.toByteArray();
-				 String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-				 
-				 inputstream.close();
-				 outputStream.close();
-				 //-------here set the binary data of image
-				 apdu.setBase64Image(base64Image);
-//				 apdu.setPhoto( inputstream);<---it is not required here because we already set binary data
-		 	}else {
 			
-				System.out.println("data is empty");
+		} catch (Exception e) {
+			
+			System.out.println(e);
+			// TODO: handle exception
+			
+		}
+		
+		
+		return apdu;
+	
+	
+	}
+	
+	//----------this method is only for getting one doctor data------
+
+public  DoctorSettingData doctorData(String mobile) {
+		
+		String dql="Select * From doctorprofilesetting where mobile=?";
+		DoctorSettingData apdu = new DoctorSettingData();
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(dql);
+			ps.setString(1, mobile);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
 				
-			}*/
+				// here we will write code for getting data which are come from the doctorprofilesetting 
+				/*
+				 * apdu.setFirstName(rs.getString("firstName"));
+				 * apdu.setLastName(rs.getString("lastName"));
+				 * apdu.setBloodGroup(rs.getString("bloodGroup"));
+				 * apdu.setAge(rs.getInt("Age"));
+				 * apdu.setDateOfBirth(rs.getString("dateOfBirth"));
+				 * apdu.setEmailId(rs.getString("emailId"));
+				 * apdu.setMobile(rs.getString("mobile"));
+				 * apdu.setAddress(rs.getString("address")); apdu.setCity(rs.getString("city"));
+				 * apdu.setState(rs.getString("state"));
+				 * apdu.setZipCode(rs.getString("zipCode"));
+				 * apdu.setCountry(rs.getString("country"));
+				 */				}
+				
 			
 		} catch (Exception e) {
 			

@@ -47,10 +47,7 @@ public class PatientController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action= request.getParameter("action");
-		System.out.println(action+"-action");
-		
-		System.out.println();
-		
+
 		switch(action) {
 		case "register":  ps.patientRegistration(request,response);break;
 		

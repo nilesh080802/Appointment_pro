@@ -12,6 +12,11 @@ public class UserDAOImp {
 
 	static Connection con=null;
 	public UserDAOImp() {
+		System.out.println(con);
+		System.out.println(con);
+		System.out.println(con);
+		System.out.println(con);
+		System.out.println(con);
 		
 		con= DBConnection.openConnection();
 	}
