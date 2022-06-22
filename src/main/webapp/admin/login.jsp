@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
 		
 		<!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/admin/assets/css/font-awesome.min.css">
 		
 		<!-- Main CSS -->
         <link rel="stylesheet" href="./assets/css/style.css">
@@ -39,7 +39,7 @@
             	<div class="container">
                 	<div class="loginbox">
                     	<div class="login-left">
-							<img class="img-fluid" src="./assets/img/logo-white.png" alt="Logo">
+							<img class="img-fluid" src="${pageContext.request.contextPath}/admin/assets/img/logo-white.png" alt="Logo">
                         </div>
                         <div class="login-right">
 							<div class="login-right-wrap">
@@ -48,12 +48,13 @@
 											<%if(request.getAttribute("loginError")!=null){ %>
 											<%=request.getAttribute("loginError") %>
 											
-											<%}else if(request.getAttribute("signup")!=null){%>
+											<%}else if(request.getAttribute("registration")!=null){%>
 											
 											 <p style="color:green;">
-											  <%=request.getAttribute("signup") %>
+											  <%=request.getAttribute("registration") %>
 											 </p>
 											<%}%>
+											
 								</p>
 								<p class="account-subtitle"> Access to our dashboard</p>
 								
@@ -71,6 +72,7 @@
 								</form>
 								<!-- /Form -->
 								
+								<center><a href="${pageContext.request.contextPath}/admin/register.jsp"> Register Admin</a></center>
 								<div class="text-center forgotpass"><a href="forgot-password.jsp">Forgot Password?</a></div>
 								
 							</div>
@@ -82,7 +84,7 @@
 		<!-- /Main Wrapper -->
 		
 		<!-- jQuery -->
-        <script src="assets/js/jquery-3.2.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/assets/js/jquery-3.2.1.min.js"></script>
 		
 		<!-- Bootstrap Core JS -->
         <script src="assets/js/popper.min.js"></script>

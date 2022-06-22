@@ -10,11 +10,48 @@ import com.dollop.appointment.utility.DBConnection;
 public class UserDAOImp 
 {
 	static Connection con=null;
-	
-	public UserDAOImp() 
-	{		
+
+	public UserDAOImp() {
+		
+		
 		con= DBConnection.openConnection();
 	}
+	
+	public void generatePatientId(String mobile)
+	{
+		String dql="SELECT pid FROM `patientprofilesetting` WHERE mobile=?";
+		String dml="Update patientprofilesetting SET PatientId=? where mobile=?";
+		
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(dql);
+			ps.setString(1, mobile);
+			
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			int pid=rs.getInt("pid");
+			
+			String patientId = "PT0"+pid;
+			PreparedStatement ps2 = con.prepareStatement(dml);
+			ps2.setString(1, patientId);
+			ps2.setString(2, mobile);
+			ps2.executeUpdate();
+			
+			
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public void	addUserData(UserData ud)  {
+		//this method for add user into database
+		String dml="insert into userdata(firstName,lastName,mobileNumber,password,type) values(?,?,?,?,?)";
+		
+
 		
 	public void	addUserData(UserData ud)  
 	{
@@ -40,7 +77,12 @@ public class UserDAOImp
 				ps2.setString(3, ud.getMobileNumber());
 			
 				ps2.executeUpdate();
+				
+				generatePatientId(ud.getMobileNumber());
+				
+				
 			}
+
 			else
 			{
 				String dmldps = "INSERT INTO doctorprofilesetting(firstName,lastName,mobileNumber) VALUES(?,?,?)";				
@@ -55,6 +97,12 @@ public class UserDAOImp
 		} 
 		catch(Exception e) 
 		{			
+
+			
+			
+		} catch (Exception e) {
+			
+
 			e.printStackTrace();
 		}		
 	}
@@ -138,6 +186,7 @@ public class UserDAOImp
 		return false;
 	}
 	
+
 	public void addAllTable(String mobileNumber)
 	{
 		String dql = "SELECT * FROM doctorprofilesetting WHERE mobileNumber=?";
@@ -171,6 +220,9 @@ public class UserDAOImp
 			e.printStackTrace();
 		}
 	}
+
+	
+
 
 	public int getUserId(String mobileNumber)
 	{

@@ -36,7 +36,7 @@
 			
 			<%}else if(session.getAttribute("type") == "patient") {%>
 			 
-			 <% response.sendRedirect("patient-dashboard.jsp");%>
+			<%--  <% response.sendRedirect("patient-dashboard.jsp");%> --%>
 			
 			<%}else if(session.getAttribute("type") == "admin") {%>
 			 
@@ -49,7 +49,7 @@
 		<div class="main-wrapper">
 		
 			<!-- Header -->
-			<jsp:include page="footer.jsp"/>
+			<jsp:include page="header.jsp"/>
 			<!-- /Header -->
 			
 			<!-- Breadcrumb -->

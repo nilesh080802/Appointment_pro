@@ -290,7 +290,7 @@
 																	<tr>
 																		<td>
 																			<h2 class="table-avatar">
-																				<a href="patient-profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
+																				<a href="patient-profile.jsp" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient2.jpg" alt="User Image"></a>
 																				<a href="patient-profile.jsp">Charlene Reed <span>#PT0001</span></a>
 																			</h2>
 																		</td>

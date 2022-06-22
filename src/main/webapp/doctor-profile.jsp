@@ -51,6 +51,7 @@
 								</ol>
 							</nav>
 							<h2 class="breadcrumb-title">Doctor Profile</h2>
+							 <%=session.getAttribute("pid")%>
 						</div>
 					</div>
 				</div>
@@ -70,7 +71,8 @@
 										<img src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
 									</div>
 									<div class="doc-info-cont">
-										<h4 class="doc-name">Dr. Darren Elder</h4>
+										<h4 class="doc-name">Dr.${appointment.getdFirstName()} ${appointment.getdLastName()}</h4>
+										
 										<p class="doc-speciality">BDS, MDS - Oral & Maxillofacial Surgery</p>
 										<p class="doc-department"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">Dentist</p>
 										<div class="rating">
@@ -122,9 +124,14 @@
 										</ul>
 									</div>
 									<div class="doctor-action">
-										<a href="javascript:void(0)" class="btn btn-white fav-btn">
-											<i class="far fa-bookmark"></i>
+										<a href="javascript:void(0)" id="favourites"   class="btn btn-white fav-btn">
+										
+											<i class="far fa-bookmark"  ></i>
+											<input type="hidden" name="doctorId" id="did" value="PT01"<%-- "${doctorProfile.getDoctorId()}" --%>>
+											<input type="hidden" name="patientId" id="pid" value="DT01"<%-- "${pid}" --%>>
 										</a>
+										
+										
 										<a href="chat.jsp" class="btn btn-white msg-btn">
 											<i class="far fa-comment-alt"></i>
 										</a>
@@ -207,6 +214,7 @@
 																<div class="timeline-content">
 																	<a href="#/" class="name">American Dental Medical University</a>
 																	<div>MDS</div>
+																	
 																	<span class="time">2003 - 2005</span>
 																</div>
 															</div>
@@ -873,3 +881,48 @@
 
 <!-- doccure/doctor-profile.jsp  30 Nov 2019 04:12:16 GMT -->
 </html>
+<script>
+
+$("#favourites").on("click",function(){
+	
+	$.ajax({
+		
+		url:'PatientController',
+		type: "POST",
+		
+		data: {
+			
+			action:"addRemoveFavourites",
+			patientId:$("#did").val(),
+			doctorId:$("#pid").val()
+		},
+		//data: {doctorId: $("#did").attr('value')},
+		success: function(res){
+//			alert($("#did").attr('value'));
+			console.log($("#did").val());
+			
+			
+		}
+		//alert("doctor added in your favourite list");
+	});
+	
+});
+
+/* 
+function favIcon(){
+	  
+	  
+   $(document).ready(function(){
+	   
+	$.ajax({
+	    url: "PatientController",
+	    type: "GET",
+	    data : 
+	    success: function (res) {
+	    	console.log(res); 
+	    }
+	  });
+   });
+});
+ */
+</script>

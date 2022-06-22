@@ -1,12 +1,15 @@
 package com.dollop.appointment.dao;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+//import java.io.ByteArrayOutputStream;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
+import com.dollop.appointment.model.PatientAppointmentShowData;
 import com.dollop.appointment.model.PatientSettingData;
+
 import com.dollop.appointment.utility.DBConnection;
 
 public class PatientDAOImp {
@@ -18,6 +21,52 @@ static Connection con=null;
 		
 	}
 	 
+	public ArrayList<PatientAppointmentShowData>  patientAppointmentGetData(String patientId) {
+		
+		String dql="SELECT appointmentdata.DoctorId, appointmentdata.PatientId,appointmentdata.Status, appointmentdata.AppointmentDate, appointmentdata.BookingDate, appointmentdata.Amount, doctorprofilesetting.firstName, doctorprofilesetting.lastName,doctorprofilesetting.specialist,doctorprofilesetting.imagePath  FROM `appointmentdata`\r\n"
+				+ "INNER JOIN doctorprofilesetting ON appointmentdata.DoctorId=doctorprofilesetting.doctorId";
+		
+		
+		ArrayList<PatientAppointmentShowData> appointmentList= new ArrayList<PatientAppointmentShowData>();
+		try {
+			
+			PreparedStatement ps = con.prepareStatement(dql);
+			
+			ResultSet rs= ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				
+				PatientAppointmentShowData pasd = new PatientAppointmentShowData();
+				pasd.setDoctorId(rs.getInt("DoctorId"));
+				pasd.setPatientId(rs.getString("PatientId"));
+				pasd.setApptDate(rs.getString("AppointmentDate"));
+				pasd.setBookingDate(rs.getString("BookingDate"));
+				pasd.setAmount(rs.getInt("Amount"));
+				pasd.setStatus(rs.getInt("Status"));
+				pasd.setdFirstName(rs.getString("firstName"));
+				pasd.setdLastName(rs.getString("lastName"));
+				pasd.setSpecialization(rs.getString("specialist"));
+				pasd.setDoctorImage(rs.getString("imagePath"));
+			
+				
+				System.out.println(rs.getInt("Status")+"-dao");
+			
+				
+				appointmentList.add(pasd);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		
+		return appointmentList;
+		
+		
+	}
 	
 	public PatientSettingData patientProfileGetData(String mobileNumber) {
 		
@@ -46,26 +95,12 @@ static Connection con=null;
 				psd.setState(rs.getString("state"));
 				psd.setZipCode(rs.getString("zipCode"));
 				psd.setCountry(rs.getString("country"));
+				psd.setImagePath(rs.getString("imagePath"));
+				psd.setPatientId(rs.getString("PatientId"));
+				
+				System.out.println(mobileNumber+"-"+rs.getString("mobile")+"get->"+rs.getString("imagePath"));
 				
 				
-				/*This is for image view on jsp
-				 * Blob blob = rs.getBlob("photo"); InputStream inputstream = null;
-				 * if(blob!=null) { inputstream = blob.getBinaryStream(); // read the input
-				 * stream...
-				 * 
-				 * } ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); byte[]
-				 * buffer = new byte[4096]; int bytesRead=-1;
-				 * 
-				 * while((bytesRead = inputstream.read(buffer)) != -1) {
-				 * outputStream.write(buffer,0,bytesRead);
-				 * 
-				 * } byte[] imageBytes = outputStream.toByteArray(); String base64Image =
-				 * Base64.getEncoder().encodeToString(imageBytes);
-				 * 
-				 * inputstream.close(); outputStream.close(); //-------here set the binary data
-				 * of image psd.setBase64Image(base64Image);
-				 */
-//				 psd.setPhoto( inputstream);<---it is not required here because we already set binary data
 		 	}else {
 			
 				System.out.println("data is empty");
@@ -86,7 +121,7 @@ static Connection con=null;
 	//method for inserting details of patient
 //	@SuppressWarnings("resource")
 	public void patientProfileInsData(PatientSettingData psd) { 
-	  String DML="UPDATE patientProfileSetting SET firstName=?,lastName=?,bloodGroup=?,dateOfBirth=?,emailId=?,address=?,city=?,state=?,zipCode=?,country=?,photo=? WHERE mobile=?"; 
+	  String DML="UPDATE patientProfileSetting SET firstName=?,lastName=?,bloodGroup=?,dateOfBirth=?,emailId=?,address=?,city=?,state=?,zipCode=?,country=?,imagePath=? WHERE mobile=?"; 
 	  
 	  try {
 	  
@@ -94,6 +129,7 @@ static Connection con=null;
 
 	  
 	  
+	  System.out.println("img-path->"+psd.getImagePath());
 	  
 	  ps.setString(1,psd.getFirstName()); 
 	  ps.setString(2,psd.getLastName());
@@ -106,9 +142,7 @@ static Connection con=null;
 	  ps.setString(8,psd.getState()); 
 	  ps.setString(9,psd.getZipCode());
 	  ps.setString(10,psd.getCountry());
-	  
-	  ps.setBlob(11, psd.getPhoto());
-	  
+	  ps.setString(11, psd.getImagePath());
 	  ps.setString(12,psd.getMobile());
 	  
 	  
@@ -125,6 +159,75 @@ static Connection con=null;
 	   
 	  
 	 }
+
+	public void addRemoveFavourites(String patientId, String doctorId) {
+
+		String dml2="Insert into favourites(patientId,doctorId)values(?,?)";
+		String dml1="DELETE FROM favourites WHERE patientId=? AND doctorId=?";
+		String dql="Select * from favourites where patientId=? AND doctorId=?";
+		try {
+			
+			PreparedStatement psq = con.prepareStatement(dql);
+			psq.setString(1, patientId);
+			psq.setString(2, doctorId);
+			
+			ResultSet rs = psq.executeQuery();
+			System.out.println(rs.next());
+			if(rs.next()) {
+				
+				PreparedStatement ps1 = con.prepareStatement(dml1);
+				ps1.setString(1, patientId);
+				ps1.setString(2, doctorId);
+				
+				ps1.execute();
+				
+				
+			}else {
+				
+				PreparedStatement ps2 = con.prepareStatement(dml2);
+				ps2.setString(1, patientId);
+				ps2.setString(2, doctorId);
+				
+				ps2.execute();
+				
+			}
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+	public void patientsFavouritesShowData(String patientId) {
+		String dql ="select doctorId from favouritest where patientId=?";
+		ArrayList favourites = new ArrayList();
+		try {
+			PreparedStatement ps = con.prepareStatement(dql);
+			ps.setString(1,patientId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				
+				String did = rs.getString("doctorId");
+				
+				
+				
+			}
+			
+			
+			
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	  
 
 }

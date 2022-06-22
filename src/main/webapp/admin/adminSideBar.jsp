@@ -76,7 +76,7 @@
 								<span>Pages</span>
 							</li>
 							<li> 
-								<a href="profile.jsp"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
+								<a href="${pageContext.request.contextPath}/AdminController?action=showAdminProfile&mobile=${mobileNumber}"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
 							</li>
 							<li class="submenu">
 								<a href="#"><i class="fe fe-document"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>

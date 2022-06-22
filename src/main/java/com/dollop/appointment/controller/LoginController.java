@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dollop.appointment.service.AdminService;
 import com.dollop.appointment.service.LoginService;
 
 /**
@@ -22,11 +23,12 @@ public class LoginController extends HttpServlet
 	 * @see HttpServlet#HttpServlet()
 	 */
 	LoginService ls = null;
-	
-	//Constructor
-	public LoginController() 
-	{
+
+	AdminService as=null;
+	public LoginController() {
+
 		ls = new LoginService();
+		as=new AdminService();
 	}
 	
 	/**
@@ -52,9 +54,7 @@ public class LoginController extends HttpServlet
 		HttpSession session = request.getSession();
 		
 		String action=request.getParameter("action");
-//	    System.out.println(action+"   :main action");
-	        
-	        
+
 		String mobileNumber = request.getParameter("mobileNumber");
 		String password = request.getParameter("password");
 		
@@ -63,14 +63,13 @@ public class LoginController extends HttpServlet
 			mobileNumber = mobileNumber.trim();
 			password = password.trim();
 		}
+
 		
-		/*
-		 * request.setAttribute("mobile", mobileNumber);
-		 * response.sendRedirect("/PatientController");
-		 */
 		
-		if (mobileNumber == "" || password == "") 
-		{
+
+	
+		if (mobileNumber == "" || password == "") {
+
 			//here we set a messseg  for showing on jsp page
 			
 			request.setAttribute("loginError", "Please Fill required details !!!");
@@ -78,6 +77,7 @@ public class LoginController extends HttpServlet
 			{
 				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 				rd.forward(request, response);
+
 			}
 			else if(action.equals("adminLogin")) 
 			{
@@ -91,6 +91,15 @@ public class LoginController extends HttpServlet
 			if(action.equals("userLogin")) 
 			{
 				ls.userLogin(request,response,mobileNumber,password);
+
+			}else if(action.equals("adminLogin")) {
+				
+//				as.showPatientData(request,response);
+				
+//				as.showDoctorData(request,response);
+//				System.out.println(mobileNumber);
+				ls.adminLogin(request,response,mobileNumber,password);
+
 			}
 			else if(action.equals("adminLogin")) 
 			{

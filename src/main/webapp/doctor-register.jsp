@@ -89,7 +89,11 @@
 
 											    $('#submit').validate({ // initialize the plugin
 											        rules: {
-											            name: {
+											            fname: {
+											                required: true,
+											                
+											            },
+											            lname: {
 											                required: true,
 											                
 											            },
