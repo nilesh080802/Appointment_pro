@@ -47,11 +47,13 @@ public class PatientController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action= request.getParameter("action");
-		System.out.println(action);
-
+		System.out.println(action+"-action");
+		
+		System.out.println();
 		
 		switch(action) {
 		case "register":  ps.patientRegistration(request,response);break;
+		
 		
 		case "profileSettingInsData": ps.patientProfileSettingInsData(request,response);
 		 RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
@@ -69,7 +71,17 @@ public class PatientController extends HttpServlet {
 		 rd2.forward(request, response);
 		break;
 		
-		case "PatientFavouritesShowData": ps.patientProfileSettingShowData(request,response);
+		
+		case "addRemoveFavourites": ps.addRemoveFavouritesData(request,response);
+			
+		 break;
+		
+		
+		
+		case "PatientFavouritesShowData": 
+//			ps.patientProfileSettingShowData(request,response);
+			
+			ps.patientsFavouritesShow(request,response);
 			RequestDispatcher rd3 = request.getRequestDispatcher("favourites.jsp");
 			 rd3.forward(request, response);
 		break;
@@ -79,6 +91,13 @@ public class PatientController extends HttpServlet {
 		 rd4.forward(request, response);
 		 break;
 		
+		case "doctorProfile" :ps.doctorProfileShowData(request,response);
+		RequestDispatcher rd5 = request.getRequestDispatcher("doctor-profile.jsp");
+		rd5.forward(request, response);
+		
+		
+		break;
+			
 		default :
 		
 		}
