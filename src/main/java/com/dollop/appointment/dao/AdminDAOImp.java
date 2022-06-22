@@ -5,11 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
 import com.dollop.appointment.model.AdminData;
 import com.dollop.appointment.model.AdminRegistrationData;
->>>>>>> f23183224bdc1fd8dabf9ef30d6d84ffb78a2490
+
 import com.dollop.appointment.model.DoctorSettingData;
 import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.utility.DBConnection;
