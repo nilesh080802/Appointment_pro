@@ -42,11 +42,12 @@ public class LoginService {
 				} else {
 
 					session.setAttribute("type","patient");
-					//method for retrive data from database
+					
 					PatientDAOImp ptdao= new PatientDAOImp();
 					PatientSettingData psd= ptdao.patientProfileGetData(mobileNumber);
 //					request.setAttribute("patientData", psd);
 					request.setAttribute("patient",psd);
+					session.setAttribute("pid",psd.getPatientId() );
  					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");
 					rd.forward(request, response);
 
