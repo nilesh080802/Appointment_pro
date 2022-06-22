@@ -3,11 +3,14 @@ package com.dollop.appointment.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
 import com.dollop.appointment.model.DoctorSettingData;
+import com.dollop.appointment.model.InvoiceView;
+import com.dollop.appointment.model.PaymentSettingData;
 import com.dollop.appointment.utility.DBConnection;
 
 public class DoctorDAOImp {
@@ -607,5 +610,90 @@ static Connection con=null;
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<PaymentSettingData> getAllInvoiceDetails()
+	{
+		String query = "SELECT invoice_data.invoiceId, invoice_data.invoiceDate, invoice_data.patientId, invoice_data.doctorId,patientprofilesetting.firstName, patientprofilesetting.lastName, paymentinfo.amount "+ 
+						"FROM ((invoice_data "+ 
+						"INNER JOIN patientprofilesetting ON invoice_data.patientId = patientprofilesetting.patientId) "+ 
+						"INNER JOIN paymentinfo ON invoice_data.patientId = paymentinfo.patientId);";
+		ArrayList<PaymentSettingData> list = new ArrayList<PaymentSettingData>();
+		
+		try
+		{
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				PaymentSettingData payment = new PaymentSettingData();
+				payment.setInvoiceId(rs.getInt("invoiceId"));
+				String output = new SimpleDateFormat("yyyy-MMM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("invoiceDate")));
+				payment.setInvoiceDate(output);
+				payment.setPatientId(rs.getInt("patientId"));
+				payment.setDoctorId(rs.getInt("doctorId"));
+				payment.setFirstName(rs.getString("firstName"));
+				payment.setLastName(rs.getString("lastName"));
+				payment.setAmmount(rs.getInt("amount"));
+				
+				list.add(payment);				
+			}
+			return list;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public InvoiceView getInvoiceViewDetails()
+	{
+		String query = "SELECT dps.firstName as docFirstName,dps.lastName as docLastName,dps.addressLine1 as docAddress,dps.city as docCity,dps.state as docState,dps.country as docCountry,dps.postalCode as docPostalCode,"+
+						"pps.firstName as patFirstName, pps.lastName as patLastName, pps.address as patAddress, pps.city as patCity, pps.state as patState, pps.country as patCountry, pps.zipCode as patZipCode,"+
+						"pay.paymentId, pay.patientId, pay.cardNumber, pay.cardName, pay.dateTime, pay.paymentType, pay.amount, inv.invoiceDate, inv.orderId "+
+						"FROM (((invoice_data inv INNER JOIN doctorprofilesetting dps ON inv.doctorId = dps.doctorId)"+
+						"INNER JOIN patientprofilesetting pps ON inv.patientId = pps.patientId)"+
+						"INNER JOIN paymentinfo pay ON inv.paymentId = pay.paymentId);";
+		
+		InvoiceView invoiceView = new InvoiceView();
+		try
+		{
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+			{
+				invoiceView.setDocFirstName(rs.getString("docFirstName"));
+				invoiceView.setDocLastName(rs.getString("docLastName"));
+				invoiceView.setDocAddress(rs.getString("docAddress"));
+				invoiceView.setDocCity(rs.getString("docCity"));
+				invoiceView.setDocState(rs.getString("docState"));
+				invoiceView.setDocCountry(rs.getString("docCountry"));
+				invoiceView.setDocPostalCode(rs.getString("docPostalCode"));
+				invoiceView.setPatFirstName(rs.getString("patFirstName"));
+				invoiceView.setPatLastName(rs.getString("patLastName"));
+				invoiceView.setPatAddress(rs.getString("patAddress"));
+				invoiceView.setPatCity(rs.getString("patCity"));
+				invoiceView.setPatState(rs.getString("patState"));
+				invoiceView.setPatCountry(rs.getString("patCountry"));
+				invoiceView.setPatZipCode(rs.getString("patZipCode"));
+				invoiceView.setPaymentId(rs.getInt("paymentId"));
+				invoiceView.setPatientId(rs.getInt("patientId"));
+				invoiceView.setCardNumber(rs.getString("cardNumber"));
+				invoiceView.setCardName(rs.getString("cardName"));
+				invoiceView.setDateTime(rs.getString("dateTime"));
+				invoiceView.setPaymentType(rs.getString("paymentType"));
+				invoiceView.setAmount(rs.getDouble("amount"));
+				invoiceView.setInvoiceDate(rs.getString("invoiceDate"));
+				invoiceView.setOrderId(rs.getString("orderId"));
+				
+				return invoiceView;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return invoiceView;
 	}
 }
