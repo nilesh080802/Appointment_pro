@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import com.dollop.appointment.model.AdminData;
 import com.dollop.appointment.model.AdminRegistrationData;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 01fbbac89b529cab8c482b2bdca7aa5a18f7bfe9
 =======
 >>>>>>> 01fbbac89b529cab8c482b2bdca7aa5a18f7bfe9
 import com.dollop.appointment.model.DoctorSettingData;
