@@ -127,7 +127,7 @@
 												</a>
 											</li>
 											<li>
-												<a href="invoices.jsp">
+												<a href="${pageContext.request.contextPath}/DoctorController?action=getAllInvoiceDetails">
 													<i class="fas fa-file-invoice"></i>
 													<span>Invoices</span>
 												</a>
@@ -728,16 +728,16 @@
 
 <!-- doccure/doctor-profile-settings.jsp  30 Nov 2019 04:12:15 GMT -->
 </html>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> -->
 <script type="text/javascript">
 		
-		setTimeout(function () 
-			{
-				<%request.removeAttribute("successMsg"); %>
-				<%request.removeAttribute("failedMsg");%>
-            	// Closing the alert
-            	$('#alert').alert('close');
-        	}, 10000);
+setTimeout(function () 
+		{
+			<%request.removeAttribute("successMsg"); %>
+			<%request.removeAttribute("failedMsg");%>
+        	// Closing the alert
+        	$('#alert').alert('close');
+    	}, 10000);
 		
 		$("form").on("change",function(event){
 			event.preventDefault();
