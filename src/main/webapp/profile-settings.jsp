@@ -1,9 +1,10 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html lang="en">
 	
 <!-- doccure/profile-settings.jsp  30 Nov 2019 04:12:18 GMT -->
 <head>
-		<meta charset="utf-8">
+		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Doccure</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 		
@@ -82,22 +83,21 @@
 				<div class="container-fluid">
 					<div class="row">
 					
-						<!-- Profile Sidebar -->
+					<!-- Profile Sidebar -->
 						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
 							<div class="profile-sidebar">
 								<div class="widget-profile pro-widget-content">
 									<div class="profile-info-widget">
 										<a href="#" class="booking-doc-img">
-										<img src="data:image/jpeg;base64,${patient.getBase64Image()}"  onerror="this.src='assets/img/patients/patient.jpg'" alt="User Image">
-										<!-- patient profile photo  -->
+											
+											<img src="${patient.getImagePath()}" onerror="assets/img/patients/patient.jpg" alt="User Image">
 										</a>
 										<div class="profile-det-info">
-											<h3>${patient.getFirstName()}${patient.getLastName()}</h3>
+											<h3>${patient.getFirstName()}  ${patient.getLastName()}</h3>
 											<div class="patient-details">
 												<h5><i class="fas fa-birthday-cake"></i>${patient.getDateOfBirth()}, 38 years</h5>
-												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>
-												${patient.getCity()},  ${patient.getState()},  ${patient.getCountry()}
-												</h5>
+												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>${patient.getCountry()}, ${patient.getState()}, ${patient.getCity()}</h5>
+												<h5 class="mb-0">${patient.getAddress()}, ${patient.getZipCode()}</h5>
 											</div>
 										</div>
 									</div>
@@ -105,14 +105,14 @@
 								<div class="dashboard-widget">
 									<nav class="dashboard-menu">
 										<ul>
-											<li>
-												<a href="#">
+											<li >
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientDashboardShowData&mobile=${mobileNumber}">
 													<i class="fas fa-columns"></i>
 													<span>Dashboard</span>
 												</a>
 											</li>
 											<li>
-												<a href="favourites.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientFavouritesShowData&mobile=${mobileNumber}">
 													<i class="fas fa-bookmark"></i>
 													<span>Favourites</span>
 												</a>
@@ -125,19 +125,19 @@
 												</a>
 											</li>
 											<li class="active">
-												<a href="${pageContext.request.contextPath}/PatientController?action=profileSettingShowData&mobile=${patient.getMobile()}">
+												<a href="${pageContext.request.contextPath}/PatientController?action=profileSettingShowData&mobile=${mobileNumber}">
 													<i class="fas fa-user-cog"></i>
 													<span>Profile Settings</span>
 												</a>
 											</li>
 											<li>
-												<a href="change-password.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientChangePasswordShowData&mobile=${mobileNumber}">
 													<i class="fas fa-lock"></i>
 													<span>Change Password</span>
 												</a>
 											</li>
 											<li>
-												<a href="index-2.jsp">
+												<a href="${pageContext.request.contextPath}/LoginController?action=logout">
 													<i class="fas fa-sign-out-alt"></i>
 													<span>Logout</span>
 												</a>
@@ -148,37 +148,54 @@
 
 							</div>
 						</div>
-						<!-- /Profile Sidebar -->
+						<!-- / Profile Sidebar -->
+													
+						
+						
 						
 						<div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="card">
 								<div class="card-body">
-									
-									<!-- Profile Settings Form -->
-									<form  action="${pageContext.request.contextPath}/PatientController?action=profileSettingInsData&mobile=${patient.getMobile()}" id="submit" method ="post" enctype="multipart/form-data">
+								<!-- Profile Settings Form image-->
+					             	<form id="myform" method="post" action="UploadServlet" enctype="multipart/form-data">
+								
+										
 										<div class="row form-row">
+										
 											<div class="col-12 col-md-12">
 												<div class="form-group">
 													<div class="change-avatar">
 														<div class="profile-img">
-														<img src="data:image/jpeg;base64,${patient.getBase64Image()}" alt="User Image" onerror="this.src='assets/img/patients/patient.jpg'">
+														
+														<img src= "${patient.getImagePath()}" alt="User Image" ">
 													
 														</div>
-														
 														
 														<div class="upload-img">
 															<div class="change-photo-btn">
 																<span><i class="fa fa-upload"></i> Upload Photo</span>
-																<input type="file" class="upload" name="photo">
+																
+																<input type="file" class="upload" name="image" >
+															
 															</div>
 															<small class="form-text text-muted">Allowed JPG, GIF or PNG. Max size of 2MB</small>
-															
-								
+														
 														</div>
 													</div>
 												</div>
-											</div>
-													
+										    </div>
+									  </div>
+									 		
+					    	   </form>
+					 <!-- /Profile Settings Form image-->
+					
+					<!-- Profile Settings Form data -->
+							<form  action="${pageContext.request.contextPath}/PatientController?action=profileSettingInsData&mobile=${patient.getMobile()}" id="submit" method ="POST"  >
+									
+								  <div class="row form-row">
+										
+										
+										
 											<div class="col-12 col-md-6">
 										    <p style="color:red;">
 											<%if(request.getAttribute("msg")!=null){ %>
@@ -216,7 +233,7 @@
 													</div>
 												</div>
 											</div>
-						<%-- 					<div class="col-12 col-md-6">
+											<%--<div class="col-12 col-md-6">
 												<div class="form-group">
 													<label>Age</label>
 													<div class="cal-icon">
@@ -286,10 +303,12 @@
 											</div>
 										</div>
 										<div class="submit-section">
+										    <input type="hidden" name="image"  id="imgPath">
 											<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
 										</div>
+									
 									</form>
-									<!-- /Profile Settings Form -->
+									<!-- /Profile Settings Form data -->
 									
 								</div>
 							</div>
@@ -332,3 +351,24 @@
 
 <!-- doccure/profile-settings.jsp  30 Nov 2019 04:12:18 GMT -->
 </html>
+<script>
+$( "form" ).on( "change", function( event ) {
+	  event.preventDefault();
+	  var form = $('#myform')[0];
+      var data = new FormData(form);
+	$.ajax({
+	    url: "UploadServlet",
+	    type: "POST",
+	    data: data,
+	    processData: false,
+	    contentType: false,
+	    success: function (res) {
+	    	console.log(res); 
+	    	
+	    	$("#imgPath").attr("value",res);
+	    	$("#newImg").attr("src",res);
+	    	$("#img").attr("src",res);
+	    }
+	  });
+});
+</script>
