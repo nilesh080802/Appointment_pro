@@ -7,7 +7,7 @@ public class PatientAppointmentShowData {
 	private String dLastName;
 	private String specialization;
 	
-	private String doctorId;
+	private int doctorId;
 	private String patientId;
 	private String apptDate;
 	private String bookingDate;
@@ -28,10 +28,10 @@ public class PatientAppointmentShowData {
 	public void setDoctorImage(String doctorImage) {
 		this.doctorImage = doctorImage;
 	}
-	public String getDoctorId() {
+	public int getDoctorId() {
 		return doctorId;
 	}
-	public void setDoctorId(String doctorId) {
+	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
 	}
 	public String getPatientId() {
