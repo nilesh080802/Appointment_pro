@@ -1,3 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html> 
 <html lang="en">
 	
@@ -77,19 +80,22 @@
 
 					<div class="row">
 						
-						<!-- Profile Sidebar -->
+					<!-- Profile Sidebar -->
 						<div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
 							<div class="profile-sidebar">
 								<div class="widget-profile pro-widget-content">
 									<div class="profile-info-widget">
 										<a href="#" class="booking-doc-img">
-											<img src="assets/img/patients/patient.jpg" alt="User Image">
+											
+											<img src="${patient.getImagePath()}">
 										</a>
 										<div class="profile-det-info">
-											<h3>Richard Wilson</h3>
+											<h3>${patient.getFirstName()}  ${patient.getLastName()}</h3>
+											<h5>your Id-${patient.getPatientId()}</h5>
 											<div class="patient-details">
-												<h5><i class="fas fa-birthday-cake"></i> 24 Jul 1983, 38 years</h5>
-												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Newyork, USA</h5>
+												<h5><i class="fas fa-birthday-cake"></i>${patient.getDateOfBirth()}, 38 years</h5>
+												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i>${patient.getCountry()}, ${patient.getState()}, ${patient.getCity()}</h5>
+												<h5 class="mb-0">${patient.getAddress()}, ${patient.getZipCode()}</h5>
 											</div>
 										</div>
 									</div>
@@ -98,13 +104,13 @@
 									<nav class="dashboard-menu">
 										<ul>
 											<li class="active">
-												<a href="patient-dashboard.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientDashboardShowData&id=${patient.getPatientId()}&mobile=${mobileNumber}">
 													<i class="fas fa-columns"></i>
 													<span>Dashboard</span>
 												</a>
 											</li>
 											<li>
-												<a href="favourites.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientFavouritesShowData&id=${patient.getPatientId()}&mobile=${mobileNumber}">
 													<i class="fas fa-bookmark"></i>
 													<span>Favourites</span>
 												</a>
@@ -123,7 +129,7 @@
 												</a>
 											</li>
 											<li>
-												<a href="change-password.jsp">
+												<a href="${pageContext.request.contextPath}/PatientController?action=PatientChangePasswordShowData&mobile=${mobileNumber}">
 													<i class="fas fa-lock"></i>
 													<span>Change Password</span>
 												</a>
@@ -141,6 +147,7 @@
 							</div>
 						</div>
 						<!-- / Profile Sidebar -->
+
 						
 						<div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="card">
@@ -186,20 +193,26 @@
 																</tr>
 															</thead>
 															<tbody>
+																<!-- foreach loop for printing data on the screen -->
+															<c:forEach var="appointment" items="${appointments}">
+															
 																<tr>
 																	<td>
-																		<h2 class="table-avatar">
+																		 <h2 class="table-avatar">
 																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image">
+																				 <img class="avatar-img rounded-circle" src="${appointment.getDoctorImage()}" alt="User Image">
 																			</a>
-																			<a href="doctor-profile.jsp">Dr. Ruby Perrin <span>Dental</span></a>
-																		</h2>
+																			<a href="PatientController?action=doctorProfile">Dr.${appointment.getdFirstName()} ${appointment.getdLastName()} <span>${appointment.getSpecialization()}</span></a>
+																		</h2> 
 																	</td>
-																	<td>14 Nov 2019 <span class="d-block text-info">10.00 AM</span></td>
-																	<td>12 Nov 2019</td>
-																	<td>$160</td>
+																	<td>${appointment.getApptDate()} <span class="d-block text-info">${appointment.getApptDate()}</span></td>
+																	<td>${appointment.getBookingDate()}</td>
+																	<td>${appointment.getAmount()}</td>
 																	<td>16 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
+																	
+																	<td><span class="badge badge-pill bg-success-light">Confirm-${appointment.getStatus()}</span></td>
+																	
+																	
 																	<td class="text-right">
 																		<div class="table-action">
 																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
@@ -211,6 +224,10 @@
 																		</div>
 																	</td>
 																</tr>
+																</c:forEach>
+																
+																
+																
 																<tr>
 																	<td>
 																		<h2 class="table-avatar">
@@ -224,7 +241,7 @@
 																	<td>12 Nov 2019</td>
 																	<td>$250</td>
 																	<td>14 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
+																	<td><span class="badge badge-pill bg-success-light">Confirm-${appointment.getStatus()}</span></td>
 																	<td class="text-right">
 																		<div class="table-action">
 																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
@@ -261,181 +278,7 @@
 																		</div>
 																	</td>
 																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-04.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. Sofia Brient <span>Urology</span></a>
-																		</h2>
-																	</td>
-																	<td>10 Nov 2019 <span class="d-block text-info">3.00 PM</span></td>
-																	<td>10 Nov 2019</td>
-																	<td>$350</td>
-																	<td>12 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-warning-light">Pending</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-05.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. Marvin Campbell <span>Ophthalmology</span></a>
-																		</h2>
-																	</td>
-																	<td>9 Nov 2019 <span class="d-block text-info">7.00 PM</span></td>
-																	<td>8 Nov 2019</td>
-																	<td>$75</td>
-																	<td>11 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-06.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. Katharine Berthold <span>Orthopaedics</span></a>
-																		</h2>
-																	</td>
-																	<td>8 Nov 2019 <span class="d-block text-info">9.00 AM</span></td>
-																	<td>6 Nov 2019</td>
-																	<td>$175</td>
-																	<td>10 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-danger-light">Cancelled</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-07.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. Linda Tobin <span>Neurology</span></a>
-																		</h2>
-																	</td>
-																	<td>8 Nov 2019 <span class="d-block text-info">6.00 PM</span></td>
-																	<td>6 Nov 2019</td>
-																	<td>$450</td>
-																	<td>10 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-08.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. Paul Richard <span>Dermatology</span></a>
-																		</h2>
-																	</td>
-																	<td>7 Nov 2019 <span class="d-block text-info">9.00 PM</span></td>
-																	<td>7 Nov 2019</td>
-																	<td>$275</td>
-																	<td>9 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-09.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. John Gibbs <span>Dental</span></a>
-																		</h2>
-																	</td>
-																	<td>6 Nov 2019 <span class="d-block text-info">8.00 PM</span></td>
-																	<td>4 Nov 2019</td>
-																	<td>$600</td>
-																	<td>8 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
-																<tr>
-																	<td>
-																		<h2 class="table-avatar">
-																			<a href="doctor-profile.jsp" class="avatar avatar-sm mr-2">
-																				<img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-10.jpg" alt="User Image">
-																			</a>
-																			<a href="doctor-profile.jsp">Dr. Olga Barlow  <span>Dental</span></a>
-																		</h2>
-																	</td>
-																	<td>5 Nov 2019 <span class="d-block text-info">5.00 PM</span></td>
-																	<td>1 Nov 2019</td>
-																	<td>$100</td>
-																	<td>7 Nov 2019</td>
-																	<td><span class="badge badge-pill bg-success-light">Confirm</span></td>
-																	<td class="text-right">
-																		<div class="table-action">
-																			<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																				<i class="fas fa-print"></i> Print
-																			</a>
-																			<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																				<i class="far fa-eye"></i> View
-																			</a>
-																		</div>
-																	</td>
-																</tr>
+															
 															</tbody>
 														</table>
 													</div>

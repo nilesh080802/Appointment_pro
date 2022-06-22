@@ -154,8 +154,7 @@ public class AdminDAOImp {
 				  apd.setZipCode(rs.getString("zipCode"));
 				  apd.setCountry(rs.getString("country"));
 				  apd.setMobile(rs.getString("mobile"));
-				  
-				  patientList.add(apd);
+
 				 
 			}
 			
