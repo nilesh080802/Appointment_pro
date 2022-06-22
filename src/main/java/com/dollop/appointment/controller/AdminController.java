@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import com.dollop.appointment.service.AdminService;
 
@@ -45,21 +45,33 @@ public class AdminController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
 		String action= request.getParameter("action");
 		System.out.println(action);
+	
 		
 		switch(action) {
 		
-		case "showPatinetData": as.showPatientData(request,response);
+		case "showPatientsData": as.showPatientsData(request,response);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("admin/editPatientProfile.jsp"); 
-		  rd.forward(request,response);
+		RequestDispatcher rd = request.getRequestDispatcher("admin/patient-list.jsp");
+		rd.forward(request, response);
 		break;
 		
-		case "editPatinetProfileShow": as.editPatientProfileShow(request,response);break;
-					
-		case "editPatinetProfileUpdate":as.editPatinetProfileUpdate(request,response);break;
+		case "editPatinetProfileShow": as.editPatientProfileShow(request,response);
+		
+		RequestDispatcher rd6=request.getRequestDispatcher("admin/editPatientProfile.jsp");
+		rd6.forward(request, response);
+		break;			
+		case "editPatientProfileUpdate":as.editPatientProfileUpdate(request,response);
+		
+	
+		
+		as.editPatientProfileShow(request,response);
+		RequestDispatcher rdp = request.getRequestDispatcher("admin/editPatientProfile.jsp");
+		rdp.forward(request, response);
+		
+		break;
 		
 		case "register": as.adminRegistration(request,response); break;
 		case "showAdminProfile" : as.showAdminData(request, response); 
@@ -69,10 +81,31 @@ public class AdminController extends HttpServlet {
 		
 		break;
 		case "editAdminData" : as.editAdminData(request,response);
+							   as.showAdminData(request, response);
 		
 		RequestDispatcher rd2=request.getRequestDispatcher("admin/profile.jsp");
 		rd2.forward(request, response);
 		break;
+		
+		case "changeAdminPassword" : 
+			
+		if(as.changeAdminPassword(request,response))
+		{
+			
+		session.invalidate();
+		
+		request.setAttribute("changed","Password Successfully Changed");
+		response.sendRedirect("admin/login.jsp");
+		}else {
+			
+			
+			as.showAdminData(request, response);
+			RequestDispatcher rd4=request.getRequestDispatcher("admin/profile.jsp");
+			rd4.forward(request, response);
+			
+		}
+		break;
+		
 		
 		
 		default:
