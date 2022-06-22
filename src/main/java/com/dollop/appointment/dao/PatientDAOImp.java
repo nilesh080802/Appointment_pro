@@ -96,7 +96,7 @@ static Connection con=null;
 				psd.setZipCode(rs.getString("zipCode"));
 				psd.setCountry(rs.getString("country"));
 				psd.setImagePath(rs.getString("imagePath"));
-				psd.setPatientId(rs.getString("PatientId"));
+				psd.setPatientId(rs.getInt("pid"));
 				
 				System.out.println(mobileNumber+"-"+rs.getString("mobile")+"get->"+rs.getString("imagePath"));
 				
@@ -201,7 +201,7 @@ static Connection con=null;
 		
 		
 	}
-
+	//Method for showing patients favourites data
 	public void patientsFavouritesShowData(String patientId) {
 		String dql ="select doctorId from favouritest where patientId=?";
 		ArrayList favourites = new ArrayList();

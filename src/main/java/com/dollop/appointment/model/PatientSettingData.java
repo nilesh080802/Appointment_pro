@@ -4,6 +4,9 @@ package com.dollop.appointment.model;
 
 public class PatientSettingData {
 	
+	private String imagePath;
+
+	
     private Integer patientId;
 	private String firstName;
 	private String lastName;
@@ -22,20 +25,13 @@ public class PatientSettingData {
 		return patientId;
 	}
 	public void setPatientId(Integer patientId) {
+		
 		this.patientId = patientId;
 	}
 
-	private String imagePath;
-	private String patientId;
 	
 	
 	
-	public String getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(String patientId) {
-		this.patientId = patientId;
-	}
 	public String getImagePath() {
 		return imagePath;
 	}

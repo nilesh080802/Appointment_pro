@@ -1,7 +1,7 @@
 package com.dollop.appointment.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,12 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.taglibs.standard.tag.common.xml.ForEachTag;
 
-import com.dollop.appointment.model.DoctorSettingData;
-import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.model.PaymentSettingData;
 import com.dollop.appointment.service.PaymentService;
 

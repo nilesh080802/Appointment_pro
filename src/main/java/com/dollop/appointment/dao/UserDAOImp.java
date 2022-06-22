@@ -47,10 +47,6 @@ public class UserDAOImp
 		
 	}
 	
-	public void	addUserData(UserData ud)  {
-		//this method for add user into database
-		String dml="insert into userdata(firstName,lastName,mobileNumber,password,type) values(?,?,?,?,?)";
-		
 
 		
 	public void	addUserData(UserData ud)  
@@ -94,12 +90,6 @@ public class UserDAOImp
 				ps3.executeUpdate();
 				addAllTable(ud.getMobileNumber());				
 			}			
-		} 
-		catch(Exception e) 
-		{			
-
-			
-			
 		} catch (Exception e) {
 			
 

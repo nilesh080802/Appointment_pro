@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.dollop.appointment.dao.PatientDAOImp;
 import com.dollop.appointment.dao.UserDAOImp;
@@ -37,17 +37,7 @@ public class PatientService {
 		pms=new PaymentService(); 
 	}
 
-	public void patientProfileSettingShowData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{		
-		String mobileNumber=request.getParameter("mobile");
-		PatientSettingData psd= pdi.patientProfileGetData(mobileNumber);
-		 
-        request.setAttribute("patient",psd);
-		RequestDispatcher rd = request.getRequestDispatcher("profile-settings.jsp");
-		rd.forward(request, response);		
-
-		
-	}
+	
 	
 	public void BookingData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -267,6 +257,18 @@ public class PatientService {
        	  RequestDispatcher rd3 =request.getRequestDispatcher("invoice-view.jsp");
    		  rd3.forward(request, response);
          }
+	}
+
+	public void patientsFavouritesShow(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void doctorProfileShowData(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

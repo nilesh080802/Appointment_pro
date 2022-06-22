@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class DoctorSettingData 
 {
-	private int doctorId;
-
+	
 	private String firstName;
 	private Integer  doctorId;
 	private String lastName;
@@ -74,10 +73,7 @@ public class DoctorSettingData
 		this.hospitalId = hospitalId;
 	}
 	
-	public int getDoctorId()
-	{
-		return doctorId;
-	}
+	
 	public void setDoctorId(int doctorId)
 	{
 		this.doctorId = doctorId;

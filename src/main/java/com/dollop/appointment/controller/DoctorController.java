@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dollop.appointment.dao.UserDAOImp;
 import com.dollop.appointment.model.DoctorSettingData;
 import com.dollop.appointment.model.PaymentSettingData;
-import com.dollop.appointment.model.UserData;
+
 import com.dollop.appointment.service.DoctorService;
 
 /**

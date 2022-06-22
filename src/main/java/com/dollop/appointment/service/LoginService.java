@@ -41,21 +41,7 @@ public class LoginService
 					session.setAttribute("doctorId", udi.getUserId(mobileNumber));
 					RequestDispatcher rd = request.getRequestDispatcher("doctor-dashboard.jsp");
 					rd.forward(request, response);
-				} 
-				else 
-				{
-					session.setAttribute("type","patient");					
-					RequestDispatcher rd = request.getRequestDispatcher("patient-dashboard.jsp");
-
-				
-				if (udi.identifyUser(mobileNumber)) {
-			
-					session.setAttribute("type","doctor");
-					
-					RequestDispatcher rd = request.getRequestDispatcher("doctor-dashboard.jsp");
-					rd.forward(request, response);
-				} 
-				else{
+				}else{
 
 					session.setAttribute("type","patient");
 					

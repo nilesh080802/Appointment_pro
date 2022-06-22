@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.dollop.appointment.model.AdminData;
 import com.dollop.appointment.model.DoctorSettingData;
 import com.dollop.appointment.model.PatientSettingData;
 import com.dollop.appointment.utility.DBConnection;

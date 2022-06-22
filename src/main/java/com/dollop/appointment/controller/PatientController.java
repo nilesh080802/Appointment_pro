@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dollop.appointment.service.PatientService;
-import com.dollop.appointment.service.PaymentService;
 
 /**
  * Servlet implementation class PatientController
