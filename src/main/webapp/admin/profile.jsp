@@ -118,12 +118,23 @@
 									</div>
 									<div class="col-auto profile-btn">
 										
+								
+										
 										
 									</div>
 								</div>
 							</div>
+							<%if(request.getAttribute("changePassword")!=null ){ %>
+							<p style="color:red;">
+							
+										<%=request.getAttribute("changePassword")%>
+							</p>
+		
+								<%}%>
+							
 							<div class="profile-menu">
 								<ul class="nav nav-tabs nav-tabs-solid">
+																
 									<li class="nav-item">
 										<a class="nav-link active" data-toggle="tab" href="#per_details_tab">About</a>
 									</li>
@@ -172,7 +183,59 @@
 												</div>
 											</div>
 											
-											<!-- Edit Details Modal -->
+										
+											
+										</div>
+
+									
+									</div>
+									<!-- /Personal Details -->
+
+								</div>
+								<!-- /Personal Details Tab -->
+								
+								<!-- Change Password Tab -->
+								<div id="password_tab" class="tab-pane fade">
+								
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title">Change Password</h5>
+													
+											<div class="row">
+												<div class="col-md-10 col-lg-6">
+													<form action="${pageContext.request.contextPath }/AdminController?action=changeAdminPassword&mobileNumber=${mobileNumber}" id="submit" method ="post">														<div class="form-group">
+															<label>Old Password</label>
+			
+															<input type="password" name="oldPassword" class="form-control">
+														</div>
+														<div class="form-group">
+															<label>New Password</label>
+															<input type="password" name="newPassword" class="form-control">
+														</div>
+														<div class="form-group">
+															<label>Confirm Password</label>
+															<input type="password" name=newConPassword class="form-control">
+														</div>
+														<button class="btn btn-primary" type="submit">Save Changes</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /Change Password Tab -->
+								
+							</div>
+						</div>
+					</div>
+				
+				</div>			
+			</div>
+			<!-- /Page Wrapper -->
+		
+        </div>
+		<!-- /Main Wrapper -->
+			<!-- Edit Details Modal -->
 											<div class="modal fade" id="edit_personal_details" aria-hidden="true" role="dialog">
 												<div class="modal-dialog modal-dialog-centered" role="document" >
 													<div class="modal-content">
@@ -200,7 +263,7 @@
 																	<div class="col-12">
 																		<div class="form-group">
 																			<label>Date of Birth</label>
-																			<div class="cal-icon">
+																			<div class="form-group">
 																				<input type="date"  name="dateOfBirth"class="form-control" value="${adminData.getDateOfBirth()}">
 																			</div>
 																		</div>
@@ -258,57 +321,6 @@
 												</div>
 											</div>
 											<!-- /Edit Details Modal -->
-											
-										</div>
-
-									
-									</div>
-									<!-- /Personal Details -->
-
-								</div>
-								<!-- /Personal Details Tab -->
-								
-								<!-- Change Password Tab -->
-								<div id="password_tab" class="tab-pane fade">
-								
-									<div class="card">
-										<div class="card-body">
-											<h5 class="card-title">Change Password</h5>
-											<div class="row">
-												<div class="col-md-10 col-lg-6">
-													<form>
-														<div class="form-group">
-															<label>Old Password</label>
-															<input type="password" class="form-control">
-														</div>
-														<div class="form-group">
-															<label>New Password</label>
-															<input type="password" class="form-control">
-														</div>
-														<div class="form-group">
-															<label>Confirm Password</label>
-															<input type="password" class="form-control">
-														</div>
-														<button class="btn btn-primary" type="submit">Save Changes</button>
-													</form>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- /Change Password Tab -->
-								
-							</div>
-						</div>
-					</div>
-				
-				</div>			
-			</div>
-			<!-- /Page Wrapper -->
-		
-        </div>
-		<!-- /Main Wrapper -->
-		
 		<!-- jQuery -->
         <script src="${pageContext.request.contextPath }/admin/assets/js/jquery-3.2.1.min.js"></script>
         
