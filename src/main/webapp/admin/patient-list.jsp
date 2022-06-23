@@ -34,6 +34,8 @@
 		<![endif]-->
     </head>
     <body>
+
+	
 				<!-- Sidebar -->
             <jsp:include page="adminSideBar.jsp"/>
 			<!-- /Sidebar -->	
@@ -95,7 +97,7 @@
 														<h2 class="table-avatar">
 															<a href="${pageContext.request.contextPath}/AdminController?action=editPatinetProfileShow&mobile=${patients.getMobile()}"" class="avatar avatar-sm mr-2">
 															
-															<img src="data:image/jpeg;base64,${patients.getBase64Image()}" class="avatar-img rounded-circle" onerror="this.src='assets/img/patients/patient1.jpg'" alt="User Image">
+															<img src="data:image/jpeg;base64" class="avatar-img rounded-circle" onerror="this.src='assets/img/patients/patient1.jpg'" alt="User Image">
 															 
 															</a>
 															<a href="${pageContext.request.contextPath}/AdminController?action=editPatinetProfileShow&mobile=${patients.getMobile()}">${patients.getFirstName()}  ${patients.getLastName()}</a>
