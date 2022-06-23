@@ -27,6 +27,8 @@
 			<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
     </head>
+
+	
     <body>
 	
 		<!-- Main Wrapper -->
@@ -161,6 +163,7 @@
 					</li>
 					<!-- /User Menu -->
 					
+
 				</ul>
 				<!-- /Header Right Menu -->
 				
