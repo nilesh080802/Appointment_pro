@@ -25,6 +25,8 @@
 		<![endif]-->
     </head>
     <body>
+
+		
     
     <%if(session.getAttribute("type")=="admin" ){ %>
 			
