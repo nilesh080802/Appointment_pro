@@ -2,7 +2,7 @@
 /.settings/
 /src/main/webapp/assets/img/
 /src/main/webapp/admin/assets/img/
-/src/main/webapp/WEB-INF/lib/
+/src/main/webapp/WEB-INF/lib/*.jar
 .classpath
 .project
 /bin/
