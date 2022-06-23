@@ -26,10 +26,18 @@
     </head>
     <body>
 	
+
+		
 		<!-- Main Wrapper -->
 		   <%if(session.getAttribute("type")=="admin" ){ %>
 			
 				<%response.sendRedirect("./index.jsp");%>
+			
+			<%}%>
+			
+			<%if(request.getAttribute("changed")!=null ){ %>
+			
+				<%=request.getAttribute("changed")%>
 			
 			<%}%>
 			
@@ -57,6 +65,11 @@
 											
 								</p>
 								<p class="account-subtitle"> Access to our dashboard</p>
+								
+			<%-- 					 <%if(request.getAttribute("changed")!=null ){ %>
+									<%=request.getAttribute("changed")%>
+			
+								 <%}%> --%> 
 								
 								<!-- Form -->
 								<form action="${pageContext.request.contextPath}/LoginController?action=adminLogin" id="submit" method ="post">
