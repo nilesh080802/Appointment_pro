@@ -2,7 +2,7 @@
 /.settings/
 /src/main/webapp/assets/img/
 /src/main/webapp/admin/assets/img/
- /src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.49.jar
+/src/main/webapp/WEB-INF/lib/
 .classpath
 .project
 /bin/
