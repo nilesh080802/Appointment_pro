@@ -33,6 +33,8 @@
     <body>
     
     
+
+	
 			<!--Manage session -->
 		  <%if(session.getAttribute("type") == "doctor"){ %>
 			
