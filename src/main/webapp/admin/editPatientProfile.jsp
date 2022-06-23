@@ -31,6 +31,8 @@
     
     
     <!--Manage session -->
+
+	
 		  <%if(session.getAttribute("type") == "doctor"){ %>
 			
 			<% response.sendRedirect("doctor-dashboard.jsp");%>
@@ -81,7 +83,7 @@
 									<div class="col-auto profile-image">
 										<a href="editPatientProfile.jsp">
 										
-												<img src="data:image/jpeg;base64,${patients.getBase64Image()}" class="avatar-img rounded-circle" onerror="this.src='assets/img/patients/patient1.jpg'" alt="User Image">
+												<img src="data:image/jpeg;base64" class="avatar-img rounded-circle" onerror="this.src='assets/img/patients/patient1.jpg'" alt="User Image">
 										</a>
 									</div>
 									<div class="col ml-md-n2 profile-user-info">
@@ -91,10 +93,8 @@
 										<div class="about-text">${patients.getCity()}, ${patients.getAddress()},${patients.getZipCode()}</div>
 									</div>
 									 <div class="col-auto profile-btn">
-										
-										<a href="#" class="btn btn-primary">
-											Edit
-										</a>
+									
+										<a class="btn btn-primary" class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="fa fa-edit mr-1">Edit</i></a>
 									</div>
 								</div>
 							</div>
@@ -159,32 +159,32 @@
 															</button>
 														</div>
 														<div class="modal-body">
-															<form action="${pageContext.request.contextPath}/AdminController?action=editPatinetProfileUpdate&mobile=${patients.getMobile()}">
+															<form action="${pageContext.request.contextPath}/AdminController?action=editPatientProfileUpdate&mobile=${patients.getMobile()}" method="post">
 																<div class="row form-row">
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>First Name</label>
-																			<input type="text" class="form-control" value="${patients.getFirstName()}">
+																			<input type="text" class="form-control"  name="firstName" value="${patients.getFirstName()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Last Name</label>
-																			<input type="text"  class="form-control" value="${patients.getLastName()}">
+																			<input type="text"  class="form-control" name="lastName" value="${patients.getLastName()}">
 																		</div>
 																	</div>
 																	<div class="col-12">
 																		<div class="form-group">
 																			<label>Date of Birth</label>
-																			<div class="cal-icon">
-																				<input type="text" class="form-control" value="${patients.getDateOfBirth()}">
+																			<div >
+																				<input type="date" class="form-control" name="dateOfBirth" value="${patients.getDateOfBirth()}">
 																			</div>
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Email ID</label>
-																			<input type="email" class="form-control" value="${patients.getEmailId()}">
+																			<input type="email" class="form-control" name="emailId" value="${patients.getEmailId()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
@@ -199,31 +199,31 @@
 																	<div class="col-12">
 																		<div class="form-group">
 																		<label>Address</label>
-																			<input type="text" class="form-control" value="${patients.getAddress()}">
+																			<input type="text" class="form-control" name="address" value="${patients.getAddress()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>City</label>
-																			<input type="text" class="form-control" value="${patients.getCity()}">
+																			<input type="text" class="form-control" name="city" value="${patients.getCity()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>State</label>
-																			<input type="text" class="form-control" value="${patients.getState()}">
+																			<input type="text" class="form-control" name="state" value="${patients.getState()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Zip Code</label>
-																			<input type="text" class="form-control" value="${patients.getZipCode()}">
+																			<input type="text" class="form-control" name="zipCode" value="${patients.getZipCode()}">
 																		</div>
 																	</div>
 																	<div class="col-12 col-sm-6">
 																		<div class="form-group">
 																			<label>Country</label>
-																			<input type="text" class="form-control" value="${patients.getCountry()}">
+																			<input type="text" class="form-control" name="country" value="${patients.getCountry()}">
 																		</div>
 																	</div>
 																</div>
