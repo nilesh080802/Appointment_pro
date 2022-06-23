@@ -1,3 +1,4 @@
+//PaymentController.java
 package com.dollop.appointment.controller;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import com.dollop.appointment.service.PaymentService;
 /**
  * Servlet implementation class PaymentController
  */
-@WebServlet("/PaymentController")
+//@WebServlet("/PaymentController")
 
 public class PaymentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

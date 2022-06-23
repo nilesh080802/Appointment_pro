@@ -1,3 +1,4 @@
+//UploadServlet.java
 
  package com.dollop.appointment.controller;
 
@@ -27,7 +28,8 @@
  
 
 	
-	 @WebServlet(name = "UploadServlet", urlPatterns = { "/fileuploadservlet" })
+//	 @WebServlet(name = "UploadServlet", urlPatterns = { "/fileuploadservlet" })
+	 
 	 @MultipartConfig(
  		  fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
  		  maxFileSize = 1024 * 1024 * 10,      // 10 MB
