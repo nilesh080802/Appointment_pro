@@ -18,6 +18,7 @@ public class AdminDAOImp {
 	
 	public AdminDAOImp() {
 		con= DBConnection.openConnection();
+		System.out.println(con);
 	
 		
 	}
@@ -386,7 +387,7 @@ public  DoctorSettingData doctorData(String mobile) {
 	public boolean verifyUser(String mobileNumber, String password) {
 		//this method for verify user . user is register or not
 		System.out.println(mobileNumber+"  "+password);
-		String dql = "select * from admindata where mobileNumber=? AND password=?";
+		String dql = "select * from admindata where mobileNumber=? AND pass=?";
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(dql);
@@ -410,7 +411,7 @@ public  DoctorSettingData doctorData(String mobile) {
 	public boolean verifyPassword( String password) {
 		//this method for verify admin ,admin is registerd or not
 //		System.out.println(mobileNumber+"  "+password);
-		String dql = "select * from admindata where  password=?";
+		String dql = "select * from admindata where  pass=?";
 		try {
 			
 			PreparedStatement ps = con.prepareStatement(dql);
