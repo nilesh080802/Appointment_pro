@@ -60,10 +60,18 @@ public class DoctorService
 			ud.setPassword(password);
 			ud.setType(1);
 
-			udi.addUserData(ud);
+			if(udi.addUserData(ud))
+			{
 			request.setAttribute("signup", "SignUp Successfully!!!!");
 			request.setAttribute("mobile", mobileNumber);
 			return true;
+			}
+			else {
+				request.setAttribute("signup", "MobileNumber is Already Exist!!!!");
+//				request.setAttribute("mobile", mobileNumber); no use
+				return false;
+				
+			}
 		} 
 		else 
 		{
