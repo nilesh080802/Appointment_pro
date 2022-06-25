@@ -61,7 +61,7 @@ public class DoctorController extends HttpServlet
   			   }
   			   else
   			   {
-  				 RequestDispatcher rd = request.getRequestDispatcher("doctor-profile-settings.jsp");
+  				 RequestDispatcher rd = request.getRequestDispatcher("doctor-register.jsp");
   				 rd.forward(request, response);
   			   }
   			   break;
