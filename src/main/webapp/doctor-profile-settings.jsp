@@ -247,8 +247,8 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Date of Birth</label>
-													<div class="cal-icon">
-														<input type="date" class="form-control datetimepicker" name="dateOfBirth" value="${doctor.getDateOfBirth()}">
+													<div >
+														<input type="date"  name="dateOfBirth" value="${doctor.getDateOfBirth()}">
 												   </div>
 												</div>
 											</div>
