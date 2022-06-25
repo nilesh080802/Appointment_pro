@@ -49,10 +49,10 @@ public class UserDAOImp
 	
 
 		
-	public void	addUserData(UserData ud)  
+	public boolean	addUserData(UserData ud)  
 	{
 		//this method for add user into database
-		String dml="insert into userdata values(?,?,?,?,?)";		
+		String dml="insert into userdata (firstName,lastName,MobileNumber,password,type) values(?,?,?,?,?)";		
 		try 
 		{			
 			PreparedStatement ps = con.prepareStatement(dml);
@@ -62,7 +62,9 @@ public class UserDAOImp
 			ps.setString(4, ud.getPassword());
 			ps.setInt(5, ud.getType());
 			
+			
 			ps.executeUpdate();
+			
 		
 			if(ud.getType()==0) 
 			{
@@ -86,14 +88,16 @@ public class UserDAOImp
 				ps3.setString(1, ud.getFname());
 				ps3.setString(2, ud.getLname());
 				ps3.setString(3, ud.getMobileNumber());
-				
 				ps3.executeUpdate();
 				addAllTable(ud.getMobileNumber());				
 			}			
+			
+			return true;//If Doctor Successfully Registered 
 		} catch (Exception e) {
 			
 
 			e.printStackTrace();
+			return false;// if Mobile Number is already Registered
 		}		
 	}
 	
