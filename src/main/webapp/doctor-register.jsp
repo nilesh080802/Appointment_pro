@@ -52,9 +52,9 @@
 										<div class="login-header">
 											<h3>Doctor Register <a href="register.jsp">Not a Doctor?</a></h3>
 											<p style="color:red;">
-											<%if(request.getAttribute("loginError")!=null){ %>
+											<%if(request.getAttribute("signup")!=null){ %>
 											
-											<%= request.getAttribute("loginError") %>
+											<%= request.getAttribute("signup") %>
 											
 											<%}%>
 											</p>
