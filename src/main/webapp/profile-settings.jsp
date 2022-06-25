@@ -90,7 +90,7 @@
 									<div class="profile-info-widget">
 										<a href="#" class="booking-doc-img">
 											
-											<img src="${patient.getImagePath()}" onerror="assets/img/patients/patient.jpg" alt="User Image">
+											<img src="${patient.getImagePath()}" alt="User Image">
 										</a>
 										<div class="profile-det-info">
 											<h3>${patient.getFirstName()}  ${patient.getLastName()}</h3>
@@ -168,7 +168,7 @@
 														<div class="profile-img">
 														
 														<img src= "${patient.getImagePath()}" alt="User Image" ">
-													
+													<
 														</div>
 														
 														<div class="upload-img">
@@ -353,18 +353,21 @@
 </html>
 <script>
 $( "form" ).on( "change", function( event ) {
+	alert("upload servlet");
 	  event.preventDefault();
 	  var form = $('#myform')[0];
       var data = new FormData(form);
+      
 	$.ajax({
-	    url: "UploadServlet",
+	   
+		url: "UploadServlet",
 	    type: "POST",
+	    username:"patientPhoto",
 	    data: data,
 	    processData: false,
 	    contentType: false,
 	    success: function (res) {
 	    	console.log(res); 
-	    	
 	    	$("#imgPath").attr("value",res);
 	    	$("#newImg").attr("src",res);
 	    	$("#img").attr("src",res);

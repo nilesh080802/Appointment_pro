@@ -28,7 +28,7 @@
  
 
 	
-//	 @WebServlet(name = "UploadServlet", urlPatterns = { "/fileuploadservlet" })
+	 @WebServlet(name = "UploadServlet", urlPatterns = { "/UploadServlet" })
 	 
 	 @MultipartConfig(
  		  fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
@@ -68,19 +68,21 @@
  	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	 		//doGet(request, response);
-	 
+
 	 		Part filePart = request.getPart("image");
 	 		String name = getFileName(filePart);
-	 		System.out.println(name);
-	
 	 
 	 		for(Part part : request.getParts())
 	 		{
-			name = getFileName(part);
-			System.out.println(name);
-			part.write("D:\\Java Program\\Appointment_pro\\src\\main\\webapp\\assets\\img\\doctors\\"+name);
-		}
-		response.getWriter().print("assets/img/patients/"+name);
+	 			name = getFileName(part);
+	 			System.out.println(name);
+				part.write("F:\\JAVA PROJECT\\newJava\\Appointment\\src\\main\\webapp\\assets\\img\\all-image\\"+name);
+				//^This path is changable for according to our system project path
+				//part.write("D:\\Java Program\\Appointment_pro\\src\\main\\webapp\\assets\\img\\all-image\\"+name);
+		
+	 		}
+	 		
+		response.getWriter().print("assets/img/all-image/"+name);
 	}
 	
  

@@ -1,8 +1,8 @@
 /build/
 /.settings/
-/src/main/webapp/assets/img/
-/src/main/webapp/admin/assets/img/
+/src/main/webapp/assets/img/patients/*.jpg
 /src/main/webapp/WEB-INF/lib/*.jar
+/src/main/webapp/assets/img/all-image/*.png
 .classpath
 .project
 /bin/
